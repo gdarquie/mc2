@@ -1,0 +1,222 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #div_studios{
+            height: 400px;
+        }
+
+        .film{margin-bottom: 1em;}
+
+        .poster{
+            height:300px;
+        }
+
+        tr{
+            line-height: 0.2em;
+        }
+
+
+        .card{
+            padding : 30px;
+        }
+
+        .list_film {
+            color: #039be5;
+            cursor: pointer; cursor: hand;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+
+        <h1>Censored content : {{ myContent.title }}</h1>
+
+
+        <article class="card card_thematique row">
+        <h2>Studios</h2>
+            <div class="row col s12">
+                <div id="div_studios" class="donut"></div>
+            </div>
+        </article>
+
+        <article class="card card_thematique">
+                <h2>List of films with censored content "{{  myContent.title  }}"</h2>
+
+                <div id="table_one_censored" class="row">
+                    <input class="search" placeholder="Search" />
+                    <table class="striped medium-table">
+                        <thead>
+                        <tr>
+                            <th onclick="sortPerso(this, 'list_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            <th onclick="sortPerso(this, 'list_release_date')" data-cpt="0">Release Date<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            <th onclick="sortPerso(this, 'list_studio')" data-cpt="0">Studio<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        {% for film in films  %}
+                            <tr>
+                                <td onclick="window.location.href='{{ path('film', {'filmId' : film.filmId}) }}';" class="list_film">{{ film.title }}</td>
+                                <td class="list_release_date">{{ film.released }}</td>
+                                <td class="list_studio">
+                                    {% for studio in film.studios %}
+                                        {{ studio.title }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <ul class="pagination"></ul>
+                </div>
+            </div>
+        </article>
+
+        <div id="espacde_kibana">
+
+        </div>
+
+        {#<h2>Number genres</h2>#}
+
+        {#<p>[tester nuage de mots clés]</p>#}
+
+        {#{% for genre in genres %}#}
+            {#<p>{{ genre.title }} ({{ genre.nb }})</p>#}
+        {#{% endfor %}#}
+        {#<div id="chart_div"></div>#}
+
+        {#<h2>Dance contents</h2>#}
+
+        {#<p>[tester nuage de mots clés]</p>#}
+
+        {#<div id="chart_div2"></div>#}
+
+        {#<h2>Films</h2>#}
+
+
+        {#<div class="row">#}
+        {#{% for film in filmsByContent %}#}
+            {#<div class="col s3">#}
+                {#<h4>{{ film.title }}</h4>#}
+                {#<img src="" alt="">#}
+            {#</div>#}
+        {#{% endfor %}#}
+        {#</div>#}
+
+        {#<h1>PCA verdict {% for item in verdict  %}{{ item.title }}{% endfor %}</h1>#}
+
+        {#<p><span class="number">{{ filmsByVerdict|length }}</span> films / <span class="number">{{ nbFilmsWithVerdict.nb }}</span> studied films.</p>#}
+
+        {#<article>#}
+            {#<h2>Studios</h2>#}
+
+            {#<div id="chart_div"></div>#}
+
+            {#<table class="striped">#}
+                {#<tr><th>Studio</th><th>Number of studied films</th></tr>#}
+                {#{% for studio in nbFilmsWithVerdictByStudio %}#}
+                    {#<tr>#}
+                        {#<td>{{ studio.title }}</td><td>{{ studio.nb }}</td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#</table>#}
+        {#</article>#}
+
+        {#<h2>Films</h2>#}
+
+        {#<div class="row">#}
+            {#{% for film in filmsByVerdict  %}#}
+                {#<a href="">#}
+                    {#<div class="col s3 film">#}
+                        {#<h4 class="center">{{ film.title }} ({{ film.released }})</h4>#}
+                        {#<img class="poster" src="http://img.omdbapi.com/?i={{ film.idImdb }}&apikey=1733f6a&h=300" alt="poster">#}
+                    {#</div>#}
+                {#</a>#}
+            {#{% endfor %}#}
+        {#</div>#}
+
+        {#<table class="striped">#}
+            {#{% for film in filmsByVerdict  %}#}
+                {#<tr>#}
+                    {#<td>{{ film.title }}</td>#}
+                {#</tr>#}
+            {#{% endfor %}#}
+        {#</table>#}
+
+
+    </section>
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+    <script type="text/javascript">
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for studio in studiosByContent %}
+                ['{{ studio.title }}', {{ studio.nb }}],
+                {% endfor %}
+            ]);
+
+
+            var options = {
+                title: '',
+                pieHole: 0.4
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('div_studios'));
+            chart.draw(data, options);
+        }
+    </script>
+
+
+    <script>
+
+        {% if films|length < 16 %}
+
+        var options = {
+            valueNames: ['list_film', 'list_release_date', 'list_studio']
+        };
+
+        {% endif %}
+
+
+        {% if films|length > 15 %}
+
+        var options = {
+            valueNames: ['list_film', 'list_release_date', 'list_studio'],
+            page: 15,
+            pagination: true
+        };
+
+        {% endif %}
+
+        var FilmList = new List('table_one_censored', options);
+
+    </script>
+
+    <script>
+        function sortPerso(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                FilmList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                FilmList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+    </script>
+
+{% endblock %}

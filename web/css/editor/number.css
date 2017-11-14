@@ -1,0 +1,42 @@
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+input, .form-group{
+    line-height: 0.9em;
+}
+
+.tabs li{
+    color:green;
+    font-size : 0.6em!important;
+}
+
+#menu_admin{
+    top :65px;
+    padding-bottom: 120px;
+}
+
+#menu_admin li{
+    cursor:pointer
+}
+
+.main h3{
+    text-align: center;
+    text-decoration: underline;
+    /*font-size: 2.6em;*/
+    /*padding-left: 3em;*/
+    margin-bottom: 2em;
+}
+
+
+/* For display Function */
+
+.main, footer, #menu_admin, nav{
+    display: none;
+}
+
+#menu_admin .collection-item span{
+    cursor:pointer;
+}

@@ -1,0 +1,163 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="container" id="my-list">
+
+        <h2>All {{ type }}s</h2>
+        {% if type == "song" %}
+            <p><a href="{{ path('songs_special') }}">More about songs</a></p>
+        {% endif %}
+
+        <!-- class="search" automagically makes an input a search field. -->
+        <input class="search" placeholder="Search" />
+        <!-- class="sort" automagically makes an element a sort buttons. The date-sort value decides what to sort by. -->
+
+        <table class="table highlight">
+
+            <thead>
+
+            {% if type == 'person' %}
+                <th class="sort" data-sort="name" >Name <i class="material-icons tiny">arrow_drop_down
+                    </i></th>
+            {% else %}
+                <th class="sort" data-sort="title" >Title <i class="material-icons tiny">arrow_drop_down
+                    </i></th>
+            {% endif %}
+
+
+            {% if type == 'number' %}
+                <th class="sort" data-sort="film" >Film <i class="material-icons tiny">arrow_drop_down
+                    </i></th>
+            {% endif %}
+
+            <th>Last update</th>
+
+            <th>Creation date</th>
+
+            <!-- pas d'éditors pour stagenumber -->
+            {% if type == 'stagenumber' %}
+            {% else %}
+                <th class="sort" data-sort="editor" >Editor(s) <i class="material-icons tiny">arrow_drop_down
+                    </i></th>
+            {% endif %}
+
+            <th>Edit</th>
+
+            <th>Delete</th>
+
+            </thead>
+            
+            <tbody class="list">
+
+                {% for item in items  %}
+
+                    <tr>
+
+                        {% if type =='number' %}
+                            <td class="title sort" data-sort="title"><a href="{{ path('number', {'id' : item.id}) }}">{{ item.title }}</a></td>
+
+                        {% elseif type =='film' %}
+                            <td class="title sort" data-sort="title"><a href="{{ path('film', {'filmId' : item.filmId}) }}">{{ item.title }}</a></td>
+
+
+                        {% elseif type =='stageshow' %}
+                            <td class="title sort" data-sort="title"><a href="{{ path('stageshow', {'stageshowId' : item.stageshowId}) }}">{{ item.title }}</a></td>
+
+                        {% elseif type == 'stagenumber' %}
+                            <td class="title sort" data-sort="title"><a href="{{ path('stagenumber', {'stagenumberId' : item.stagenumberId}) }}">{{ item.title }}</a></td>
+
+                        {% elseif type =='song' %}
+                            <td class="title sort" data-sort="title"><a href="{{ path('song', {'songId' : item.songId}) }}">{{ item.title }}</a></td>
+
+                        {% elseif type =='person' %}
+                            <td class="name sort" data-sort="name"><a href="{{ path('person', {'personId' : item.personId}) }}">{{ item.name }}</a></td>
+
+                        {% endif %}
+
+
+                        {% if item.film is defined %}
+                            <td class="film">{{ item.film.title }}</td>
+                        {% endif %}
+
+                        <td class="creation">{{ item.dateCreation|date("Y-m-d") }}</td>
+                        <td class="update">{{ item.lastUpdate|date("Y-m-d") }}</td>
+
+                        <!-- pas d'éditeur pour stagenumber -->
+                        {% if type == 'stagenumber' %}
+                        {% else %}
+                            <td class="editor">
+                                {% for user in item.editors  %}
+                                    {{ user.username }}{% if loop.last %}{% else %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                        {% endif %}
+
+                        {% if type =='number' %}
+
+                            <td><a href="{{ path('number_edit', {'id' : item.id }) }}"><i class="material-icons black-text">edit</i></a></td>
+                            <td><a href="{{ path('number_delete', {'id' : item.id}) }}" onclick="return confirm('Are you sure you want to delete this item?');" ><i class="material-icons black-text">delete</i></a></td>
+
+                        {% elseif type =='film' %}
+                            <td><a href="{{ path('film_edit', {'filmId' : item.filmId }) }}" ><i class="material-icons black-text">edit</i></a></td>
+                            <td><a href="{{ path('film_delete', {'id' : item.filmId}) }}" onclick=" return confirm('Are you sure you want to delete this item?');" ><i class="material-icons black-text">delete</i></a></td>
+
+
+                        {% elseif type =='stageshow' %}
+                            <td><a href="{{ path('stageshow_edit', {'stageshowId' : item.stageshowId }) }}"><i class="material-icons black-text">edit</i></a></td>
+                            <td><a href="{{ path('stageshow_delete', {'id' : item.stageshowId}) }}" onclick="return confirm('Are you sure you want to delete this item?');" ><i class="material-icons black-text">delete</i></a></td>
+
+                        {% elseif type == 'stagenumber' %}
+                            <td><a href="{{ path('stagenumber_edit', {'stagenumberId' : item.stagenumberId }) }}"><i class="material-icons black-text">edit</i></a></td>
+                            <td><a href="{{ path('stagenumber_delete', {'id' : item.stagenumberId}) }}" onclick="return confirm('Are you sure you want to delete this item?');" ><i class="material-icons black-text">delete</i></a></td>
+
+                        {% elseif type =='song' %}
+                            <td><a href="{{ path('song_edit', {'songId' : item.songId }) }}"><i class="material-icons black-text">edit</i></a></td>
+                            <td><a href="{{ path('song_delete', {'id' : item.songId}) }}" onclick="return confirm('Are you sure you want to delete this item?');" ><i class="material-icons black-text">delete</i></a></td>
+
+                        {% elseif type =='person' %}
+                            <td><a href="{{ path('person_edit', {'personId' : item.personId }) }}"><i class="material-icons black-text">edit</i></a></td>
+                            <td><a href="{{ path('person_delete', {'id' : item.personId}) }}" onclick="return confirm('Are you sure you want to delete this item?');" ><i class="material-icons black-text">delete</i></a></td>
+
+                        {% endif %}
+
+
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <ul class="pagination"></ul>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+<script>
+
+    //-- list.js
+
+    var maxPagination = 2;
+    var minPagination = 1;
+    var pages = 10;
+
+    var options = {
+        valueNames: [ 'title', 'name', 'film', 'upload', 'creation', 'editor' ],
+        page: pages,
+        pagination: [{
+            innerWindow:maxPagination,
+            outerWindow:minPagination,
+        }],
+    };
+
+    var myNumbersList = new List('my-list', options);
+
+
+
+</script>
+
+{% endblock %}

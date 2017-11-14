@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Distributors list</h1>
+
+        <table class="stripped">
+            <thead>
+                <tr>
+                    <th>Distributor id</th>
+                    <th>Title</th>
+                    <th>Date_creation</th>
+                    <th>Last_update</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for distributor in distributors %}
+                <tr>
+                    <td><a href="{{ path('admin_distributor_show', { 'distributorId': distributor.distributorId }) }}">{{ distributor.distributorId }}</a></td>
+                    <td>{{ distributor.title }}</td>
+                    <td>{% if distributor.datecreation %}{{ distributor.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if distributor.lastupdate %}{{ distributor.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_distributor_show', { 'distributorId': distributor.distributorId }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_distributor_edit', { 'distributorId': distributor.distributorId }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('admin_distributor_new') }}">Create a new distributor</a>
+            </li>
+        </ul>
+
+    </div>
+{% endblock %}

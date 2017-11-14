@@ -1,0 +1,101 @@
+{% import _self as formMacros %}
+
+{% macro printValidationTitleRow(validationForm) %}
+    <div class="col s12 js-title-validation-item">
+        <br><br>
+        <a href="" class="js-remove-title-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+<div id="title" class="row container main">
+
+    {% if ( validationTitle|length < 2 or is_granted('ROLE_EDITOR')) %}
+        <article class="col s12">
+    {% else %}
+        <article class="col s12 hide">
+    {% endif %}
+
+
+        <h3>Title</h3>
+
+        <div class="color-cartouche">
+
+            {{ form_errors(numberForm) }}
+
+            <div class="row">
+
+                <div class="col s6">
+                    {{form_row(numberForm.title)}}
+                </div>
+
+                <div class="col s6">
+                {{ form_label(numberForm.commentTitle, "Title comment(s)") }}
+                {{ form_widget(numberForm.commentTitle, {
+                    'attr': {'class': 'materialize-textarea'}
+                }) }}
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col s12">
+                    {{ form_widget(numberForm.completeTitle) }}
+                    {{ form_label(numberForm.completeTitle, "Completed? (check when you're done with the whole section)") }}
+                    {{ form_errors(numberForm.completeTitle) }}
+                </div>
+            </div>
+        </div>
+
+        {% if is_granted('ROLE_EDITOR') %}
+
+
+            <div class="color-cartouche">
+
+                {% if validationTitle is defined %}
+                    {% for item in validationTitle  %}
+                        <div class="chip js-title-validation-item">
+                            {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                            <a href="" class="js-remove-title-validation">
+                                {#<i class="material-icons black-text" >delete</i>#}
+                                <i class="close material-icons black-text">close</i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+
+                <div class="row js-title-validation-wrapper" data-prototype="{{ formMacros.printValidationTitleRow(numberForm.validationTitle.vars.prototype)|e('html_attr') }}">
+
+                    <div class="col s12">
+                        <a href="#" class="js-add-title-validation valign-wrapper col s12">
+                            <i class="material-icons black-text ">add</i>
+                            Add a validation
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hide">
+                    {{ form_widget(numberForm.validationTitle) }}
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </article>
+
+
+    {% if ( validationTitle |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+</div>

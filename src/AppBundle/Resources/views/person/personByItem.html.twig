@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <section class="container">
+        <h1>{{ person.name }} and {{ thesaurus.title }}</h1>
+
+        <article class="card">
+            <h2>Films</h2>
+
+        </article>
+
+        <article class="card">
+            <h2>Numbers</h2>
+            {% for item in numbers %}
+                <p>{{ item.title }}</p>
+            {% endfor %}
+        </article>
+
+    </section>
+{% endblock %}

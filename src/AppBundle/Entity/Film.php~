@@ -1,0 +1,297 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Film
+ *
+ * @ORM\Table(name="film")
+ * @ORM\Entity
+ */
+class Film
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="productionyear", type="integer", nullable=true)
+     */
+    private $productionyear;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="released", type="integer", nullable=true)
+     */
+    private $released;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="id_imdb", type="string", length=255, nullable=true)
+     */
+    private $idImdb;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="studio", type="string", length=255, nullable=true)
+     */
+    private $studio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="distributor", type="string", length=255, nullable=true)
+     */
+    private $distributor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=255, nullable=true)
+     */
+    private $color;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ratio", type="string", length=255, nullable=true)
+     */
+    private $ratio;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="length", type="integer", nullable=true)
+     */
+    private $length;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contract", type="string", length=255, nullable=true)
+     */
+    private $contract;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rights", type="integer", nullable=true)
+     */
+    private $rights;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="negative", type="integer", nullable=true)
+     */
+    private $negative;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pna", type="integer", nullable=true)
+     */
+    private $pna;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="us_rentals", type="integer", nullable=true)
+     */
+    private $usRentals;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="foreign_rentals", type="integer", nullable=true)
+     */
+    private $foreignRentals;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_rentals", type="integer", nullable=true)
+     */
+    private $totalRentals;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="us_boxoffice", type="integer", nullable=true)
+     */
+    private $usBoxoffice;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="foreign_boxoffice", type="integer", nullable=true)
+     */
+    private $foreignBoxoffice;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="total_boxoffice", type="integer", nullable=true)
+     */
+    private $totalBoxoffice;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="source_eco", type="text", length=65535, nullable=true)
+     */
+    private $sourceEco;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="archives", type="text", length=16777215, nullable=true)
+     */
+    private $archives;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deleted", type="text", length=16777215, nullable=true)
+     */
+    private $deleted;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adaptation", type="string", length=255, nullable=true)
+     */
+    private $adaptation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remake", type="string", length=45, nullable=true)
+     */
+    private $remake;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="song", type="integer", nullable=true)
+     */
+    private $song;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="verdict", type="string", length=255, nullable=true)
+     */
+    private $verdict;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pca_texte", type="text", length=16777215, nullable=true)
+     */
+    private $pcaTexte;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="legion", type="string", length=5, nullable=true)
+     */
+    private $legion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="protestant", type="string", length=255, nullable=true)
+     */
+    private $protestant;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="harrisson", type="string", length=255, nullable=true)
+     */
+    private $harrisson;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bord", type="string", length=255, nullable=true)
+     */
+    private $bord;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="film_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $filmId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Underscoring", inversedBy="film")
+     * @ORM\JoinTable(name="film_has_underscoring",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="film_id", referencedColumnName="film_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="underscoring_id", referencedColumnName="underscoring_id")
+     *   }
+     * )
+     */
+    private $underscoring;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\State", inversedBy="film")
+     * @ORM\JoinTable(name="film_has_state",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="film_id", referencedColumnName="film_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="state_id", referencedColumnName="state_id")
+     *   }
+     * )
+     */
+    private $state;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Censorship", inversedBy="film")
+     * @ORM\JoinTable(name="film_has_censorship",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="film_id", referencedColumnName="film_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="censorship_id", referencedColumnName="censorship_id")
+     *   }
+     * )
+     */
+    private $censorship;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->underscoring = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->state = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->censorship = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

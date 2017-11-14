@@ -1,0 +1,129 @@
+{% import _self as formMacros %}
+
+{% macro printValidationOutlinesRow(validationForm) %}
+    <div class="col s12 js-outlines-validation-item">
+        <a href="" class="js-remove-outlines-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+<div id="outlines" class="row container main">
+
+    {% if ( validationTc |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+        <h3>Outlines</h3>
+
+        <div class="color-cartouche row">
+
+
+            <div id="tc_widget_beginTc" class="row">
+                <div class="col s3">
+                    <label for="tc_hour_begin" >Hour(s)</label><input name="tc_hour_begin" id="tc_hour_begin" type="number"  min="0" max="4">
+                </div>
+                <div class="col s3">
+                    <label for="tc_min_begin">Minute(s)</label><input name="tc_min_begin" id="tc_min_begin" type="number" min="0" max="60">
+                </div>
+                <div class="col s3">
+                    <label for="tc_sec_begin">Seconde(s)</label><input name="tc_sec_begin" id="tc_sec_begin" type="number" min="0" max="60">
+                </div>
+                <div class="col s3">
+                    {{form_row(numberForm.beginTc, {
+                        'label' : "Begin timecode"
+                    })}}
+                </div>
+            </div>
+
+            <div id="tc_widget_endTc" class="row">
+                <div class="col s3">
+                    <label for="tc_hour_end" >Hour(s)</label><input name="tc_hour_end" id="tc_hour_end" type="number"  min="0" max="4">
+                </div>
+                <div class="col s3">
+                    <label for="tc_min_end">Minute(s)</label><input name="tc_min_end" id="tc_min_end" type="number" min="0" max="60">
+                </div>
+                <div class="col s3">
+                    <label for="tc_sec_end">Seconde(s)</label> <input name="tc_sec_end" id="tc_sec_end" type="number" min="0" max="60">
+                </div>
+                <div class="col s3">
+                    {{form_row(numberForm.endTc, {
+                        'label' : "End timecode"
+                    })}}
+                </div>
+            </div>
+
+
+            {{form_row(numberForm.beginThesaurus,{
+                'label' : "Begin (from thesaurus) (1 choice) (mandatory)"
+            })}}
+            {{form_row(numberForm.endingThesaurus,{
+                'label' : "Ending (from thesaurus) (1 choice) (mandatory)"
+            })}}
+            {{ form_row(numberForm.completenessThesaurus, {
+                'label' : "Is the number closed and \"satisfying\"? (from thesaurus) (1 choice) (mandatory)"
+            }) }}
+            {{ form_row(numberForm.completOptions, {
+                'label' : "Is the number interrupted and/or the song repeated in the film ? (from thesaurus) (multi) (optional)"
+            }) }}
+
+            {{ form_label(numberForm.commentTc, "Timecode comment(s)") }}
+            {{ form_widget(numberForm.commentTc, {
+                'attr': {'class': 'materialize-textarea'}
+            }) }}
+
+            {{ form_widget(numberForm.completeTc) }}
+            {{ form_label(numberForm.completeTc, "Completed?") }}
+            {{ form_errors(numberForm.completeTc) }}
+
+        </div>
+
+        {% if is_granted('ROLE_EDITOR') %}
+
+            <div class="color-cartouche">
+
+                {%  if validationTc is defined %}
+                    {% for item in validationTc  %}
+                        <div class="chip js-outlines-validation-item">
+                            {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                            <a href="" class="js-remove-outlines-validation">
+                                {#<i class="material-icons black-text" >delete</i>#}
+                                <i class="close material-icons black-text">close</i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+                <div class="row js-outlines-validation-wrapper" data-prototype="{{ formMacros.printValidationOutlinesRow(numberForm.validationTc.vars.prototype)|e('html_attr') }}">
+
+                    <div class="col s12">
+                        <a href="#" class="js-add-outlines-validation valign-wrapper col s12">
+                            <i class="material-icons black-text ">add</i>
+                            Add a validation
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hide">
+                    {{ form_widget(numberForm.validationTc) }}
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </article>
+    {% if ( validationTc |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+</div>

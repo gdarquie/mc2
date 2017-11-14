@@ -1,0 +1,75 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>{{ code.title | capitalize}}</h2>
+
+        <div class="row">
+
+            {% if code.description %}
+                <section class="card row">
+
+                    <div class="col s12">
+                        <h3>Description</h3>
+                        {{ code.description }}
+                    </div>
+
+
+                </section>
+            {% endif %}
+
+
+            <section class="card row">
+
+                <div class="col s12">
+                    <h3>Elements</h3>
+
+                    <ul class="row my-list">
+                        {% for item in thesaurus  %}
+                            <li class="col s4 title"><a href="{{ path('thesaurus_element', {'id' : item.id }) }}">{{ item.title }}</a>
+                            {% if is_granted('ROLE_EDITOR') %}
+                                <a href="{{ path('updateThesaurus' , {'id' : item.id}) }}"><i class="material-icons tiny black-text">edit</i></a>
+                            {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <ul class="pagination"></ul>
+                </div>
+
+            </section>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        //-- list.js
+
+        var maxPagination = 2;
+        var minPagination = 1;
+        var pages = 15;
+
+        var options = {
+            valueNames: [ 'title' ],
+            page: pages,
+            pagination: [{
+                innerWindow:maxPagination,
+                outerWindow:minPagination,
+            }],
+        };
+
+        var myList = new List('my-list', options);
+
+
+    </script>
+
+{% endblock %}

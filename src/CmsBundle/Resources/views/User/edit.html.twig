@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>User edit <span class="tooltipped" data-position="bottom" data-delay="30" data-tooltip="Admin = delete and all, EDITOR = validation & stage show , stage number & thesaurus, Expert = persons & films, MEMBER  = number & song, USER = cannot edit, just access to thematics pages, etc. "><i class="material-icons circle white-text grey lighten-1">help</i></span></h1>
+        {{ form_start(edit_form) }}
+            {{ include('CmsBundle:User:_form.html.twig')}}
+            <button class="btn black" type="submit" formnovalidate >Edit User</button>
+        {{ form_end(edit_form) }}
+
+        <ul>
+            <li>
+                <a href="{{ path('admin') }}#users">Back to the list</a>
+            </li>
+
+        </ul>
+
+        <div>
+            {{ form_start(delete_form) }}
+            <input class="right btn red" type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </div>
+
+        <br><br>
+
+    </div>
+{% endblock %}

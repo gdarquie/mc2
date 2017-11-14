@@ -1,0 +1,62 @@
+<div class="col s10 tab" id="other">
+
+    {#<article>#}
+    {#<iframe src="http://54.93.50.108:5601/app/kibana#/dashboard/f8b20cd0-67d6-11e7-8385-0bb2de6337bd?embed=true&_g=()&_a=(description:'',filters:!(),options:(darkTheme:!f),panels:!((col:1,id:e4ccd1a0-67d6-11e7-8385-0bb2de6337bd,panelIndex:1,row:1,size_x:6,size_y:3,type:visualization),(col:7,id:abff6a60-67d4-11e7-8385-0bb2de6337bd,panelIndex:2,row:1,size_x:6,size_y:3,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:'*')),timeRestore:!f,title:monitoring-test,uiState:(P-1:(vis:(params:(sort:(columnIndex:!n,direction:!n)))),P-2:(vis:(params:(sort:(columnIndex:3,direction:desc))))),viewMode:view)" height="600" width="800"></iframe>#}
+    {#</article>#}
+    <article>
+        <h2>Count of new numbers by day</h2>
+
+
+        <div id="chart_div"></div>
+
+
+        {#<table class="striped mini-table">#}
+        {#<tr>#}
+        {#<td>Count</td>#}
+        {#<td>Date</td>#}
+        {#</tr>#}
+        {#{% for number in numberByMonth %}#}
+        {#<tr>#}
+        {#<td>{{ number.nb }}</td>#}
+        {#<td>{{ number.day }} - {{ number.month }} - {{ number.year }}</td>#}
+        {#</tr>#}
+        {#{% endfor %}#}
+        {#</table>#}
+    </article>
+
+
+    {#<svg width="960" height="500"></svg>#}
+
+    <article>
+        <h2>Numbers by editor</h2>
+
+        <table class="striped">
+            <tr>
+                <th>Username</th>
+                <th>Count</th>
+            </tr>
+            {%  for number in numbersByEditor %}
+                <tr>
+                    <td>{{  number.name }}</td>
+                    <td>{{ number.nb }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </article>
+
+    <article>
+        <h2>Last numbers</h2>
+        <table class="striped">
+            {% for number in lastnumbers %}
+                <tr>
+                    <td>{{ number.title }}</td>
+                    <td>{{ number.lastUpdate | date() }}</td>
+                    {#<td>{{ number.editors.username }}</td>#}
+                </tr>
+            {% endfor %}
+        </table>
+    </article>
+
+
+
+</div>

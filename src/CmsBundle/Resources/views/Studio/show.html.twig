@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Studio</h1>
+
+        <table class="striped">
+            <tbody>
+                <tr>
+                    <th>Studioid</th>
+                    <td>{{ studio.studioId }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ studio.title }}</td>
+                </tr>
+                <tr>
+                    <th>Date_creation</th>
+                    <td>{% if studio.datecreation %}{{ studio.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Last_update</th>
+                    <td>{% if studio.lastupdate %}{{ studio.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('admin_studio_index') }}">Back to the list</a>
+            </li>
+            <li>
+                <a href="{{ path('admin_studio_edit', { 'studioId': studio.studioId }) }}">Edit</a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
+                    <input type="submit" class="btn red right" value="Delete">
+                {{ form_end(delete_form) }}
+            </li>
+
+            <br><br>
+        </ul>
+
+    </div>
+{% endblock %}

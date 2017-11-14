@@ -1,0 +1,501 @@
+{% extends 'base.html.twig' %}
+
+{% block fos_user_content %}{% endblock %}
+{% block stylesheets %}
+
+    {{parent()}}
+
+    <link href="{{asset('assets/vendor/vis/dist/vis.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('css/film.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block body %}
+
+    <section class='container' id='film'>
+
+        <div class="row">
+
+            <div class="col s3">
+                <h1>{{film.title}}</h1>
+            </div>
+            <div class="col s9">
+                <nav id="sub_nav" class="nav-extended col s8">
+
+                    <div class="nav-content">
+
+                        {#<a href="#" data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>#}
+                        <ul class="tabs tabs-transparent mobile">
+
+                            <li class="tab"><a href="#tab1" class="active">General</a></li>
+                            <li class="tab"><a href="#tab2">Details</a></li>
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col s12">
+
+            <!-- Tabs -->
+            <div id="tab1" class="myTab col s12">
+                <!-- General -->
+
+                <div class="row">
+                    <div class="col s3">
+                        <img src="http://img.omdbapi.com/?i={{ film.idImdb }}&apikey=1733f6a&h=300" alt="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';" style="max-width: 225px;">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} <!-- combiner les deux fonctionnalités admin dans un même champ ? -->
+                            <div class="center row films-btn">
+
+                                {% if is_granted("ROLE_USER") %}
+                                    <a href="{{path('number_new', {filmId : film.filmId }) }}"><button class="btn white red-text">Add a number</button></a>
+                                {% endif %}
+
+                                {% if is_granted("ROLE_EDITOR") %}
+                                    <a href="{{path('film_edit', { filmId : film.filmId })}}"><button class="btn white red-text">edit</button></a>
+                                {% endif %}
+
+                                {#<a href="#"><button class="btn red">Complete</button></a> <!-- définir une fonction pour bloquer les numbers -->#}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col s9">
+
+                        <div class="row card_perso">
+
+                            <div id="general_info">
+                                <div class="col s12">
+                                    <h2>General information</h2>
+                                </div>
+
+
+                                <div class="col s6">
+
+                                    <p><strong>Sample :</strong> {% if film.sample %} Yes {% else %} No {% endif %}</p>
+
+                                    {% if film.studios[0] is defined %}
+                                        <p><strong>Studio :</strong> {% for item in film.studios  %}{{ item.title }}{%  if loop.last %}{% else %} ;{% endif %} {% endfor %}</p>
+                                    {% endif %}
+
+                                    {#{% if film.distributors[0] is defined %}#}
+                                        {#<p><strong>Distributor :</strong>{% for item in film.distributors %}{{ item.title }}{%  if loop.last %}{% else %} ;{% endif %} {% endfor %}</p>#}
+                                    {#{% endif %}#}
+                                </div>
+
+                                <div class="col s6">
+                                    {% if film.directors[0] is defined %}
+                                        <p><strong>Director :</strong> {% for director in film.directors  %}{{ director.name }}{%  if loop.last %}{% else %}, {% endif %}{% endfor %}</p>
+                                    {% endif %}
+                                    {% if film.released is defined %}
+                                        <p><strong>Release date (New York) :</strong> {{ film.released }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+
+                                <article class='col s12 m12'>
+
+                                    <table class="table striped middle-table tablesorter">
+                                        <thead>
+                                        <tr>
+                                            <th>Order</th>
+                                            <th>Title</th>
+                                            <th>Begin Timecode</th>
+                                            <th>Ending Timecode</th>
+                                            <th>Length</th>
+                                            <th>Performers</th>
+                                            {% if is_granted("ROLE_MEMBER") %}
+                                                <th>Edit</th>
+                                            {% endif %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {#{% for number in numbersOf1Film %}#}
+                                        {% for number in numbersOf1Film %}
+                                            <tr>
+                                                <td>{{loop.index}}</td>
+                                                <td><a class="img_hover" href="{{ path('number', {'id' : number.id}) }}">{{ number.title  }} <span><img
+                                                                    src="{{ asset("img/default_poster.jpg") }}" alt="image du number"></span></a></td>
+                                                <td>{{ ((number.beginTc)/(60*60))|round(0, 'floor') }}h{{ ((number.beginTc)/(60)) |round(0, 'floor')-(60*((number.beginTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.beginTc) |round(0, 'floor')-(60*((number.beginTc)/(60)) |round(0, 'floor')) }}s</td>
+                                                <td>{{ ((number.endTc)/(60*60))|round(0, 'floor') }}h{{ ((number.endTc)/(60)) |round(0, 'floor')-(60*((number.endTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.endTc) |round(0, 'floor')-(60*((number.endTc)/(60)) |round(0, 'floor')) }}s</td>
+                                                <td>{{ ((number.length)/(60)) |round(0, 'floor')-(60*((number.length)/(60*60)) |round(0, 'floor'))  }}m{{ (number.length) |round(0, 'floor')-(60*((number.length)/(60)) |round(0, 'floor')) }}s</td>
+                                                <td>
+
+                                                    {% for performer in number.performers %}
+
+                                                    <a href="{{ path('person', {'personId' : performer.PersonId}) }}"> {{ performer.name }}</a>{% if loop.last %}{% else %},{% endif %}
+
+                                                    {% endfor %}
+                                                </td>
+                                                {#<td>{% for item in number.performers  %}{{ item.performer }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>#}
+
+                                                {% if is_granted("ROLE_MEMBER") %}
+                                                    <td>
+                                                        {% if number.validationTitle|length > 1 and number.validationDirector|length > 1 and number.validationTc|length > 1 and number.validationStructure|length > 1 and number.validationShots|length > 1 and number.validationPerformance|length > 1 and number.validationBackstage|length > 1 and number.validationTheme|length > 1 and number.validationMood|length > 1 and number.validationDance|length > 1 and number.validationMusic|length > 1 and number.validationReference|length > 1 and number.validationCost|length > 1 %}
+                                                            {% if is_granted("ROLE_ADMIN") %}
+                                                                <a href="{{path('number_edit', { id : number.id })}}"><span class="green-text">Validated</span></a>
+                                                            {% else %}
+                                                                <span class="green-text">Validated</span>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <a href="{{path('number_edit', { id : number.id })}}">edit
+                                                        {% endif %}
+
+                                                    </td>
+                                                {% endif %}
+
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="row">
+
+
+
+                    <article class="col s12 m6">
+                        <h3>Number's distribution</h3>
+
+                        <div id="donut">
+                            <svg style="height:500px;"></svg>
+                        </div>
+                    </article>
+
+                    <article class='col s12 m6 class_length'>
+
+                        <h2>Lengths</h2>
+
+                        <div class="row">
+                            <article class="card col cyan s12 m6">
+                                <div class="card-content white-text center-align">
+                                    <p class="center-align number">   {% for number in numberSumLength %}
+                                        {% if number.total > 0 %}
+                                        {{(number.total/60)|round}} min
+                                        {% else %}
+                                    <p>N/A</p>
+                                    {% endif %}
+
+                                    {% endfor %}</p>
+                                    <p class="center-align number-label">Sum of all numbers</p>
+                                </div>
+                            </article>
+
+                            <article class="card pink darken-4 col s12 m6">
+                                <div class="card-content white-text center-align">
+                                    <p class="center-align number">{{((film.length)/60)|round}} min</p>
+                                    <p class="center-align number-label">Movie Length</p>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="row">
+                            <article class="card cyan col s12 m6 deep-orange">
+                                <div class="card-content white-text center-align">
+                                    <p class="center-align number">   {% for number in numberSumLength %}
+                                        {% if number.total > 0 %}
+                                        {{(number.total)|round}} s
+                                        {% else %}
+                                    <p>N/A</p>
+                                    {% endif %}
+
+                                    {% endfor %}</p>
+                                    <p class="center-align number-label">Sum of all numbers</p>
+                                </div>
+                            </article>
+
+                            <article class="card green darken-3 col s12 m6">
+                                <div class="card-content white-text center-align">
+                                    <p class="center-align number">{{film.length}} sec</p>
+                                    <p class="center-align number-label">Movie Length</p>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="row">
+                            <article class="card amber col s12 m12">
+                                <div class="card-content white-text center-align">
+                                    <p class="center-align number">{% for number in numberSumLength %}
+
+                                        {% if number.total > 0 %}
+                                        {{((number.total/number.length)*100)|round(2, 'floor') }}%
+                                        {% else %}
+                                    <p>N/A</p>
+                                    {% endif %}
+
+                                    {% endfor %}</p>
+                                    <p class="center-align number-label">Ratio number/total length</p>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="row">
+                            <article class="card blue darken-4 col s12 m6">
+                                <div class="card-content white-text center-align">
+                                    <p class="center-align number">{% for number in numberAverageLength %}{{number.average|round}} sec{% endfor %}</p>
+                                    <p class="center-align number-label">Average number length for {{film.title}}</p>
+                                </div>
+                            </article>
+
+                            <article class="card pink lighten-2 col s12 m6">
+                                <div class="card-content white-text center-align">
+                                    <p class="center-align number">{% for number in numbersAverageLength %}{{number.average|round}} sec{% endfor %}</p>
+                                    <p class="center-align number-label">Average number length for all the movies</p>
+                                </div>
+                            </article>
+                        </div>
+                    </article>
+
+                </div>
+
+                <hr>
+
+                <div class="row">
+
+                    <article id="tabTimelineContainer">
+                        <h3> Cast </h3>
+                        <div >
+                            <table class="highlight mini-table" id="table_cast">
+                                <tr>
+                                    <th>Color</th>
+                                    <th>Cast</th>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#003399"></circle></svg></td>
+                                    <td>All Black cast</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#339933"></circle></svg></td>
+                                    <td>All White cast</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#ffff00"></circle></svg></td>
+                                    <td>All Latin cast</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#ff0000"></circle></svg></td>
+                                    <td>Mixed Race cast</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#cc0099"></circle></svg></td>
+                                    <td>Mixed Race Extras</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#595959"></circle></svg></td>
+                                    <td>NA</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="row">
+
+                    <article id = "container">
+                        <h3>Graphe/ Timeline</h3>
+                        <div class = "svg" id="svg_timeline"></div>
+                        <div id = "tag"></div>
+                    </article>
+                </div>
+
+            </div>
+
+
+{#--------------------------------------------------------------------------------------------------------------------------------------------#}
+{#-------------------------------------------------------  DEUXIEME ONGLET  ------------------------------------------------------------------#}
+{#--------------------------------------------------------------------------------------------------------------------------------------------#}
+
+
+            <div id="tab2" class="myTab col s12">
+
+                <section id="film_detail">
+                    <div class="row">
+
+                        <div class="col s12">
+
+                            <h2 class="titre_details">Recycling</h2>
+
+                            <table class="striped middle-table">
+                                <tr>
+                                    <th>Adaptation</th>
+                                    <th>Shows</th>
+                                    <th>Remake</th>
+                                    {#<th>Underscoring</th>#}
+                                </tr>
+
+                                <tr>
+                                    <td>{{ film.adaptation }}</td>
+                                    <td>
+                                        {% for stageshow in film.stageshows %}
+                                        {{ stageshow.title }} ({{ stageshow.opening|date('d/m/Y') }}){% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% if film.remake %}
+                                            Yes
+                                        {% endif %}
+
+                                        {% if film.remake is null %}
+
+                                        {% else %}
+                                            No
+                                        {% endif %}
+                                    </td>
+                                    {#<td>#}
+                                        {#{% for underscoring in film.underscoring %}#}
+                                            {#{{ underscoring }}{% if not loop.last %}, {% endif %}#}
+                                        {#{% endfor %}#}
+                                    {#</td>#}
+
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col s12" style="margin-bottom: 30px;">
+
+                            <h2 class="titre_details">Censorship</h2>
+
+                            <table class="striped middle-table">
+                                <tr>
+                                    <th>PCA verdict on the first submitted script</th>
+                                    <th>Censored content</th>
+                                    <th>States where the film was censored</th>
+                                </tr>
+
+                                <tr>
+                                    <td>{{ film.verdict }}</td>
+                                    <td>
+                                        {% for censorship in film.censorship %}
+                                            {{ censorship.title }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for state in film.state %}
+                                            {{ state.title }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+
+                        <div class="col s12">
+
+                            <table class="striped middle-table">
+                                <tr>
+                                    <th>Legion of Decency</th>
+                                    <th>Protestant Motion Picture Council</th>
+                                    <th>Harrison's Report</th>
+                                    <th>Film Estimate Board of National Organizations</th>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        {{ film.legion }}
+                                    </td>
+
+                                    <td>
+                                        {{ film.protestant }}
+                                    </td>
+
+                                    <td>
+                                        {{ film.harrisson }}
+                                    </td>
+                                    <td>
+                                        {{ film.bord }}
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{parent()}}
+    <script type="text/javascript" src="{{ asset('js/length_timeline.js') }}"></script>
+
+    <script type="text/javascript">
+
+        //title, begin-tc, ending-tc
+        var items = new vis.DataSet([
+            {% for number in numbersOf1Film %}
+            {id: {{loop.index}}, content: '{{number.title}}', start: {{number.beginTc}}, end: {{number.endTc}}, shots: {%  if number.shots != null %}'{{ number.shots }}'{% else %}0{% endif %}, cast: {%  if number.cast != null %}'{{ number.cast.id }}'{% else %}0{% endif %} }{% if loop.last %}{% else %},{% endif %}
+            {% endfor %}
+        ]);
+
+
+        nv.addGraph(function() {
+            var chart = nv.models.pieChart()
+                    .x(function(d) { return d.label })
+                    .y(function(d) { return d.value })
+                    .showLabels(true)     //Display pie labels
+                    .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                    .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                    .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                    .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                ;
+            d3.select("#donut svg")
+                .datum(numberLengthData ())
+                .transition().duration(350)
+                .call(chart);
+
+            return chart;
+        });
+
+        function numberLengthData() {
+            return  [
+                {% for number in numbersOf1Film %}
+                {"label" : decodeHtml("{{number.title}}"),
+                    "value" : "{{number.length}}"},
+                {% endfor %}
+            ];
+
+        }
+
+        function decodeHtml(text) {
+            return text
+                .replace(/&amp;/g, "&")
+                .replace(/&#039;/g, "\'");
+        }
+
+        //Timeline Ale
+
+        create_gant(items,{{ film.length }});
+
+    </script>
+
+{% endblock %}
+

@@ -1,0 +1,86 @@
+{% import _self as formMacros %}
+
+{% macro printValidationReferenceRow(validationForm) %}
+    <div class="col s12 js-reference-validation-item">
+        <a href="" class="js-remove-reference-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+<div id="source" class="row container main">
+
+    {% if ( validationReference |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+    <h3>Source(s)</h3>
+
+    <div class="color-cartouche">
+    {{form_row(numberForm.source_thesaurus, {
+        'label' : "(from thesaurus) (mandatory) (1 choice)"
+    })}}
+
+    {{ form_row(numberForm.stagenumbers, {
+        'label' : "Original stage number (if relevant)"
+    })}}
+
+    {{ form_label(numberForm.commentReference, 'Details of the source (title of the stage show...)') }}
+    {{ form_widget(numberForm.commentReference, {
+        'attr': {'class': 'materialize-textarea'}
+    }) }}
+
+    {{ form_widget(numberForm.completeReference) }}
+    {{ form_label(numberForm.completeReference, "Completed?") }}
+    {{ form_errors(numberForm.completeReference) }}
+
+    {#{{form_row(numberForm.validationReference)}}#}
+    </div>
+
+    {% if is_granted('ROLE_EDITOR') %}
+        <div class="color-cartouche">
+
+            {%  if validationReference is defined %}
+                {% for item in validationReference  %}
+                    <div class="chip js-reference-validation-item">
+                        {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                        <a href="" class="js-remove-reference-validation">
+                            {#<i class="material-icons black-text" >delete</i>#}
+                            <i class="close material-icons black-text">close</i>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+            <div class="row js-reference-validation-wrapper" data-prototype="{{ formMacros.printValidationReferenceRow(numberForm.validationReference.vars.prototype)|e('html_attr') }}">
+
+                <div class="col s12">
+                    <a href="#" class="js-add-reference-validation valign-wrapper col s12">
+                        <i class="material-icons black-text ">add</i>
+                        Add a validation
+                    </a>
+                </div>
+            </div>
+
+            <div class="hide">
+                {{ form_widget(numberForm.validationReference) }}
+            </div>
+
+        </div>
+    {% endif %}
+
+    </article>
+    {% if ( validationReference |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+</div>

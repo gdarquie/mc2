@@ -1,0 +1,308 @@
+<div class="container">
+<article class="card row">
+    <div class="col s12">
+        <h2>Persons associated with {{ person.name }}</h2>
+
+        <article>
+            <h3>Choreographers</h3>
+
+            <div id="choreo_top_list">
+
+                <table class="striped medium-table tablesorter">
+                    <thead>
+                    <tr>
+                        <th>Choreographer<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th>Production numbers<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for item in top_associated_choreographers  %}
+                        <tr>
+                            <td class="choreo_name_top">{{ item.name }}</td>
+                            <td class="choreo_total_top">{{ item.total }}</td>
+                            <td><a class="waves-effect waves-light choreo_btn_top" href="#modal1" data-name="{{ item.name }}">Show More</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <div id="choreo_list">
+
+                        <input class="search" placeholder="Search" />
+
+                        <table class="striped medium-table">
+                            <thead>
+                            <tr>
+                                <th onclick="sortPersoChoreoList(this, 'choreo_name')" data-cpt="0">Associated choreographers<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoChoreoList(this, 'choreo_number')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoChoreoList(this, 'choreo_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+                            {% for item in associated_choreographers  %}
+                                <tr>
+                                    <td class="choreo_name">{{ item.name }}</td>
+                                    <td onclick="window.location.href='{{ path('number', {'id' : item.id}) }}';" class="choreo_number link_perso">{{ item.title }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.filmId}) }}';" class="choreo_film link_perso">{{ item.film }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <ul class="pagination"></ul>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+            </div>
+
+
+
+        </article>
+
+        <article>
+            <h3>Composers</h3>
+
+            <div id="composers_top_list">
+
+                <table class="striped medium-table tablesorter">
+                    <thead>
+                    <tr>
+                        <th>Composer<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th>Production numbers<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for item in top_associated_composers  %}
+                        <tr>
+                            <td class="composer_name_top">{{ item.name }}</td>
+                            <td class="composer_total_top">{{ item.total }}</td>
+                            <td><a class="waves-effect waves-light composer_btn_top" href="#modal2" data-name="{{ item.name }}">Show More</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div id="modal2" class="modal">
+                <div class="modal-content">
+                    <div id="composers_list">
+
+                        <input class="search" placeholder="Search" />
+
+
+                        <table class="striped medium-table">
+                            <thead>
+                            <tr>
+                                <th onclick="sortPersoComposerList(this, 'composer_name')" data-cpt="0">Associated composer<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoComposerList(this, 'composer_song')" data-cpt="0">Song<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoComposerList(this, 'composer_number')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoComposerList(this, 'composer_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+                            {% for item in associated_composers  %}
+                                <tr>
+                                    <td class="composer_name">{{ item.name }}</td>
+                                    <td class="composer_song">{{ item.song }}</td>
+                                    <td onclick="window.location.href='{{ path('number', {'id' : item.id}) }}';" class="composer_number link_perso">{{ item.number }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.filmId}) }}';" class="composer_film link_perso">{{ item.film }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <ul class="pagination"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                </div>
+            </div>
+
+
+        </article>
+
+        <article>
+            <h3>Lyricists</h3>
+
+            <div id="lyric_top_list">
+
+                <table class="striped medium-table tablesorter">
+                    <thead>
+                    <tr>
+                        <th>Lyricist<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th>Production numbers<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for item in top_associated_lyricists  %}
+                        <tr>
+                            <td class="lyric_name_top">{{ item.name }}</td>
+                            <td class="lyric_total_top">{{ item.total }}</td>
+                            <td><a class="waves-effect waves-light lyric_btn_top" href="#modal3" data-name="{{ item.name }}">Show More</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div id="modal3" class="modal">
+                <div class="modal-content">
+                    <div id="lyric_list">
+
+                        <input class="search" placeholder="Search" />
+
+                        <table class="striped medium-table">
+                            <thead>
+                            <tr>
+                                <th onclick="sortPersoLyricistList(this, 'lyric_name')" data-cpt="0">Associated lyricist<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoLyricistList(this, 'lyric_song')" data-cpt="0">Song<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoLyricistList(this, 'lyric_number')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoLyricistList(this, 'lyric_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+                            {% for item in associated_lyricists  %}
+                                <tr>
+                                    <td class="lyric_name">{{ item.name }}</td>
+                                    <td class="lyric_song">{{ item.song }}</td>
+                                    <td onclick="window.location.href='{{ path('number', {'id' : item.id}) }}';" class="lyric_number link_perso">{{ item.number }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.filmId}) }}';" class="lyric_film link_perso">{{ item.film }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <ul class="pagination"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+</article>
+</div>
+
+{% block javascript %}
+
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+    <script>
+
+//        $(function(){
+//            $("#tabletest").tablesorter();
+//        });
+
+        var options = {
+            valueNames: [ { data: ['id'] }, 'choreo_name', 'choreo_number', 'choreo_film' ],
+            page: 10,
+            pagination: true
+        };
+
+        var choreoList = new List('choreo_list', options);
+
+        var options2 = {
+            valueNames: [ 'composer_name', 'composer_song', 'composer_number', 'composer_film' ],
+            page: 10,
+            pagination: true
+        };
+
+        var composersList = new List('composers_list', options2);
+
+        var options3 = {
+            valueNames: [ 'lyric_name', 'lyric_song', 'lyric_number', 'lyric_film' ],
+            page: 10,
+            pagination: true
+        };
+
+        var lyricList = new List('lyric_list', options3);
+
+
+    </script>
+
+
+    <script>
+        var composer_name = document.getElementsByClassName("composer_btn_top");
+        for (var i = 0; i < composer_name.length; i++) {
+            composer_name[i].addEventListener('click', function () {
+                if(this.dataset.name == "Total") {
+                    composersList.search("");
+                } else {
+                    composersList.search(this.dataset.name);
+                }
+            });
+        }
+
+        var choreo_name = document.getElementsByClassName("choreo_btn_top");
+        for (var i = 0; i < choreo_name.length; i++) {
+            choreo_name[i].addEventListener('click', function () {
+                if(this.dataset.name == "Total") {
+                    choreoList.search("");
+                } else {
+                    choreoList.search(this.dataset.name);
+                }
+            });
+        }
+
+        var lyric_name = document.getElementsByClassName("lyric_btn_top");
+        for (var i = 0; i < lyric_name.length; i++) {
+            lyric_name[i].addEventListener('click', function () {
+                if(this.dataset.name == "Total") {
+                    lyricList.search("");
+                } else {
+                    lyricList.search(this.dataset.name);
+                }
+            });
+        }
+        
+    </script>
+
+    <script>
+        function sortPersoChoreoList(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                choreoList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                choreoList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoComposerList(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                composersList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                composersList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoLyricistList(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                lyricList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                lyricList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+    </script>
+{% endblock %}

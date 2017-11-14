@@ -1,0 +1,40 @@
+<div class="col s10 tab" id="users">
+
+    <article>
+        <h2>All users <a class="option" href="{{ path('fos_user_registration_register') }}">create a new user</a></h2>
+
+
+        <table class="highlight">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                {#<th>Enabled</th>#}
+                <th>Last login</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%  for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% for role in user.roles %}
+                            {{ role }}{% if loop|last %}{% else %},{% endif %}
+                        {% endfor %}
+                    </td>
+                    {#<td>{{ user.enabled }}</td>#}
+                    <td>
+                        {{ user.lastLogin|date() }}
+                    </td>
+                    <td><a href="{{ path('admin_user_edit', {'id': user.id}) }}"><i class="material-icons">edit</i></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </article>
+
+</div>
+

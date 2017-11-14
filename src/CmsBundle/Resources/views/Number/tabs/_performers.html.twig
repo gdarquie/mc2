@@ -1,0 +1,106 @@
+{% import _self as formMacros %}
+
+{% macro printValidationPerformanceRow(validationForm) %}
+    <div class="col s12 js-performance-validation-item">
+        <a href="" class="js-remove-performance-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+
+<div id="performers" class="row container main">
+
+    {% if ( validationPerformance |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+    <h3>Performers</h3>
+
+    <div class="color-cartouche">
+
+        {{form_row(numberForm.performance_thesaurus, {
+            'label' : "Performance type (from thesaurus) (1 choice) (mandatory)"
+        })}}
+
+        {{ form_row(numberForm.performers, {
+            'label' : "Performers (multi)"
+        })}}
+        <a href="{{ path('editorNewPerson') }}" target="_blank" title="Create a new person if not already in the database">add a person</a>
+        <br><br><br>
+
+        <div>
+            {{ form_row(numberForm.figurants, {
+                'label' : "Stars who don't participate (ex : as spectators) (optional) (multi)"
+            }) }}
+            <a href="{{ path('editorNewPerson') }}" target="_blank" title="Create a new person if not already in the database">add a person</a>
+            <br><br><br>
+        </div>
+
+        {{ form_row(numberForm.cast, {
+            'label' : "Cast"
+        }) }}
+
+        {{ form_label(numberForm.commentPerformance, "Performance comment(s)") }}
+
+        {{ form_widget(numberForm.commentPerformance, {
+            'attr': {'class': 'materialize-textarea'}
+        }) }}
+
+        {{ form_widget(numberForm.completePerformance) }}
+        {{ form_label(numberForm.completePerformance, "Completed?") }}
+        {{ form_errors(numberForm.completePerformance) }}
+        {#{{form_row(numberForm.validationPerformance)}}#}
+
+    </div>
+
+    {% if is_granted('ROLE_EDITOR') %}
+        <div class="color-cartouche">
+
+            {%  if validationPerformance is defined %}
+                {% for item in validationPerformance  %}
+                    <div class="chip js-performance-validation-item">
+                        {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                        <a href="" class="js-remove-performance-validation">
+                            {#<i class="material-icons black-text" >delete</i>#}
+                            <i class="close material-icons black-text">close</i>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+
+            <div class="row js-performance-validation-wrapper" data-prototype="{{ formMacros.printValidationPerformanceRow(numberForm.validationPerformance.vars.prototype)|e('html_attr') }}">
+
+                <div class="col s12">
+                    <a href="#" class="js-add-performance-validation valign-wrapper col s12">
+                        <i class="material-icons black-text ">add</i>
+                        Add a validation
+                    </a>
+                </div>
+            </div>
+
+            <div class="hide">
+                {{ form_widget(numberForm.validationPerformance) }}
+            </div>
+
+        </div>
+    {% endif %}
+
+    </article>
+
+    {% if ( validationPerformance |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+</div>
+

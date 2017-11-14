@@ -1,0 +1,102 @@
+[
+{% for item in numbers  %}
+number : {
+
+{# Infos générales du number #}
+
+id : {{ item.id }},
+{% if item.title|length > 0 %}title : "{{ item.title }}",{% endif %}
+{% if item.beginTc|length > 0 %}beginTc : "{{ item.beginTc }}",{% endif %}
+{% if item.endTc|length > 0 %}endingTc : "{{ item.endTc }}",{% endif %}
+{% if item.length|length > 0 %}length : "{{ item.length }}",{% endif %}
+{% if item.beginThesaurus|length > 0 %} begin : "{{ item.beginThesaurus }}",{% endif %}
+{% if item.endingThesaurus|length > 0 %}ending : "{{ item.endingThesaurus }}",{% endif %}
+{% if item.shots|length > 0 %}shots : "{{ item.shots }}",{% endif %}
+{% if item.performanceThesaurus|length > 0 %}performance : "{{ item.performanceThesaurus }}",{% endif %}
+{% if item.spectatorsThesaurus|length > 0 %}spectators : "{{ item.spectatorsThesaurus }}",{% endif %}
+{% if item.source|length > 0 %}source: "{{ item.source }}",{% endif %}
+{% if item.completenessThesaurus|length > 0 %}completeness :"{{ item.completenessThesaurus }}",{% endif %}
+{% if item.integrationThesaurus|length > 0 %}integration : "{{ item.integrationThesaurus }}",{% endif %}
+{% if item.diegeticThesaurus|length > 0 %}diegetic : "{{ item.diegeticThesaurus }}",{% endif %}
+{% if item.musicianThesaurus|length > 0 %}musician : "{{ item.musicianThesaurus }}",{% endif %}
+{% if item.tempoThesaurus|length > 0 %}tempo : "{{ item.tempoThesaurus }}",{% endif %}
+{% if item.cast|length > 0 %}cast : "{{ item.cast }},{% endif %}
+
+
+{# Film #}
+{% if item.film.studios|length > 0 %}
+film : {
+    title : "{{ item.film }}",
+    {% if item.film.studios|length > 0 %}
+    studio : [
+    {% for studio in item.film.studios %}
+        "{{ studio.title }}"{% if loop.last %}{% else %},{% endif %}
+    {% endfor %}
+    ]
+    released : "{{ item.film.released }}"
+    {% endif %}
+},
+{% endif %}
+
+{# Costumes #}
+costumes : [{% for costume in item.costumes  %}
+    costume : { title : "{{costume.title}}" }{% if loop.last %}{% else %},{% endif %}
+{% endfor %}],
+
+{# Exoticisms #}
+exoticisms : [{% for exoticism in item.exoticismThesaurus  %}
+    exoticism : { title : "{{exoticism.title}}" }{% if loop.last %}{% else %},{% endif %}
+{% endfor %}],
+
+{# Performers #}
+{% if item.performers|length > 0 %}
+performers : [{% for item in item.performers  %}
+    performer : { id: {{ item.personId }} , name : "{{item.name}}", {% if item.gender|length > 0 %}gender : "{{ item.gender }}"{% endif %} }{% if loop.last %}{% else %},{% endif %}
+{% endfor %}],
+{% endif %}
+
+{# Dances & music #}
+
+{# Songs (trop gourmand) #}
+{#{% if item.song|length > 0 %}#}
+    {#songs : [{% for item in item.song  %}#}
+    {#song : { id: {{ item.songId }} , title : "{{item.title}}" }{% if loop.last %}{% else %},{% endif %}#}
+{#{% endfor %}],#}
+{#{% endif %}#}
+
+{# Moods & Genre #}
+{#{% if item.generalMood|length > 0 %}#}
+    {#moods : [{% for item in item.generalMood  %}#}
+    {#mood : { id: {{ item.id }} , title : "{{item.title}}" }{% if loop.last %}{% else %},{% endif %}#}
+{#{% endfor %}],#}
+{#{% endif %}#}
+
+{# Places, general localisation & imaginary  #}
+{% if item.diegeticPlaceThesaurus|length > 0 %}
+    place : [
+    {% for place  in item.diegeticPlaceThesaurus  %}
+        { title : "{{ place.title }}" {% if place.category > 0 %}, category: "{{ place.category }}"{% endif %} }{% if loop.last %}{% else %},{% endif %}
+    {% endfor %}
+    ]
+{% endif %}
+
+{% if item.generalLocalisation|length > 0 %}
+    general_localisation : [
+    {% for place  in item.generalLocalisation  %}
+        { title : "{{ place.title }}" {% if place.category > 0 %}, category: "{{ place.category }}"{% endif %} }{% if loop.last %}{% else %},{% endif %}
+    {% endfor %}
+    ]
+{% endif %}
+
+{#{% if item.imaginary|length > 0 %}#}
+    {#imaginary : [#}
+    {#{% for place  in item.imaginary  %}#}
+        {#{ title : "{{ place.title }}" {% if place.category > 0 %}, category: "{{ place.category }}"{% endif %} }{% if loop.last %}{% else %},{% endif %}#}
+    {#{% endfor %}#}
+    {#]#}
+{#{% endif %}#}
+
+
+}{% if loop.last %}{% else %},{% endif %}
+
+{% endfor %}]

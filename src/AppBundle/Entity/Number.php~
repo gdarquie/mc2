@@ -1,0 +1,438 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Number
+ *
+ * @ORM\Table(name="number", indexes={@ORM\Index(name="fk_number_film1_idx", columns={"film_id"})})
+ * @ORM\Entity
+ */
+class Number
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_title", type="integer", nullable=true)
+     */
+    private $validationTitle;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="begin_tc", type="integer", nullable=true)
+     */
+    private $beginTc;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="end_tc", type="integer", nullable=true)
+     */
+    private $endTc;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="length", type="integer", nullable=true)
+     */
+    private $length;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="begin", type="string", length=255, nullable=true)
+     */
+    private $begin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ending", type="string", length=255, nullable=true)
+     */
+    private $ending;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_tc", type="integer", nullable=true)
+     */
+    private $validationTc;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="structure_id", type="integer", nullable=true)
+     */
+    private $structureId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_structure", type="integer", nullable=true)
+     */
+    private $validationStructure;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="shots", type="integer", nullable=true)
+     */
+    private $shots;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_shots", type="integer", nullable=true)
+     */
+    private $validationShots;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="performance", type="string", length=255, nullable=true)
+     */
+    private $performance;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_performance", type="integer", nullable=true)
+     */
+    private $validationPerformance;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="spectators", type="string", length=255, nullable=true)
+     */
+    private $spectators;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="diegetic", type="string", length=45, nullable=true)
+     */
+    private $diegetic;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="musician", type="string", length=255, nullable=true)
+     */
+    private $musician;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="integration_id", type="integer", nullable=true)
+     */
+    private $integrationId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_backstage", type="integer", nullable=true)
+     */
+    private $validationBackstage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="diegetic_place", type="string", length=255, nullable=true)
+     */
+    private $diegeticPlace;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imaginary", type="string", length=500, nullable=true)
+     */
+    private $imaginary;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_theme", type="integer", nullable=true)
+     */
+    private $validationTheme;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_mood", type="integer", nullable=true)
+     */
+    private $validationMood;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_dance", type="integer", nullable=true)
+     */
+    private $validationDance;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dubbing", type="string", length=500, nullable=true)
+     */
+    private $dubbing;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tempo", type="string", length=255, nullable=true)
+     */
+    private $tempo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="arranger_comment", type="string", length=500, nullable=true)
+     */
+    private $arrangerComment;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lyrics", type="text", length=16777215, nullable=true)
+     */
+    private $lyrics;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_music", type="integer", nullable=true)
+     */
+    private $validationMusic;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_director", type="integer", nullable=true)
+     */
+    private $validationDirector;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cost", type="integer", nullable=true)
+     */
+    private $cost;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cost_comment", type="text", length=65535, nullable=true)
+     */
+    private $costComment;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_cost", type="integer", nullable=true)
+     */
+    private $validationCost;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="source", type="string", length=45, nullable=true)
+     */
+    private $source;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="validation_reference", type="integer", nullable=true)
+     */
+    private $validationReference;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
+     */
+    private $timestamp = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="number_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $numberId;
+
+    /**
+     * @var \AppBundle\Entity\Film
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Film")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="film_id", referencedColumnName="film_id")
+     * })
+     */
+    private $film;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Quotation", inversedBy="numberNumber")
+     * @ORM\JoinTable(name="number_has_quotation",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="number_number_id", referencedColumnName="number_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="quotation_id", referencedColumnName="quotation_id")
+     *   }
+     * )
+     */
+    private $quotation;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Song", inversedBy="number")
+     * @ORM\JoinTable(name="number_has_song",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="number_id", referencedColumnName="number_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="song_id", referencedColumnName="song_id")
+     *   }
+     * )
+     */
+    private $song;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Place", mappedBy="numberNumber")
+     */
+    private $place;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Stagenumber", inversedBy="number")
+     * @ORM\JoinTable(name="stagenumber_has_number",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="number_id", referencedColumnName="number_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="stageNumber_id", referencedColumnName="stageNumber_id")
+     *   }
+     * )
+     */
+    private $stagenumber;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Socialplace", inversedBy="numberNumber")
+     * @ORM\JoinTable(name="socialplace_has_number",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="number_number_id", referencedColumnName="number_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="socialPlace_id", referencedColumnName="socialPlace_id")
+     *   }
+     * )
+     */
+    private $socialplace;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Exoticism", inversedBy="numberNumber")
+     * @ORM\JoinTable(name="number_has_exoticism",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="number_number_id", referencedColumnName="number_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="exoticism_id", referencedColumnName="exoticism_id")
+     *   }
+     * )
+     */
+    private $exoticism;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Ensemble", mappedBy="number")
+     */
+    private $ensemble;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Completeness", mappedBy="number")
+     */
+    private $completeness;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dancing", mappedBy="number")
+     */
+    private $dancing;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Integration", mappedBy="number")
+     */
+    private $integration;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Musical", mappedBy="number")
+     */
+    private $musical;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Effects", inversedBy="number")
+     * @ORM\JoinTable(name="number_has_effects",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="number_id", referencedColumnName="number_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="effects_id", referencedColumnName="effects_id")
+     *   }
+     * )
+     */
+    private $effects;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->quotation = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->song = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->place = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stagenumber = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->socialplace = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->exoticism = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ensemble = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->completeness = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dancing = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->integration = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->musical = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->effects = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

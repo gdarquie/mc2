@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block fos_user_content %}{% endblock %}
+{% block stylesheets %}
+
+    {{parent()}}
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+    <section class="container">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+
+            {% if myNumbers|length > 0  %}
+
+                <h2>My numbers</h2>
+
+                {% if myFilms|length > 1 %}
+                    <a class="chip" href="{{ path('homepage') }}">All</a>
+                    {% for item in myFilms %}
+                        <a class="chip" href="{{ path("myFilm", {"userId" : user, "filmId" : item.film.filmId }) }}">{{ item.film }}</a>
+                    {% endfor %}
+                {% endif %}
+
+                <table id="myNumber" class="striped">
+                    <tr>
+                        <th>number</th>
+                        <th>film</th>
+                        <th>title</th>
+                        <th>outlines</th>
+                        <th>structure</th>
+                        <th>shots</th>
+                        <th>performers</th>
+                        <th>backstage</th>
+                        <th>themes</th>
+                        <th>tone</th>
+                        <th>dance</th>
+                        <th>music</th>
+                        <th>references</th>
+                        <th>complement</th>
+                        <th>view</th>
+                        <th>edit</th>
+                        <th>finish</th>
+                    </tr>
+                    {% for number in myNumbers  %}
+                        <tr>
+                            <td>{{ number.title }}</td>
+                            <td>{{ number.film }}</td>
+                            <td>{% if number.completeTitle == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeTitle == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeTc == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeTc == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeStructure == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeStructure == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeShots == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeShots == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completePerformance == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completePerformance == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeBackstage == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeBackstage == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeTheme == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeTheme == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeMood == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeMood == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeDance == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeDance == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeMusic == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeMusic == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeReference == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeReference == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+                            <td>{% if number.completeCost == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeCost == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</td>
+
+
+                            <td><a href="{{path('number', { 'id' : number.id })}}">view</a></td>
+                            <td><a href="{{ path('number_edit', {'id' : number.id }) }}">edit</a></td>
+                            <td>soon</td>
+
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+
+        {% endif %}
+    </section>
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        function myFilm(film){
+
+            $("#myNumber tr").not(":first").hide();
+
+            //ne faire apparaitre que ceux du film en question//
+
+        }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Exoticism
+ *
+ * @ORM\Table(name="exoticism")
+ * @ORM\Entity
+ */
+class Exoticism
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=500, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="exoticism_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $exoticismId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Number", mappedBy="exoticism")
+     */
+    private $numberNumber;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->numberNumber = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

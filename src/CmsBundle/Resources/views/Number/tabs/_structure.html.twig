@@ -1,0 +1,89 @@
+{% import _self as formMacros %}
+
+{% macro printValidationStructureRow(validationForm) %}
+    <div class="col s12 js-structure-validation-item">
+        <a href="" class="js-remove-structure-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+
+<div id="structure" class="row container main">
+
+    {% if ( validationStructure |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+    <h3>Structure</h3>
+
+    <div class="row color-cartouche">
+        <article class="col s12">
+
+            {{form_row(numberForm.structure, {
+                'label' : "Structure (from thesaurus) (1 choice) (mandatory)"
+            })}}
+
+            {{ form_label(numberForm.commentStructure, "Structure comment(s)") }}
+            {{ form_widget(numberForm.commentStructure, {
+                'attr': {'class': 'materialize-textarea'}
+            }) }}
+
+            {{ form_widget(numberForm.completeStructure) }}
+            {{ form_label(numberForm.completeStructure, "Completed?") }}
+            {{ form_errors(numberForm.completeStructure) }}
+
+        </article>
+    </div>
+
+    {% if is_granted('ROLE_EDITOR') %}
+
+        <div class="color-cartouche">
+
+            {%  if validationStructure is defined %}
+                {% for item in validationStructure  %}
+                    <div class="chip js-structure-validation-item">
+                        {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                        <a href="" class="js-remove-structure-validation">
+                            {#<i class="material-icons black-text" >delete</i>#}
+                            <i class="close material-icons black-text">close</i>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+
+            <div class="row js-structure-validation-wrapper" data-prototype="{{ formMacros.printValidationStructureRow(numberForm.validationStructure.vars.prototype)|e('html_attr') }}">
+
+                <div class="col s12">
+                    <a href="#" class="js-add-structure-validation valign-wrapper col s12">
+                        <i class="material-icons black-text ">add</i>
+                        Add a validation
+                    </a>
+                </div>
+            </div>
+
+            <div class="hide">
+                {{ form_widget(numberForm.validationStructure) }}
+            </div>
+
+
+        </div>
+    {% endif %}
+
+    </article>
+
+    {% if ( validationStructure |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+</div>

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block fos_user_content %}{% endblock %}
+{% block stylesheets %}
+
+{{parent()}}
+
+	<style>
+
+	.filter a{
+		margin-right: 4px;
+		margin-bottom: 5px;
+	  	background-color:white; 
+	  	color : #CC0000;
+	  	border:  1px solid #CC0000;
+	}
+		
+	</style>
+{% endblock %}
+
+
+{% block body %}
+
+<section class="container">
+
+	<h2>Thesaurus form</h2>
+
+	{{ form_start(form) }}
+
+    	{{ include('CmsBundle:Thesaurus:_form.html.twig')}}
+
+		<button class="btn black" type="submit" formnovalidate >Save thesaurus</button>
+
+	{{ form_end(form) }}
+
+
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+	{{ parent() }}
+
+
+{% endblock %}

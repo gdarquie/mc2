@@ -1,0 +1,44 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * FilmHasPerson
+ *
+ * @ORM\Table(name="film_has_person", indexes={@ORM\Index(name="fk_film_has_person_person1_idx", columns={"person_id"}), @ORM\Index(name="fk_film_has_person_film1_idx", columns={"film_id"}), @ORM\Index(name="fk_film_has_person_profession1_idx", columns={"profession_id"})})
+ * @ORM\Entity
+ */
+class FilmHasPerson
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="profession_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $professionId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="person_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $personId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="film_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $filmId;
+
+
+}
+

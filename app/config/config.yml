@@ -1,0 +1,247 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@CmsBundle/Resources/config/services.yml" }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    
+framework:
+    #esi:             ~
+    translator:      ~
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form_themes:
+        - _formTheme.html.twig
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        dql:
+            datetime_functions:
+              convert_tz: DoctrineExtensions\Query\Mysql\ConvertTz
+              date: DoctrineExtensions\Query\Mysql\Date
+              date_format: DoctrineExtensions\Query\Mysql\DateFormat
+              dateadd: DoctrineExtensions\Query\Mysql\DateAdd
+              datesub: DoctrineExtensions\Query\Mysql\DateSub
+              datediff: DoctrineExtensions\Query\Mysql\DateDiff
+              day: DoctrineExtensions\Query\Mysql\Day
+              dayname: DoctrineExtensions\Query\Mysql\DayName
+              dayofweek: DoctrineExtensions\Query\Mysql\DayOfWeek
+              dayofyear: DoctrineExtensions\Query\Mysql\DayOfYear
+              div: DoctrineExtensions\Query\Mysql\Div
+              from_unixtime: DoctrineExtensions\Query\Mysql\FromUnixtime
+              hour: DoctrineExtensions\Query\Mysql\Hour
+              last_day: DoctrineExtensions\Query\Mysql\LastDay
+              minute: DoctrineExtensions\Query\Mysql\Minute
+              now: DoctrineExtensions\Query\Mysql\Now
+              month: DoctrineExtensions\Query\Mysql\Month
+              monthname: DoctrineExtensions\Query\Mysql\MonthName
+              second: DoctrineExtensions\Query\Mysql\Second
+              strtodate: DoctrineExtensions\Query\Mysql\StrToDate
+              time: DoctrineExtensions\Query\Mysql\Time
+              timediff: DoctrineExtensions\Query\Mysql\TimeDiff
+              timestampadd: DoctrineExtensions\Query\Mysql\TimestampAdd
+              timestampdiff: DoctrineExtensions\Query\Mysql\TimestampDiff
+              timetosec: DoctrineExtensions\Query\Mysql\TimeToSec
+              week: DoctrineExtensions\Query\Mysql\Week
+              weekday: DoctrineExtensions\Query\Mysql\WeekDay
+              year: DoctrineExtensions\Query\Mysql\Year
+              yearweek: DoctrineExtensions\Query\Mysql\YearWeek
+              unix_timestamp: DoctrineExtensions\Query\Mysql\UnixTimestamp
+            numeric_functions:
+              acos: DoctrineExtensions\Query\Mysql\Acos
+              asin: DoctrineExtensions\Query\Mysql\Asin
+              atan2: DoctrineExtensions\Query\Mysql\Atan2
+              atan: DoctrineExtensions\Query\Mysql\Atan
+              bit_count: DoctrineExtensions\Query\Mysql\BitCount
+              bit_xor: DoctrineExtensions\Query\Mysql\BitXor
+              ceil: DoctrineExtensions\Query\Mysql\Ceil
+              cos: DoctrineExtensions\Query\Mysql\Cos
+              cot: DoctrineExtensions\Query\Mysql\Cot
+              degrees: DoctrineExtensions\Query\Mysql\Degrees
+              floor: DoctrineExtensions\Query\Mysql\Floor
+              log10: DoctrineExtensions\Query\Mysql\Log10
+              pi: DoctrineExtensions\Query\Mysql\Pi
+              power: DoctrineExtensions\Query\Mysql\Power
+              quarter: DoctrineExtensions\Query\Mysql\Quarter
+              radians: DoctrineExtensions\Query\Mysql\Radians
+              rand: DoctrineExtensions\Query\Mysql\Rand
+              round: DoctrineExtensions\Query\Mysql\Round
+              stddev: DoctrineExtensions\Query\Mysql\StdDev
+              sin: DoctrineExtensions\Query\Mysql\Sin
+              std: DoctrineExtensions\Query\Mysql\Std
+              tan: DoctrineExtensions\Query\Mysql\Tan
+              variance: DoctrineExtensions\Query\Mysql\Variance
+
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+# FoS
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: gaetan.darquie@gmail.com
+        sender_name: You
+
+# Elastica
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        mc2:
+            types:
+                number:
+                    mappings:
+                        title:
+                         type: keyword
+                        beginTc: { type: integer }
+                        endTc: { type: integer }
+                        length: { type: integer }
+                        shots: { type: integer }
+                        film.filmId: {type: integer}
+                        film.title: { type: keyword }
+                        film.studios: { type: keyword }
+                        film.released: { type: date, format: "yyyy" }
+                        film.directors: { type: keyword }
+                        film.censorship: { type: keyword }
+                        film.verdict: { type: keyword }
+                        film.state: { type: keyword }
+                        film.legion: { type: keyword }
+                        film.protestant: { type: keyword }
+                        film.harrisson: { type: keyword }
+                        film.bord: { type: keyword }
+                        film.length: { type: keyword }
+                        film.adaptation: { type:keyword }
+                        film.stageshows: {type:keyword}
+                        song:
+                          type: nested
+                          properties:
+                            songId:
+                              type: integer
+                            title:
+                              type: keyword
+                            lyricist:
+                              type: nested
+                              properties:
+                                personId:
+                                  type: integer
+                                name:
+                                  type: keyword
+                        cast: { type: keyword }
+                        dancingType: { type: keyword }
+                        danceSubgenre: { type: keyword }
+                        danceContent: { type: keyword }
+                        beginThesaurus: { type: keyword }
+                        endingThesaurus: { type: keyword }
+                        structure: { type: keyword }
+                        musensemble: { type: keyword }
+                        costumes: { type: keyword }
+                        stereotype: { type: keyword }
+                        source_thesaurus: { type: keyword }
+                        performance_thesaurus: { type: keyword }
+                        spectators_thesaurus: { type: keyword }
+                        diegetic_thesaurus: { type: keyword }
+                        musician_thesaurus: { type: keyword }
+                        exoticismThesaurus: { type: keyword }
+                        dancemble: { type: keyword }
+                        imaginary: { type: keyword }
+                        diegetic_place_thesaurus: { type: keyword }
+                        general_localisation: { type: keyword }
+                        tempo_thesaurus: { type: keyword }
+                        quotation_thesaurus: { type: keyword }
+                        general_mood: { type: keyword }
+                        musical_thesaurus: { type: keyword }
+                        genre: { type: keyword }
+                        choregraphers: { type: keyword }
+                        arrangers: { type: keyword }
+                        director: { type: keyword }
+                        performers: { type: keyword }
+                        figurants: { type: keyword }
+                        editors: { type: keyword }
+                        completeTitle: { type: keyword }
+                        completeTc: { type: keyword }
+                        completeStructure: { type: keyword }
+                        completeShots: { type: keyword }
+                        completePerformance: { type: keyword }
+                        completeBackstage: { type: keyword }
+                        completeTheme: { type: keyword }
+                        completeMood: { type: keyword }
+                        completeDance: { type: keyword }
+                        completeMusic: { type: keyword }
+                        completeDirector: { type: keyword }
+                        completeCost: { type: keyword }
+                        completeReference: { type: keyword }
+                        completenessThesaurus: { type: keyword }
+                        film.sample: { type: keyword }
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: AppBundle\Entity\Number
+                        provider: ~
+                        finder: ~
+                thesaurus:
+                    mappings:
+                        title: { type: keyword }
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: AppBundle\Entity\Thesaurus
+                        provider: ~

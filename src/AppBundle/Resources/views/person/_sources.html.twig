@@ -1,0 +1,165 @@
+<!-- Sources -->
+<article class="row">
+    <div class="card col s12">
+
+        <h2 class="center">Sources</h2>
+
+        <!-- Genres Modal Structure -->
+        <div id="modal_source" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h3>Sources</h3>
+                <div class="row s12">
+
+                    <article class="col s6">
+                        <h4>{{ person.name }}</h4>
+                        <table class="striped mini-table tablesorter">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Numbers</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for item in source  %}
+                                <tr>
+                                    <td><a href="{{ path('person_search_by_thesaurus' , {'personId': person.personId, 'id' : item.id, 'type' : 'source' } ) }}" >{{ item.title }}</a></td>
+                                    <td>{{ item.nb }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </article>
+
+                    <article class="col s6">
+
+                        <h4>all numbers</h4>
+                        <table class="striped mini-table tablesorter">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Numbers</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in sources  %}
+                                <tr>
+                                    <td>{{ item.title }}</td>
+                                    <td>{{ item.nb }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </article>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualisations -->
+        <div class="row">
+            <article class="col s12">
+                <h4 class="center">For {{ person.name }}</h4>
+                <div id="source_container"></div>
+            </article>
+            <hr>
+            <article class="col s12">
+                <h4 class="center">For all numbers</h4>
+                <div id="sources_container"></div>
+            </article>
+        </div>
+
+        <!-- Genre Modal Trigger -->
+        <div class="row ">
+
+            <article class="col s12 ">
+                <p class="center">
+                    <a class="modal-trigger black-text " href="#modal_source">
+                        More information
+                        <i class="material-icons">more</i>
+                    </a>
+                </p>
+            </article>
+        </div>
+
+    </div>
+    <hr>
+</article>
+
+<article class="card row">
+    <div class="col s12">
+
+        <h2>Diegetic status of the performance</h2>
+
+        <div id="melviz_diegetic" class="melviz"></div>
+
+        <div id="modal_diegetic" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h3>Diegetic status of the performance</h3>
+                <div class="row s12">
+
+                    <article class="col s6">
+                        <h4>{{ person.name }}</h4>
+                        <table class="striped mini-table tablesorter">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Numbers</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for item in diegetic  %}
+                                <tr>
+                                    <td><a href="{{ path('person_search_by_thesaurus' , {'personId': person.personId, 'id' : item.id, 'type' : 'diegetic' } ) }}" >{{ item.title }}</a></td>
+                                    <td>{{ item.nb }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </article>
+
+                    <article class="col s6">
+
+                        <h4>all numbers</h4>
+                        <table class="striped mini-table tablesorter">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Numbers</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in diegetics  %}
+                                <tr>
+                                    <td>{{ item.title }}</td>
+                                    <td>{{ item.nb }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </article>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Genre Modal Trigger -->
+        <div class="row ">
+
+            <article class="col s12 ">
+                <p class="center">
+                    <a class="modal-trigger black-text " href="#modal_diegetic">
+                        More information
+                        <i class="material-icons">more</i>
+                    </a>
+                </p>
+            </article>
+        </div>
+
+    </div>
+</article>

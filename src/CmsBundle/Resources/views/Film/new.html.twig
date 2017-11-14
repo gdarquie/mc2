@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="container">
+
+		<h1>Add a Film</h1>
+
+		{{ form_start(filmForm)}}
+
+		{{ include('CmsBundle:Film:_form.html.twig')}}
+		<button class="btn black" type="submit" formnovalidate >New Film</button>
+		{{ form_end(filmForm)}}
+
+	</div>
+
+{% endblock %}

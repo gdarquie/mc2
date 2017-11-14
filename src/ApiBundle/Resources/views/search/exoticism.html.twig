@@ -1,0 +1,63 @@
+[
+{% for item in numbers  %}
+    {
+        "id" : {{ item.id }},
+        "title" : "{{ item.title|e('html')|raw }}" ,
+        "exoticism" : {
+        {% for exoticism in item.exoticismThesaurus  %}
+                "{{ loop.index }}" : "{{ exoticism.title|e('html')|raw }}"{% if loop.last %}{% else %},{% endif %}
+        {% endfor %}
+        },
+        "film" : {
+            "id" : "{{ item.film.filmId }}" ,
+            "imdb" : "{{ item.film.idImdb }}" ,
+            "released" : "{{ item.film.released }}",
+            "title" : "{{ item.film.title|e('html')|raw }}",
+            "directors" : {
+                {% for director in item.film.directors  %}
+                    "{{ loop.index }}" : "{{ director.name|e('html')|raw }}"{% if loop.last %}{% else %},{% endif %}
+                {% endfor %}
+            },
+            "studios" : {
+                {% for studio in item.film.studios  %}
+                    "{{ loop.index }}" : "{{ studio.title|e('html')|raw }}"{% if loop.last %}{% else %},{% endif %}
+                {% endfor %}
+            }
+        },
+        "choreographer" : {
+        {% for person in item.choregraphers  %}
+                "{{ loop.index }}" : "{{ person.name|e('html')|raw }}"{% if loop.last %}{% else %},{% endif %}
+        {% endfor %}
+        },
+        "songs" : {
+            {% for song in item.song  %}
+                "{{ loop.index }}" : {
+                    "id" : "{{ song.songId|e('html')|raw }}",
+                    "title" : "{{ song.title|e('html')|raw }}"
+                } {% if loop.last %}{% else %},{% endif %}
+            {% endfor %}
+        },
+        "performers" : {
+            {% for person in item.performers  %}
+                "{{ loop.index }}" : {
+                    "id" : "{{ person.personId|e('html')|raw }}",
+                    "name" : "{{ person.name|e('html')|raw }}"
+                } {% if loop.last %}{% else %},{% endif %}
+            {% endfor %}
+        },
+        {#"song" : {};#}
+        {#"composer" : {},#}
+        {#"lyricist" : {},#}
+         "tone" : {
+        {% for mood in item.generalMood  %}
+            "{{ loop.index }}" : "{{ mood.title|e('html')|raw }}"{% if loop.last %}{% else %},{% endif %}
+        {% endfor %}
+        },
+        "topic" : {
+        {% for mood in item.genre  %}
+            "{{ loop.index }}" : "{{ mood.title|e('html')|raw }}"{% if loop.last %}{% else %},{% endif %}
+        {% endfor %}
+        }
+    }{% if loop.last %}{% else %},{% endif %}
+{% endfor %}
+]

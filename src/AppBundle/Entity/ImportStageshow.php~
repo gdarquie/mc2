@@ -1,0 +1,106 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ImportStageshow
+ *
+ * @ORM\Table(name="import_stageShow", indexes={@ORM\Index(name="fk_stageShow_film1_idx", columns={"film_id"})})
+ * @ORM\Entity
+ */
+class ImportStageshow
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=500, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="production", type="string", length=255, nullable=true)
+     */
+    private $production;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="opening", type="date", nullable=true)
+     */
+    private $opening;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="revival", type="string", length=45, nullable=true)
+     */
+    private $revival;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ibdb", type="integer", nullable=true)
+     */
+    private $ibdb;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="race", type="string", length=45, nullable=true)
+     */
+    private $race;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=45, nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="closing", type="date", nullable=true)
+     */
+    private $closing;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="count", type="integer", nullable=true)
+     */
+    private $count;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="song", type="string", length=500, nullable=true)
+     */
+    private $song;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stageShow_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $stageshowId;
+
+    /**
+     * @var \AppBundle\Entity\Film
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Film")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="film_id", referencedColumnName="film_id")
+     * })
+     */
+    private $film;
+
+
+}
+

@@ -1,0 +1,190 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <style>
+
+        .axis--x path {
+            display: none;
+        }
+
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+
+        #menu_admin{
+            top :64px;
+        }
+
+        header, .main, footer, #alert-panel {
+            padding-left: 300px;
+        }
+
+        @media only screen and (max-width : 992px) {
+            header, .main, footer {
+                padding-left: 0;
+            }
+        }
+
+        .main h1{
+            font-size:1.5em;
+        }
+        .main h2{
+            font-size:1.3em;
+        }
+
+
+        #menu_admin .collection-item div, #menu_admin .collection-header{
+            text-transform: uppercase;
+        }
+
+        #chart_div{
+            width : 600px;
+        }
+
+        .option{
+            font-size:0.6em;
+            vertical-align: top;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="container-fluid ">
+
+        <div class="row">
+
+            <div id="menu_admin" class="col s12 m3">
+
+                <ul class="collection with-header">
+
+                    <li class="collection-header"><h4>Administration</h4></li>
+
+                    <li class="collection-item"><div><a href="{{ path('numbers') }}">Numbers</a></div></li>
+
+                    <li class="collection-item"><div><a href="{{ path('films') }}">Films</a><a href="{{ path('editorNewFilm') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+                    <li class="collection-item"><div><a href="{{ path('persons') }}">Persons</a><a href="{{ path('editorNewPerson') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+                    <li class="collection-item"><div><a href="{{ path('admin_studio_index') }}">Studios</a><a href="{{ path('admin_studio_new') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+                    <li class="collection-item"><div><a href="{{ path('admin_distributor_index')}}">Distributors</a><a href="{{ path('admin_distributor_new') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+                    <li class="collection-item"><div><a href="{{ path('songs') }}">Songs</a><a href="{{ path('editorNewSong') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+
+                    <li class="collection-item"><div><a href="{{ path('stageshows') }}">Stage Shows</a><a href="{{ path('stageshow_new') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+                    <li class="collection-item"><div><a href="{{ path('stagenumbers') }}">Stage Numbers</a></div></li>
+
+                    <li class="collection-item"><div><a href="{{ path('thesaurus') }}">Thesaurus</a><a href="{{ path('newThesaurus') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+
+                    <li class="collection-item"><div><a href="{{ path('admin_code_index') }}">Thesaurus types</a></div></li>
+
+                    <!-- voir ensuite -->
+                    <li class="collection-item"><div><a href="{{ path('admin_censorship_index') }}">Censorships</a><a href="{{ path('admin_censorship_new') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+                    <li class="collection-item"><div><a href="{{ path('admin_state_index') }}">States</a><a href="{{ path('admin_state_new') }}" class="secondary-content"><i class="material-icons">add</i></a></div></li>
+
+
+                </ul>
+
+
+            </div>
+
+            <section class='row main col s12 m9'>
+
+                <div class="row">
+                    <div class="col s12">
+                        <ul class="tabs">
+                            <li class="tab col s3 active"><a href="#activity">Activity</a></li>
+                            <li class="tab col s3"><a href="#users">Users</a></li>
+                            <li class="tab col s3"><a href="#other">Other</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                {% include 'CmsBundle:Admin:_activity.html.twig' %}
+
+                {% include 'CmsBundle:Admin:_users.html.twig' %}
+
+                {% include 'CmsBundle:Admin:_other.html.twig' %}
+
+
+
+
+
+            </section>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+
+
+
+        $(document).ready(function() {
+
+            //materliaze collapsing items
+            $('.collapsible').collapsible();
+
+            $('.js-remove-number').on('click', function(e) {
+                e.preventDefault();
+                var $el = $(this).closest('.js-number-item');
+                var r = confirm("Are you sure ?"); //changer par un modal
+                if (r == true) {
+                    $.ajax({
+                        url: $(this).data('url'),
+                        method: 'DELETE'
+                    }).done(function () {
+                        $el.fadeOut();
+                    });
+                }})});
+    </script>
+
+    <script>
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+
+
+            var data = google.visualization.arrayToDataTable([
+                ['Date', 'Number'],
+                {% for item in numberByMonth %}
+                ['{{ item.day }}-{{ item.month }}-{{ item.year }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+
+            var options = {
+                title: 'New numbers by day',
+                legend: { position: 'bottom' },
+                width : 1000,
+                height : 550
+            };
+
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+
+{% endblock %}

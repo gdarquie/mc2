@@ -1,0 +1,342 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body{
+            background: #f7f7f7;
+        }
+        .film{margin-bottom: 1em;}
+
+        .poster{
+            height:300px;
+        }
+
+        tr{
+            line-height: 0.2em;
+        }
+
+
+        .donut{
+            height: 400px;
+        }
+        .card{
+            padding:30px;
+        }
+
+        .film{
+            height:350px;
+        }
+
+        .list_film {
+            color: #039be5;
+            cursor: pointer; cursor: hand;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+
+        <h1>Legion of Decency Grade : {{ myLegion.title }}</h1>
+
+
+        <article class="card card_thematique row">
+            <p>Number of films : <span class="number">{{ myLegion.nb }}</span></p>
+
+            <div id="table_one_legion" class="row">
+                <input class="search" placeholder="Search" />
+                <table class="striped medium-table">
+                    <thead>
+                    <tr>
+                        <th onclick="sortPerso(this, 'list_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortPerso(this, 'list_release_date')" data-cpt="0">Release Date<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortPerso(this, 'list_studio')" data-cpt="0">Studio<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for film in films  %}
+                        <tr>
+                            <td onclick="window.location.href='{{ path('film', {'filmId' : film.filmId}) }}';" class="list_film">{{ film.title }}</td>
+                            <td class="list_release_date">{{ film.released }}</td>
+                            <td class="list_studio">
+                                {% for studio in film.studios %}
+                                    {{ studio.title }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <ul class="pagination"></ul>
+            </div>
+
+
+        </article>
+
+
+        {#<article class="card row">#}
+            {#<h2>Films  with {{ myLegion.title }} grade by Studios</h2>#}
+
+        {#<p>A film can have more than one studio.</p>#}
+
+        {#<div id="chart_studio" class="donut"></div>#}
+        {#</article>#}
+
+        {#<article class="card row">#}
+            {#<h2>Dance contents</h2>#}
+
+            {#<div id="chart_div2" class="donut"></div>#}
+
+            {#{% for item in danceContents %}#}
+                {#<a href="{{ path('censorship_legion_thesaurus', {'legion' : item.legion , 'type' : 'dance','id' : item.id}) }}"><span class="chip">{{ item.title }} ({{ item.nb }})</span></a>#}
+            {#{% endfor %}#}
+        {#</article>#}
+
+        {#<article class="card row">#}
+        {#<h2>Number topics</h2>#}
+
+            {#{% for genre in genres %}#}
+            {#<p>{{ genre.title }} ({{ genre.nb }})</p>#}
+            {#{% endfor %}#}
+            {#<div id="chart_div" class="donut"></div>#}
+        {#</article>#}
+
+        {#<article class="card">#}
+            {#<h2>Costumes</h2>#}
+            {#<div id="chart_costumes" class="donut"></div>#}
+        {#</article>#}
+
+        {#<article class="card">#}
+            {#<h2>Ethnics stereotypes</h2>#}
+            {#<div id="chart_stereotypes" class="donut"></div>#}
+        {#</article>#}
+
+        {#<article class="card row">#}
+            {#<h2>Films</h2>#}
+
+            {#<div class="row">#}
+                {#{% for film in filmsByLegion %}#}
+                    {#<div class="col s3 film">#}
+                        {#<h4>{{ film.title }}</h4>#}
+                        {#<img class="poster" src="http://img.omdbapi.com/?i={{ film.idImdb }}&apikey=1733f6a&h=300" alt="poster">#}
+                    {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
+        {#</article>#}
+
+
+        {#<h1>PCA verdict {% for item in verdict  %}{{ item.title }}{% endfor %}</h1>#}
+
+        {#<p><span class="number">{{ filmsByVerdict|length }}</span> films / <span class="number">{{ nbFilmsWithVerdict.nb }}</span> studied films.</p>#}
+
+        {#<article>#}
+        {#<h2>Studios</h2>#}
+
+        {#<div id="chart_div"></div>#}
+
+        {#<table class="striped">#}
+        {#<tr><th>Studio</th><th>Number of studied films</th></tr>#}
+        {#{% for studio in nbFilmsWithVerdictByStudio %}#}
+        {#<tr>#}
+        {#<td>{{ studio.title }}</td><td>{{ studio.nb }}</td>#}
+        {#</tr>#}
+        {#{% endfor %}#}
+        {#</table>#}
+        {#</article>#}
+
+        {#<h2>Films</h2>#}
+
+        {#<div class="row">#}
+        {#{% for film in filmsByVerdict  %}#}
+        {#<a href="">#}
+        {#<div class="col s3 film">#}
+        {#<h4 class="center">{{ film.title }} ({{ film.released }})</h4>#}
+        {#<img class="poster" src="http://img.omdbapi.com/?i={{ film.idImdb }}&apikey=1733f6a&h=300" alt="poster">#}
+        {#</div>#}
+        {#</a>#}
+        {#{% endfor %}#}
+        {#</div>#}
+
+        {#<table class="striped">#}
+        {#{% for film in filmsByVerdict  %}#}
+        {#<tr>#}
+        {#<td>{{ film.title }}</td>#}
+        {#</tr>#}
+        {#{% endfor %}#}
+        {#</table>#}
+
+
+    </section>
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+    <script type="text/javascript">
+        google.charts.setOnLoadCallback(drawBasic);
+        function drawBasic() {
+
+            //diagram censorship
+            var data4 = new google.visualization.DataTable();
+            data4.addColumn('number', 'Year');
+            data4.addColumn('number', 'Number of Films with Verdict');
+
+            data4.addRows([
+                {% for item in filmsByYear %}
+                [{{ item.released }}, {{ item.nb }}],
+                {% endfor %}
+
+            ]);
+
+            var options4 = {
+                hAxis: {
+                    title: 'Years'
+                },
+                vAxis: {
+                    title: 'Films'
+                },
+            };
+
+            var chart4 = new google.visualization.LineChart(document.getElementById('diagram'));
+            chart4.draw(data4, options4);
+        }
+
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            //donut des genres
+            var data = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for genre in genres %}
+                ['{{ genre.title }}', {{ genre.nb }}],
+                {% endfor %}
+            ]);
+
+
+            var options = {
+                title: 'Films by genres',
+                pieHole: 0.4,
+            };
+
+
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+
+            //donut des dance contents
+            var data2 = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in danceContents %}
+                ['{{ item.title }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+
+            var options = {
+                title: 'Films by dance contents',
+                pieHole: 0.4,
+            };
+
+
+            var chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
+            chart2.draw(data2, options);
+
+            //donut studios
+            var data_studio = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in studiosByLegion %}
+                ['{{ item.title }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Films by studios',
+                pieHole: 0.4,
+            };
+
+
+            var chart_studio = new google.visualization.PieChart(document.getElementById('chart_studio'));
+            chart_studio.draw(data_studio, options);
+
+            //donut costumes
+            var data_costumes = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in costumes %}
+                ['{{ item.title }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Films by costumes',
+                pieHole: 0.4,
+            };
+
+
+            var chart_costumes = new google.visualization.PieChart(document.getElementById('chart_costumes'));
+            chart_costumes.draw(data_costumes, options);
+
+            //donut stereotypes
+            var data_stereotypes = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in stereotypes %}
+                ['{{ item.title }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Films by ehtnic stereotypes',
+                pieHole: 0.4,
+            };
+
+
+            var chart_stereotypes = new google.visualization.PieChart(document.getElementById('chart_stereotypes'));
+            chart_stereotypes.draw(data_stereotypes, options);
+
+
+        }
+    </script>
+
+    <script>
+
+        {% if films|length < 16 %}
+
+        var options = {
+            valueNames: ['list_film', 'list_release_date', 'list_studio']
+        };
+
+        {% endif %}
+
+
+        {% if films|length > 15 %}
+
+        var options = {
+            valueNames: ['list_film', 'list_release_date', 'list_studio'],
+            page: 15,
+            pagination: true
+        };
+
+        {% endif %}
+
+        var FilmList = new List('table_one_legion', options);
+
+    </script>
+
+    <script>
+        function sortPerso(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                FilmList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                FilmList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+    </script>
+
+{% endblock %}

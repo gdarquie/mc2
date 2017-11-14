@@ -1,0 +1,789 @@
+{% extends 'base.html.twig' %}
+
+{% block fos_user_content %}{% endblock %}
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset("assets/vendor/swiper/dist/css/swiper.css") }}">
+
+
+{{parent()}}
+<style>
+  .parallax-container{
+    min-height: 370px;
+    height: auto;
+    margin-top:0px;
+    margin-bottom: 0px;
+  }
+
+  input{
+    color:white;
+  }
+
+  .card{
+    padding:30px;
+  }
+
+  .poster{
+    max-height:300px;
+  }
+
+  .myCard{
+    padding : 0px 20px;
+  }
+
+  .film{
+    height : 400px;
+    padding :10px;
+  }
+
+  #filmsWithNumbers{
+    padding-top: 2em;
+    background:#f7f7f7;
+  }
+
+  .myBtn{
+    margin-bottom: 5px;
+    background-color:white;
+    color : #CC0000;
+    border:  1px solid #CC0000;
+  }
+
+  .filmsHidden{
+    display :none;
+  }
+
+  .box{
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    margin-top: 110px;
+  }
+
+  #persons, #numbers, #songs{
+    /*min-height:450px;*/
+    max-height:100vh;
+  }
+
+  #songs{
+    /*border :20px solid black;*/
+    /*border-right :50px solid black;*/
+    /*border-left :50px solid black;*/
+    /*box-shadow: 10px 10px 5px #888888;*/
+    /*background:#f7f7f7;*/
+    background: #00ff00 url("{{ asset('img/intro.gif') }}");
+    background-size:100%;
+    color: black;
+  }
+
+
+  .posterImage{
+    height : 300px;
+  }
+
+  .valign{
+    margin-top : 35px;
+  }
+
+
+
+
+a {
+  text-decoration: none;
+}
+
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  /*margin: 50px auto 0;*/
+}
+
+
+
+.swiper-container-horizontal > .swiper-pagination {
+  top: 0;
+  bottom: auto;
+}
+.swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet {
+  margin: 0;
+}
+
+.active-mark {
+  background-color: #CC0000;
+  width: 20%;
+  height: 4px;
+  position: absolute;
+  left: 0;
+  top: 52px;
+  -webkit-transition: left 0.2s ease-out;
+  transition: left 0.2s ease-out;
+}
+
+.swiper-pagination-bullet {
+  border-radius: 0;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: normal;
+  opacity: 0.5;
+  height: 56px;
+  min-width: 20vw;
+  padding-top: 10px;
+  text-align: center;
+  -webkit-transition: font-weight 0.22s ease;
+  transition: font-weight 0.22s ease;
+}
+
+.swiper-pagination-bullet:nth-of-type(1).swiper-pagination-bullet-active ~ .active-mark {
+  left: 0%;
+}
+.swiper-pagination-bullet:nth-of-type(2).swiper-pagination-bullet-active ~ .active-mark {
+  left: 20%;
+}
+.swiper-pagination-bullet:nth-of-type(3).swiper-pagination-bullet-active ~ .active-mark {
+  left: 40%;
+}
+.swiper-pagination-bullet:nth-of-type(4).swiper-pagination-bullet-active ~ .active-mark {
+  left: 60%;
+}
+.swiper-pagination-bullet:nth-of-type(5).swiper-pagination-bullet-active ~ .active-mark {
+  left: 80%;
+}
+.swiper-pagination-bullet:first-of-type.swiper-pagination-bullet-active ~ .active-mark {
+  left: 0;
+}
+
+.swiper-pagination-bullet-active {
+  font-weight: bold;
+  background-color: black;
+  opacity: 0.5;
+  max-width: 20vw;
+
+
+}
+
+.swiper-pagination {
+display: inline;
+width: 100vw;
+}
+
+.swiper-wrapper {
+  transform: translate(0px, 25px);
+}
+
+
+
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+  <div class="swiper-container">
+    <!-- Add Pagination -->
+    <div class="swiper-pagination">
+    </div>
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="parallax-container" id="film">
+          <div class="parallax"><img class="img_search" src="{{ asset('img/star.png') }}"></div>
+          <section class="container box">
+            <div class="col s12">
+             <div class="row">
+              <h2 class="col">Search a film</h2>
+                {% if is_granted('ROLE_ADMIN') %}
+                  <span class="col valign"><a href="{{ path('films') }}">all films</a></span>
+                {% endif %}
+             </div>
+              <input type="text" id="searchMovie" placeholder ="Write the title of a film (3 characters min)">
+            </div>
+          </section>
+        </div>
+
+        <!-- Results search -->
+        <section class="container">
+          <article id="results" class="row card myCard"></article>
+        </section>
+      </div>
+
+
+      <div class="swiper-slide">
+
+        <div class="parallax-container" id="numbers">
+          <div class="parallax"><img class="img_search" src="{{ asset('img/couple.jpeg') }}"></div>
+          <section class="container box">
+            <div class="col s12">
+              <div class="row">
+                <h2 class="col">Search a number</h2>
+                {% if is_granted('ROLE_ADMIN') %}
+                  <span class="col valign"><a href="{{ path('numbers') }}">all numbers</a></span>
+                {% endif %}
+              </div>
+              <input type="text" id="searchNumber" placeholder ="Write the title of a number (3 characters min)">
+            </div>
+          </section>
+        </div>
+                <section class="container">
+        <article id="resultsNumber" class="row card myCard"></article>
+        </section>
+      </div>
+
+
+      <div class="swiper-slide">
+
+        <div class="parallax-container" id="songs">
+            {#<div class="parallax"><img src="{{ asset('img/gold-diggers-1933.jpg') }}"></div>#}
+          <section class="container box">
+            <div class="col s12">
+              <div class="row">
+                <h2 class="col">Search a song</h2>
+                {% if is_granted('ROLE_ADMIN') %}
+                  <span class="col valign"><a href="{{ path('songs') }}">all songs</a></span>
+                {% endif %}
+              </div>
+              <input type="text" id="searchSong" class="black-text" placeholder ="Write the name of a song (3 characters min)">
+            </div>
+          </section>
+        </div>
+        <article id="resultsSong" class="row myCard"></article>
+      </div>
+
+
+      <div class="swiper-slide">
+
+        <div class="parallax-container" id="persons">
+          <div class="parallax"><img class="img_search" src="{{ asset('img/oz.jpg') }}"></div>
+          <section class="container box">
+            <div class="col s12">
+              <div class="row">
+                <h2 class="col">Search a person</h2>
+                {% if is_granted('ROLE_ADMIN') %}
+                  <span class="col valign"><a href="{{ path('persons') }}">all persons</a></span>
+                {% endif %}
+              </div>
+              <input type="text" id="searchPerson" placeholder ="Write the name of a person (3 characters min)">
+            </div>
+          </section>
+        </div>
+        <article id="resultsPerson" class="row myCard"></article>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="parallax-container" id="shows">
+        <div class="parallax"><img src="{{ asset('img/19586.jpg') }}"></div>
+        <section class="container box">
+          <div class="col s12">
+            <div class="row">
+              <h2 class="col">Search a Stage Show</h2>
+                {% if is_granted('ROLE_ADMIN') %}
+                  <span class="col valign"><a href="{{ path('stageshows') }}">all stage shows</a></span>
+                {% endif %}
+            </div>
+            <input type="text" id="searchShow" placeholder ="Write the name of a Stage Show (3 characters min)">
+          </div>
+        </section>
+      </div>
+      <article id="resultsShow" class="row myCard"></article>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  {#<section class="container">#}
+    {#<article>#}
+      {#<h2>Films & numbers per year</h2>#}
+      {#<div id="chart_div"></div>#}
+      {#<p>MC2 database contains <strong>{{films|length}}</strong> films, <strong>{{ filmsWithNumber|length }}</strong> films with numbers and <strong>{{numbers|length}}</strong> <a href="{{ path('numbers') }}">numbers</a>.</p>#}
+      {#<p class="center"><a class="btn myBtn" href="{{ path('stats') }}">See more stats</a></p>#}
+    {#</article>#}
+
+
+
+  </section>
+
+<!-- Films with numbers -->
+
+  <div id="filmsWithNumbers">
+  <section class="container">
+    <article>
+      <h2>Films with numbers</h2>
+
+      <div class="items row">
+        {% for film in filmsWithNumber |slice(0,8) %}
+          <div class="col s3 film card">
+            <a href="/mc2/film/id/{{film.filmId}}">
+            <h4 class="center">{{film.title}}({{film.released}})</h4>
+            <img class="poster col s12" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
+            </a>
+          </div>
+          {#<a href="/mc2/film/id/{{film.filmId}}"><li class="btn" >{{film.title}}({{film.released}})</li></a>#}
+          {# [{% for nb in nbNumbers %}{{ nb }}{% endfor %}]#}
+        {% endfor %}
+        {% for film in filmsWithNumber |slice(8) %}
+          <div class="col s3 film card filmsHidden">
+            <a href="/mc2/film/id/{{film.filmId}}">
+              <h4 class="center">{{film.title}}({{film.released}})</h4>
+              <img class="poster col s12" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
+            </a>
+          </div>
+          {#<a href="/mc2/film/id/{{film.filmId}}"><li class="btn" >{{film.title}}({{film.released}})</li></a>#}
+          {# [{% for nb in nbNumbers %}{{ nb }}{% endfor %}]#}
+        {% endfor %}
+      </div>
+      <p class="center"><a class="btn myBtn" id="showNumbers">Show all</a></p>
+    </article>
+  </section>
+  </div>
+
+
+
+  <!-- Themes -->
+
+  <section class="container">
+    <!-- censorship, exoticism, dance -->
+
+    <div class="row">
+
+      <h2 class="uppercase center">Themes</h2>
+
+      <!-- censorship -->
+      <div class="card sticky-action col s6">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator posterImage" src="{{ asset('img/42nd-street-poster.jpg') }}">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Censorship<i class="material-icons right">more_vert</i></span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Censorship<i class="material-icons right">close</i></span>
+          <p>Informations about</p>
+          <ul class="browser-default">
+            <li>Censorship from PCA verdict</li>
+            <li>Censored contents</li>
+            <li>Legion of decency</li>
+          </ul>
+        </div>
+        <div class="card-action"><a href="{{ path("censorship") }}">Go to censorship pages</a></div>
+      </div>
+
+      <!-- dance -->
+      <div class="card sticky-action col s6">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator posterImage" src="{{ asset('img/gentlemen prefer blondes.jpg') }}">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Dance<i class="material-icons right">more_vert</i></span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Dances<i class="material-icons right">close</i></span>
+          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        </div>
+        <div class="card-action"><a href="{{ path("getDancing") }}">Go to dance pages</a></div>
+      </div>
+
+
+      <!-- Moods -->
+      <div class="card sticky-action col s6">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator posterImage" src="{{ asset('img/affiche.jpg') }}">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Topics<i class="material-icons right">more_vert</i></span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        </div>
+        <div class="card-action"><a href="{{ path("getMood") }}">Go to topics pages</a></div>
+      </div>
+
+      <!-- Exoticisms -->
+      <div class="card sticky-action col s6">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator posterImage" src="{{ asset('img/oklahoma.jpg') }}">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Exoticism<i class="material-icons right">more_vert</i></span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Exoticism<i class="material-icons right">close</i></span>
+          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        </div>
+        <div class="card-action"><a href="{{ path("getExoticism") }}">Go to exoticism pages</a></div>
+      </div>
+
+      <div class="card sticky-action col s6 offset-s3">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator posterImage" src="{{ asset('img/81pYjCir5iL._SL1500_.jpg') }}">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Music<i class="material-icons right">more_vert</i></span>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Music<i class="material-icons right">close</i></span>
+          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        </div>
+        <div class="card-action"><a href="{{ path("getMusic") }}">Go to music pages</a></div>
+      </div>
+
+
+
+
+    </div> <!-- end of row -->
+  </section>
+
+
+
+
+  {#<div class="parallax-container">#}
+    {#<br><br>#}
+    {#<div class="parallax"><img src="{{ asset('img/star.png') }}"></div>#}
+    {#<section class="container">#}
+      {#<div class="col s12">#}
+        {#<h1>Statistiques</h1>#}
+      {#</div>#}
+    {#</section>#}
+  {#</div>#}
+
+  {#<div class="parallax-container">#}
+    {#<br><br>#}
+    {#<div class="parallax"><img src="{{ asset('img/star.png') }}"></div>#}
+    {#<section class="container">#}
+      {#<div class="col s12">#}
+        {#<h1>Censorship</h1>#}
+      {#</div>#}
+    {#</section>#}
+  {#</div>#}
+
+  {#<div class="parallax-container">#}
+    {#<br><br>#}
+    {#<div class="parallax"><img src="{{ asset('img/star.png') }}"></div>#}
+    {#<section class="container">#}
+      {#<div class="col s12">#}
+        {#<h1>Stats</h1>#}
+      {#</div>#}
+    {#</section>#}
+  {#</div>#}
+
+  
+
+{% endblock %}
+
+{% block javascripts %}
+
+  {{ parent() }}
+  <script src="{{ asset("assets/vendor/react/react.js") }}"></script>
+  <script src="{{ asset("assets/vendor/react/react-dom.js") }}"></script>
+  <script src="{{ asset("assets/vendor/babel/browser.min.js") }}"></script>
+  <script type="text/javascript" src="  https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.2/js/swiper.min.js"></script>
+
+
+  {#<script src="{{ asset("assets/vendor/swiper/dist/js/swiper.js") }}"></script>#}
+  {#<script src="{{ asset("assets/vendor/swiper/dist/js/swiper.jquery.js") }}"></script>#}
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script>
+
+//
+
+//    $(document).ready(function(){
+//        $('ul.tabs').tabs();
+//        $('#search_tab').tabs({ 'swipeable': true });
+//    });
+
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('date', 'Year');
+      data.addColumn('number', 'Numbers');
+      data.addColumn('number', 'Films');
+
+
+
+      data.addRows([
+        {% for item in nbNumbersByYear %}
+        [new Date({{ item.released }}, 0, 1), {{ item.nb }}, {{ item.nbFilms }}],
+        {% endfor %}
+
+      ]);
+
+      var formatter = new google.visualization.DateFormat({pattern: 'yyyy'});
+            formatter.format(data, 0);
+
+      var options = {
+
+      };
+
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+
+
+    function searchMovie(){
+
+    $("#searchMovie").keyup(function(){
+      input = $("#searchMovie").val();
+      console.log("Search movie activée")
+
+      var selection = [];
+
+      jQuery.when(
+              jQuery.getJSON('/mc2/api/films/')
+      ).done(function (json){
+
+        if (input.length > 2){
+          for(var i= 0; i < json.films.length;i++){
+            // if(input == json.films[i].title)
+
+            str = json.films[i].title;
+
+            //en cas de null dans la BD
+            if (str == null){
+              str = "null";
+            }
+
+            str = str.toLowerCase();
+            input = input.toLowerCase();
+
+            if (str.indexOf(input)> -1)
+            {
+               console.log(input+"ca marche"+json.films[i].title);
+              res = json.films[i];
+              selection.push(res);
+//               console.log(selection);
+            }
+          }
+        }
+
+
+        if (selection.length > 0){
+
+          $("#results").html("<div class='col s12'><h2>Result(s)</h2></div>");
+          for(var i = 0; i < selection.length ; i++){
+            txt = "<div class='card col s4 film'><h3>"+selection[i]['title']+" ("+selection[i]['released']+")"+"</h3><a href='/mc2/editor/film/id/"+selection[i]['filmId']+"/number/new' class='btn teal'>Add a number</a><a href='/mc2/film/id/"+selection[i]['filmId']+"' class='teal btn'>See the description</a></div>";
+            $("#results").append(txt);
+          }
+        }
+
+      });
+    });
+
+    }
+
+    function searchPerson(){
+
+      $("#searchPerson").keyup(function(){
+        input = $("#searchPerson").val();
+
+        var selection = [];
+
+        jQuery.when(
+                jQuery.getJSON('/mc2/api/persons/')
+        ).done(function (json){
+
+          if (input.length > 2){
+            for(var i= 0; i < json.person.length;i++){
+              // if(input == json.films[i].title)
+
+              str = json.person[i].name;
+
+              str = str.toLowerCase();
+              input = input.toLowerCase();
+
+              if (str.indexOf(input)> -1)
+              {
+                // console.log(input+"ca marche"+json.films[i].title);
+                res = json.person[i];
+                selection.push(res);
+                // console.log(selection);
+              }
+            }
+          }
+
+
+          if (selection.length > 0){
+
+            $("#resultsPerson").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            for(var i = 0; i < selection.length ; i++){
+              txt = "<span class='btn myBtn'><a href='/mc2/person/"+selection[i].personId+"'>"+selection[i]['name']+"</a></span>";
+              $("#resultsPerson").append(txt);
+            }
+          }
+        });
+      });
+
+    }
+
+    function searchNumber(){
+
+      $("#searchNumber").keyup(function(){
+        input = $("#searchNumber").val();
+
+        var selection = [];
+
+        jQuery.when(
+                jQuery.getJSON('/mc2/api/numbers/')
+        ).done(function (json){
+
+          if (input.length > 2){
+            for(var i= 0; i < json.number.length;i++){
+              // if(input == json.films[i].title)
+
+              str = json.number[i].title;
+
+              str = str.toLowerCase();
+              input = input.toLowerCase();
+
+              if (str.indexOf(input)> -1)
+              {
+                // console.log(input+"ca marche"+json.films[i].title);
+                res = json.number[i];
+                selection.push(res);
+              }
+            }
+          }
+
+
+          if (selection.length > 0){
+
+            $("#resultsNumber").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            for(var i = 0; i < selection.length ; i++){
+              txt = "<a href='number/"+selection[i]['id']+"'><span class='btn myBtn'>"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")</span></a>";
+              $("#resultsNumber").append(txt);
+              $("#resultsNumber").css('padding-bottom','20px');
+            }
+          }
+        });
+      });
+
+    }
+
+    function searchShow(){
+
+        $("#searchShow").keyup(function(){
+            input = $("#searchShow").val();
+
+            var selection = [];
+
+            jQuery.when(
+                jQuery.getJSON('mc2/api/stageshows')
+            ).done(function (json){
+
+                if (input.length > 2){
+
+                    for(var i= 0; i < json.stageshows.length;i++){
+
+                        str = json.stageshows[i].title;
+
+                        str = str.toLowerCase();
+                        input = input.toLowerCase();
+
+                        if (str.indexOf(input)> -1)
+                        {
+                            // console.log(input+"ca marche"+json.films[i].title);
+                            res = json.stageshows[i];
+                            selection.push(res);
+                        }
+                    }
+                }
+
+                if (selection.length > 0){
+
+                    $("#resultsShow").html("<div class='col s12'><h2>Result(s)</h2></div>");
+                    for(var i = 0; i < selection.length ; i++){
+                        txt = "<a href='stageshow/id/"+selection[i]['stageshowId']+"'><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";
+                        $("#resultsShow").append(txt);
+                    }
+                }
+            });
+        });
+
+    }
+
+
+    function searchSong(){
+
+      $("#searchSong").keyup(function(){
+        input = $("#searchSong").val();
+
+        var selection = [];
+
+        jQuery.when(
+                jQuery.getJSON('/mc2/api/songs/')
+        ).done(function (json){
+
+          if (input.length > 2){
+            for(var i= 0; i < json.song.length;i++){
+              // if(input == json.films[i].title)
+
+              str = json.song[i].title;
+
+              str = str.toLowerCase();
+              input = input.toLowerCase();
+
+              if (str.indexOf(input)> -1)
+              {
+                // console.log(input+"ca marche"+json.films[i].title);
+                res = json.song[i];
+                selection.push(res);
+                // console.log(selection);
+              }
+            }
+          }
+
+
+          if (selection.length > 0){
+
+            $("#resultsSong").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            for(var i = 0; i < selection.length ; i++){
+              txt = "<a href='song/id/"+selection[i]['songId']+"'><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";
+              {#txt = "<a href=\"{{ path('song' , { 'songId'  : selection[i]['songId'] }) }}\"><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";#}
+              $("#resultsSong").append(txt);
+            }
+          }
+        });
+      });
+
+    }
+
+
+    searchMovie();
+    searchPerson();
+    searchNumber();
+    searchSong();
+    searchShow();
+
+    $("#showNumbers").click(
+            function(){
+              $(this).hide();
+              $(".filmsHidden").fadeIn();
+              $("#shownNumbers").hide();
+            }
+    )
+  </script>
+
+
+  <script>
+    var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			slidesPerView: 1,
+			paginationClickable: true,
+			loop: true,
+       		paginationBulletRender: function (index, className) {
+				var tabsName = ['Movie', 'Number', 'Song', 'Person', 'Stageshow'];
+				if ( index === (tabsName.length - 1) ) {
+          				return	'<span class="' + className + '">'
+          						+ tabsName[index] + '</span>'
+          						+ '<div class="active-mark "></div>';
+				}
+				return '<span class="' + className + '">' + tabsName[index] + '</span>';
+        		}
+		});
+  </script>
+
+{% endblock %}

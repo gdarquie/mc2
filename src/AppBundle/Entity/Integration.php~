@@ -1,0 +1,55 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Integration
+ *
+ * @ORM\Table(name="integration")
+ * @ORM\Entity
+ */
+class Integration
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="integration_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $integrationId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Number", inversedBy="integration")
+     * @ORM\JoinTable(name="integration_has_number",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="integration_id", referencedColumnName="integration_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="number_id", referencedColumnName="number_id")
+     *   }
+     * )
+     */
+    private $number;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->number = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

@@ -1,0 +1,253 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <!-- custom -->
+    <link rel="stylesheet" href="{{ asset('css/person.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.2/css/swiper.min.css">
+
+    {#<link rel="stylesheet" href="{{ asset('assets/vendor/responsive-nav.js/responsive-nav.css') }}">#}
+
+{% endblock %}
+
+{% block body %}
+
+    <section class="container-large">
+
+        <div class="row">
+
+            <header class="col s12 row center">
+
+                <h1 class="col s4">{{ person.name }} <span class="small-h1">({{ person.gender }}) {% if is_granted("ROLE_EDITOR") %} - <a href="{{ path('person_edit' , {"personId" : person.personId}) }}">edit</a>{% endif %}</span></h1>
+
+
+                <nav id="sub_nav" class="nav-extended col s8">
+
+                    <div class="nav-content">
+
+                        {#<a href="#" data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>#}
+                        <ul class="tabs tabs-transparent mobile">
+
+                            <li class="tab"><a href="#tab1" class="active">Films</a></li>
+                            <li class="tab"><a href="#tab2">Numbers</a></li>
+                            {% if person.numbersPerformer|length > 0 %}
+                            <li class="tab"><a href="#tab5">Persons</a></li>
+                            <li class="tab"><a href="#tab4">Presence</a></li>
+                            <li class="tab"><a href="#tab7">Number types</a></li>
+                            <li class="tab"><a href="#tab6">Sources & backstage</a></li>
+                            <li class="tab"><a href="#tab3" >Themes</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+            <div class="col s12">
+
+                {#<div id="tableau">#}
+
+                {#</div>#}
+
+
+
+                <!-- Tabs -->
+                <div id="tab1" class="myTab col s12">
+                    <!-- Numbers connected to the person -->
+                    {% include 'AppBundle:person:_films.html.twig' %}
+
+                </div>
+
+                <div id="tab2" class="myTab col s12">
+                    <!-- Films -->
+                    {% include 'AppBundle:person:_numbers.html.twig' %}
+                </div>
+
+                {% if person.numbersPerformer|length > 0 %}
+
+
+                <div id="tab3" class="myTab col s12">
+                    <!-- Topics & exoticisms -->
+                    {% include 'AppBundle:person:_topics.html.twig' %}
+                </div>
+
+                <div id="tab4" class="myTab col s12">
+                    <!-- Calculations about time presence of the person -->
+                    {% include 'AppBundle:person:_presence.html.twig' %}
+                </div>
+
+                <div id="tab5" class="myTab col s12">
+                    <!-- Others -->
+                    {% include 'AppBundle:person:_person.html.twig' %}
+                </div>
+
+                <div id="tab6" class="myTab col s12">
+                    <!-- Others -->
+                    {% include 'AppBundle:person:_sources.html.twig' %}
+                </div>
+
+                <div id="tab7" class="myTab col s12">
+                    <!-- Others -->
+                    {% include 'AppBundle:person:_others.html.twig' %}
+                </div>
+
+                {% endif %}
+
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script type="text/javascript" src="{{ asset('js/melviz.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/donut_simple.js') }}"></script>
+    {#<script type="text/javascript" src="{{ asset('assets/vendor/responsive-nav.js/responsive-nav.js') }}"></script>#}
+
+
+    <script>
+
+        $(document).ready(function(){
+//            var nav = responsiveNav(".nav-collapse");
+        });
+
+
+
+
+        var drawCloud = function(){
+
+            console.log('Function drawCloud lauched');
+            var words_genre = '';
+            var words_genres = '';
+            var words_mood = '';
+            var words_moods = '';
+            var words_exoticism = '';
+            var words_exoticisms = '';
+
+
+            words_genres = [{% for item in genres  %}{ text : "{{ item.title|raw }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+            $('#genres').jQCloud(words_genres);
+            $('#genres').jQCloud('update', words_genres, {
+                fontSize: {
+                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                    from: 0.1,
+                    to: 0.05
+                }
+            });
+
+            words_genre = [{% for item in genre %}{ text : "{{ item.title|raw }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+            $('#genre').jQCloud(words_genre);
+            $('#genre').jQCloud('update', words_genre, {
+                fontSize: {
+                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                    from: 0.1,
+                    to: 0.05
+                }
+            });
+
+            //moods
+            words_moods = [{% for item in moods  %}{ text : "{{ item.title }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+            $('#moods').jQCloud(words_moods);
+            $('#moods').jQCloud('update', words_moods);
+
+            words_mood = [{% for item in mood %}{ text : "{{ item.title }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+            $('#mood').jQCloud(words_mood);
+            $('#mood').jQCloud('update', words_mood);
+
+            //exoticism
+            words_exoticisms = [{% for item in exoticisms  %}{ text : "{{ item.title|e('html') }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+            $('#exoticisms').jQCloud(words_exoticisms, {
+                fontSize: {
+                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                    from: 0.1,
+                    to: 0.05
+                }
+            });
+            $('#exoticisms').jQCloud('update', words_exoticisms);
+
+            words_exoticism = [{% for item in exoticism %}{ text : "{{ item.title|e('html') }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+            $('#exoticism').jQCloud(words_exoticism, {
+                fontSize: {
+                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                    from: 0.1,
+                    to: 0.05
+                }
+            });
+            $('#exoticism').jQCloud('update', words_exoticism);
+
+            //sources
+            words_sources = [{% for item in sources  %}{ text : "{{ item.title|raw }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+            $('#sources').jQCloud(words_sources);
+            $('#sources').jQCloud('update', words_sources, {
+                fontSize: {
+                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                    from: 0.1,
+                    to: 0.05
+                }
+            });
+
+            words_source = [{% for item in source %}{ text : "{{ item.title|raw }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+            $('#source').jQCloud(words_source);
+            $('#source').jQCloud('update', words_source, {
+                fontSize: {
+                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                    from: 0.1,
+                    to: 0.05
+                }
+            });
+
+        }
+
+        $(".tabs").click(function(){
+
+            $("#genre_container").html("<div class='wordcloud' id='genre'></div>");
+            $("#genres_container").html("<div class='wordcloud' id='genres'></div>");
+
+            $("#mood_container").html("<div class='wordcloud' id='mood'></div>");
+            $("#moods_container").html("<div class='wordcloud' id='moods'></div>");
+
+            $("#exoticism_container").html("<div class='wordcloud' id='exoticism'></div>");
+            $("#exoticisms_container").html("<div class='wordcloud' id='exoticisms'></div>");
+
+            $("#source_container").html("<div class='wordcloud' id='source'></div>");
+            $("#sources_container").html("<div class='wordcloud' id='sources'></div>");
+
+            //Melviz diegetic
+            var url = '{{ path("api_person_melviz_diegetic", {'personId': person.personId}) }}';
+            d3.json(url , function(error, data) {
+                viz_mediane("melviz_diegetic", data, 9);
+            });
+
+            //Melviz performance
+            var url = '{{ path("api_person_melviz_performance", {'personId': person.personId}) }}';
+            d3.json(url , function(error, data) {
+                viz_mediane("melviz_performance", data, 5);
+            });
+
+            //Melviz structure
+            var url = '{{ path("api_person_melviz_structure", {'personId': person.personId}) }}';
+            d3.json(url , function(error, data) {
+                viz_mediane("melviz_structure", data, 7);
+            });
+
+            //Melviz structure
+            var url = '{{ path("api_person_melviz_completeness", {'personId': person.personId}) }}';
+            d3.json(url , function(error, data) {
+                viz_mediane("melviz_completeness", data, 4);
+//                versionBarres("melviz_completeness", data, 2);
+            });
+
+            drawCloud();
+
+        })
+
+
+
+    </script>
+{% endblock %}
+
+

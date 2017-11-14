@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>States list</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Lat</th>
+                    <th>Long</th>
+                    <th>Stateid</th>
+                    <th>Date_creation</th>
+                    <th>Last_update</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for state in states %}
+                <tr>
+                    <td><a href="{{ path('admin_state_show', { 'stateId': state.stateId }) }}">{{ state.title }}</a></td>
+                    <td>{{ state.lat }}</td>
+                    <td>{{ state.long }}</td>
+                    <td>{{ state.stateId }}</td>
+                    <td>{% if state.datecreation %}{{ state.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if state.lastupdate %}{{ state.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_state_show', { 'stateId': state.stateId }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_state_edit', { 'stateId': state.stateId }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('admin_state_new') }}">Create a new state</a>
+            </li>
+        </ul>
+
+    </div>
+{% endblock %}

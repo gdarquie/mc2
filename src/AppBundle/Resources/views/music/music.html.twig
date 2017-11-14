@@ -1,0 +1,505 @@
+{% extends 'base.html.twig' %}
+
+
+{%  block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card{
+            padding : 30px;
+        }
+
+        .list_composer_name, .composer_number, .composer_film, .list_lyricist_name, .lyricist_number, .lyricist_film, .list_arranger_name, .arranger_number, .arranger_film {
+            color: #039be5;
+            cursor: pointer; cursor: hand;
+        }
+
+    </style>
+
+
+{% endblock %}
+
+
+{% block body %}
+
+<section class="container" id="exoticism">
+
+    <header>
+        <h1 class="center">Music</h1>
+        <h1 class="center"><i>Musique</i></h1>
+    </header>
+
+
+    <article class="card card_thematique row" style="overflow: hidden">
+
+        <h2>Songs in Musical Numbers</h2>
+        
+        <h3><a href="{{ path('songs') }}">List of all songs</a></h3>
+
+    </article>
+
+    <article class="card card_thematique row" style="overflow: hidden">
+
+        <h2>Composers</h2>
+
+        <div id="table_composers" class="row">
+            <input class="search" placeholder="Search" />
+            <table class="striped medium-table">
+                <thead>
+                <tr>
+                    <th onclick="sortPersoComposer(this, 'list_composer_name')" data-cpt="0">Composer</th>
+                    <th onclick="sortPersoComposer(this, 'list_composer_songs')" data-cpt="0">Songs</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="list">
+
+                {% for composer in listComposers  %}
+
+                <tr>
+                    <td onclick="window.location.href='{{ path('person', {'personId' : composer.id}) }}';" class="list_composer_name">{{ composer.name }}</td>
+                    <td class="list_composer_songs">{{ composer.nbSongs }}</td>
+                    <td><a class="waves-effect waves-light composer_btn_top" href="#modal1" data-name="{{ composer.name }}">Show More</a></td>
+                </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <ul class="pagination"></ul>
+        </div>
+
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <div id="composer_number_table">
+
+                    <input class="search" placeholder="Search" />
+
+                    <table class="striped medium-table">
+                        <thead>
+                        <tr>
+                            <th onclick="sortPersoComposerNumber(this, 'composer_name')" data-cpt="0">Associated composer</th>
+                            <th onclick="sortPersoComposerNumber(this, 'composer_number')" data-cpt="0">Number</th>
+                            <th onclick="sortPersoComposerNumber(this, 'composer_film')" data-cpt="0">Film</th>
+                            <th>Number of songs</th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        {% for item in listNumberComposers  %}
+                        {% for number in item.number  %}
+                            <tr>
+                                <td class="composer_name">{% for composer in item.composer  %}{{ composer.name }}{% if not loop.last %}, {% endif %} {% endfor %}</td>
+                                <td onclick="window.location.href='{{ path('number' ,{'id' : number.id}) }}';" class="composer_number">{{ number.title }}</td>
+                                <td onclick="window.location.href='{{ path('film' ,{'filmId' : number.film.filmId}) }}';" class="composer_film">{{ number.film }}</td>
+                                <td class="composer_song">{% for song in number.song  %}<a href="{{ path('song' ,{'songId' : song.songId}) }}">{{ song }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                            </tr>
+                        {% endfor %}
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                    <ul class="pagination"></ul>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
+
+    </article>
+
+    <article class="card card_thematique row" style="overflow: hidden">
+
+        <h2>Lyricists</h2>
+
+        <div id="table_lyricists" class="row">
+            <input class="search" placeholder="Search" />
+            <table class="striped medium-table">
+                <thead>
+                <tr>
+                    <th onclick="sortPersoLyricist(this, 'list_lyricist_name')" data-cpt="0">Lyricist</th>
+                    <th onclick="sortPersoLyricist(this, 'list_lyricist_songs')" data-cpt="0">Number of songs</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="list">
+
+                {% for lyricist in listLyricists  %}
+
+                <tr>
+                    <td onclick="window.location.href='{{ path('person', {'personId' : lyricist.id}) }}';" class="list_lyricist_name">{{ lyricist.name }}</td>
+                    <td class="list_lyricist_songs">{{ lyricist.nbSongs }}</td>
+                    <td><a class="waves-effect waves-light lyricist_btn_top" href="#modal2" data-name="{{ lyricist.name }}">Show More</a></td>
+                </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <ul class="pagination"></ul>
+        </div>
+
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <div id="lyricist_number_table">
+
+                    <input class="search" placeholder="Search" />
+
+                    <table class="striped medium-table">
+                        <thead>
+                        <tr>
+                            <th onclick="sortPersoLyricistNumber(this, 'lyricist_name')" data-cpt="0">Associated lyricist</th>
+                            <th onclick="sortPersoLyricistNumber(this, 'lyricist_number')" data-cpt="0">Number</th>
+                            <th onclick="sortPersoLyricistNumber(this, 'lyricist_film')" data-cpt="0">Film</th>
+                            <th>Song</th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        {% for item in listNumberLyricists  %}
+                            {% for number in item.number  %}
+                                <tr>
+                                    <td class="lyricist_name">{% for lyricist in item.lyricist  %}{{ lyricist.name }}{% if not loop.last %}, {% endif %} {% endfor %}</td>
+                                    <td onclick="window.location.href='{{ path('number' ,{'id' : number.id}) }}';" class="lyricist_number">{{ number.title }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : number.film.filmId}) }}';" class="lyricist_film">{{ number.film }}</td>
+                                    <td class="lyricist_song">{% for song in number.song  %}<a href="{{ path('song' ,{'songId' : song.songId}) }}">{{ song }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                    <ul class="pagination"></ul>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
+
+
+    </article>
+
+    <article class="card card_thematique row" style="overflow: hidden">
+
+        <h2>Arrangers</h2>
+
+        <div id="table_arrangers" class="row">
+            <input class="search" placeholder="Search" />
+            <table class="striped medium-table">
+                <thead>
+                <tr>
+                    <th onclick="sortPersoArranger(this, 'list_arranger_name')" data-cpt="0">Arranger</th>
+                    <th onclick="sortPersoArranger(this, 'list_arranger_songs')" data-cpt="0">Numbers</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="list">
+
+                {% for arranger in listArrangers  %}
+                <tr>
+                    <td onclick="window.location.href='{{ path('person', {'personId' : arranger.id}) }}';"  class="list_arranger_name">{{ arranger.name }}</td>
+                    <td class="list_arranger_songs">{{ arranger.nbSongs }}</td>
+                    <td><a class="waves-effect waves-light arranger_btn_top" href="#modal3" data-name="{{ arranger.name }}">Show More</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <ul class="pagination"></ul>
+        </div>
+
+
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <div id="arranger_number_table">
+
+                    <input class="search" placeholder="Search" />
+
+                    <table class="striped medium-table">
+                        <thead>
+                        <tr>
+                            <th onclick="sortPersoArrangerNumber(this, 'arranger_name')" data-cpt="0">Associated arranger</th>
+                            <th onclick="sortPersoArrangerNumber(this, 'arranger_number')" data-cpt="0">Number</th>
+                            <th onclick="sortPersoArrangerNumber(this, 'arranger_film')" data-cpt="0">Film</th>
+                            <th>Song</th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        {% for item in listNumberArrangers  %}
+                                <tr>
+                                    <td class="arranger_name">{% for arranger in item.arrangers  %}{{ arranger.name }}{% if not loop.last %}, {% endif %} {% endfor %}</td>
+                                    <td onclick="window.location.href='{{ path('number' ,{'id' : item.id}) }}';" class="arranger_number">{{ item.title }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.film.filmId}) }}';" class="arranger_film">{{ item.film }}</td>
+                                    <td class="arranger_song">{% for song in item.song  %}<a href="{{ path('song' ,{'songId' : song.songId}) }}">{{ song }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                    <ul class="pagination"></ul>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
+
+
+    </article>
+
+
+    <article class="card card_thematique row">
+        <h2>Musical Styles</h2>
+
+        <article>
+
+           <p>Musical styles : {{ musicalStyle|length }} - <a href="{{ path('thesaurus', { 'type' : "Musical styles" }) }}">Thesaurus</a> </p>
+           <p>Production numbers per musical styles : </p>
+
+            <div class='wordcloud col s12 row' id='wordcloud_style' style="height: 300px"></div>
+
+            {#{% for item in musicalStyle  %}#}
+                {#<a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>#}
+            {#{% endfor %}#}
+        </article>
+
+        <div id="div_viz" class="col s12" style=" height: 500px;"></div>
+    </article>
+
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+
+    <script>
+
+        var optionsComposer = {
+            valueNames: ['list_composer_name', 'list_composer_songs']
+        };
+
+        var ComposerList = new List('table_composers', optionsComposer);
+
+
+        var optionsNumberComposer = {
+            valueNames: ['composer_name', 'composer_number', 'composer_film', 'composer_song'],
+            page: 15,
+            pagination: true
+        };
+
+        var ComposerNumberList = new List('composer_number_table', optionsNumberComposer);
+
+
+
+        var optionsLyricist = {
+        };
+
+        var LyricistList = new List('table_lyricists', optionsLyricist);
+
+        var optionsNumberLyricist = {
+            valueNames: ['lyricist_name', 'lyricist_number', 'lyricist_film', 'lyricist_song'],
+            page: 15,
+            pagination: true
+        };
+
+        var LyricistNumberList = new List('lyricist_number_table', optionsNumberLyricist);
+
+
+        var optionsArranger = {
+
+        };
+
+        var ArrangerList = new List('table_arrangers', optionsArranger);
+
+        var optionsNumberArranger = {
+            valueNames: ['arranger_name', 'arranger_number', 'arranger_film', 'arranger_song'],
+            page: 15,
+            pagination: true
+        };
+
+        var ArrangerNumberList = new List('arranger_number_table', optionsNumberArranger);
+
+
+    </script>
+
+
+    <script>
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in musicalStyleViz %}
+                ['{{ item.title }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                legend: {position: 'none'}
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('div_viz'));
+            chart.draw(data, options);
+        }
+
+    </script>
+
+    <script>
+
+        var composer_name = document.getElementsByClassName("composer_btn_top");
+        for (var i = 0; i < composer_name.length; i++) {
+            composer_name[i].addEventListener('click', function () {
+                if(this.dataset.name == "Total") {
+                    ComposerNumberList.search("");
+                } else {
+                    ComposerNumberList.search(this.dataset.name);
+                }
+            });
+        }
+
+        var optionsComposer = {
+            valueNames: ['list_composer_name', 'list_composer_songs'],
+            page: 15,
+            pagination: true
+        };
+
+        var ComposerList = new List('table_composers', optionsComposer);
+
+
+
+
+        var lyricist_name = document.getElementsByClassName("lyricist_btn_top");
+        for (var i = 0; i < lyricist_name.length; i++) {
+            lyricist_name[i].addEventListener('click', function () {
+                if(this.dataset.name == "Total") {
+                    LyricistNumberList.search("");
+                } else {
+                    LyricistNumberList.search(this.dataset.name);
+                }
+            });
+        }
+
+        var optionsLyricist = {
+            valueNames: ['list_lyricist_name', 'list_lyricist_songs'],
+            page: 15,
+            pagination: true
+        };
+
+        var LyricistList = new List('table_lyricists', optionsLyricist);
+
+
+
+
+        var arranger_name = document.getElementsByClassName("arranger_btn_top");
+        for (var i = 0; i < arranger_name.length; i++) {
+            arranger_name[i].addEventListener('click', function () {
+                if(this.dataset.name == "Total") {
+                    ArrangerNumberList.search("");
+                } else {
+                    ArrangerNumberList.search(this.dataset.name);
+                }
+            });
+        }
+
+        var optionsArranger = {
+            valueNames: ['list_arranger_name', 'list_arranger_songs'],
+            page: 15,
+            pagination: true
+        };
+
+        var ArrangerList = new List('table_arrangers', optionsArranger);
+
+
+
+    </script>
+
+    <script>
+
+
+        words_style = [{% for item in musicalStyle  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}" } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_style').jQCloud(words_style);
+        $('#wordcloud_style').jQCloud('update', words_style, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+    </script>
+
+    <script>
+
+        function sortPersoComposer(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                ComposerList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                ComposerList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoComposerNumber(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                ComposerNumberList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                ComposerNumberList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoLyricist(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                LyricistList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                LyricistList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoLyricistNumber(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                LyricistNumberList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                LyricistNumberList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+
+        function sortPersoArranger(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                ArrangerList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                ArrangerList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoArrangerNumber(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                ArrangerNumberList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                ArrangerNumberList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+    </script>
+
+
+{% endblock %}

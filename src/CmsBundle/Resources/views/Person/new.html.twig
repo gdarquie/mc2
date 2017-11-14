@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Add a person</h1>
+
+        {{ form_start(personForm)}}
+
+        {{ include('CmsBundle:Person:_form.html.twig')}}
+        <button class="btn black" type="submit" formnovalidate>New Person</button>
+        {{ form_end(personForm)}}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,116 @@
+
+<div class="row">
+
+
+    <div class="col s12">
+        <div class="cartouche">
+        {{ form_widget(filmForm.sample) }}
+        {{ form_label(filmForm.sample) }}
+        {{ form_errors(filmForm.sample) }}
+        </div>
+    </div>
+
+    <div class="col s6">
+        <div class="cartouche mini-form ">
+            {{form_row(filmForm.title, {
+                'label' : "Title"
+            })}}
+            {{form_row(filmForm.idImdb)}}
+            {{ form_row(filmForm.studios) }}
+            {{ form_row(filmForm.distributors) }}
+            {{ form_row(filmForm.producers) }}
+            {{ form_row(filmForm.directors) }}
+            {{form_row(filmForm.productionyear, {
+                'label' : "Production year"
+            })}}
+            {{form_row(filmForm.released)}}
+        </div>
+    </div>
+    <div class="cartouche mini-form col s6">
+
+        <h3>Technical Specs</h3>
+
+        {{ form_row(filmForm.color) }}
+        {{ form_row(filmForm.ratio) }}
+        {{ form_row(filmForm.length) }}
+    </div>
+
+    <div class="cartouche mini-form col s6">
+
+        <h3>Recycling</h3>
+
+        {{ form_row(filmForm.adaptation) }}
+        {{ form_row(filmForm.stageshows) }}
+        {{ form_widget(filmForm.remake) }}
+        {{ form_label(filmForm.remake) }}
+        {{ form_errors(filmForm.remake) }}
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col s6">
+        <div class="cartouche mini-form ">
+
+            <h3>Censorship</h3>
+
+            {{form_row(filmForm.verdict, {
+                'label' : "First opinion by the on the submitted script"
+            }) }}
+            {{form_row(filmForm.censorship, {
+                'label' : "Censored Content"
+            }) }}
+            {{form_row(filmForm.state, {
+                'label' : "States where the film was censored"
+            }) }}
+            {{ form_row(filmForm.pcaTexte, {
+                'attr': {'class': 'materialize-textarea'},
+                'label' : "PCA text"
+            }) }}
+            {{form_row(filmForm.legion, {
+                'label' : "Legion of Decency"
+            }) }}
+            {{ form_row(filmForm.protestant, {
+                'label' : "Protestant Motion Picture Council"
+            }) }}
+            {{ form_row(filmForm.harrisson,  {
+                'label' : "Harrison's Reports"
+            }) }}
+            {{ form_row(filmForm.bord, {
+                'label' : " Film Estimate Board of National Organizations"
+            }) }}
+
+        </div>
+
+        <div class="cartouche mini-form">
+            {{ form_row(filmForm.archives, {
+                'attr': {'class': 'materialize-textarea'}
+            }) }}
+        </div>
+    </div>
+
+    <div class="cartouche mini-form col s6">
+        <h3>Economics</h3>
+
+        {{ form_row(filmForm.contract) }}
+        {{ form_row(filmForm.rights) }}
+        {{ form_row(filmForm.negative) }}
+        {{ form_row(filmForm.pna) }}
+        {{ form_row(filmForm.usRentals) }}
+        {{ form_row(filmForm.foreignRentals) }}
+        {{ form_row(filmForm.totalRentals) }}
+        {{ form_row(filmForm.usBoxoffice) }}
+        {{ form_row(filmForm.foreignBoxoffice) }}
+        {{ form_row(filmForm.totalBoxoffice) }}
+        {{ form_row(filmForm.sourceEco , {
+            'attr': {'class': 'materialize-textarea'}
+        }) }}
+
+    </div>
+
+
+
+</div>
+{#{{ form_row(filmForm.deleted) }}#} {# à laisser caché #}
+{#{{ form_row(filmForm.isComplete) }}#} {# à laisser caché  pour l'instant #}

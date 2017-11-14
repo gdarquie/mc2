@@ -1,0 +1,82 @@
+{% import _self as formMacros %}
+
+{% macro printValidationCostRow(validationForm) %}
+    <div class="col s12 js-cost-validation-item">
+        <a href="" class="js-remove-cost-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+
+
+<div id="complement" class="row container main">
+
+    {% if ( validationCost |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+        <h3>Complement</h3>
+
+        <div class="color-cartouche">
+            {{form_row(numberForm.quotation_thesaurus, {
+                'label' : "Quotation (from thesaurus) (optional) (multi)"
+            })}}
+
+            {{form_label(numberForm.quotation_text, 'Besides your comments, use here one of the four keywords : "history", "literature and arts", "mythology" and "Bible" ')}}
+            {{form_widget(numberForm.quotation_text, {
+                'attr': {'class': 'materialize-textarea'}
+            }) }}
+
+            {{form_row(numberForm.lyrics, { 'attr': {'class': 'materialize-textarea'}})}}
+
+            {{form_row(numberForm.cost)}}
+            {{form_row(numberForm.costComment, { 'attr': {'class': 'materialize-textarea'}}) }}
+        </div>
+
+
+
+        {% if is_granted('ROLE_EDITOR') %}
+            <div class="color-cartouche">
+                {%  if validationCost is defined %}
+                    {% for item in validationCost  %}
+                        <div class="chip js-cost-validation-item">
+                            {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                            <a href="" class="js-remove-cost-validation">
+                                {#<i class="material-icons black-text" >delete</i>#}
+                                <i class="close material-icons black-text">close</i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="row js-cost-validation-wrapper" data-prototype="{{ formMacros.printValidationCostRow(numberForm.validationCost.vars.prototype)|e('html_attr') }}">
+
+                    <div class="col s12">
+                        <a href="#" class="js-add-cost-validation valign-wrapper col s12">
+                            <i class="material-icons black-text ">add</i>
+                            Add a validation
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hide">
+                    {{ form_widget(numberForm.validationCost) }}
+                </div>
+            </div>
+        {% endif %}
+
+    </article>
+    {% if ( validationCost |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+</div>

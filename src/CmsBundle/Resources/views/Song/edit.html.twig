@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Edit a song</h1>
+
+        {{ form_start(songForm)}}
+
+        {{ include('CmsBundle:Song:_form.html.twig')}}
+        <button class="btn black" type="submit" formnovalidate >Edit Song</button>
+        {{ form_end(songForm)}}
+
+    </div>
+
+{% endblock %}

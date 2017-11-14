@@ -1,0 +1,85 @@
+{% import _self as formMacros %}
+
+{% macro printValidationBackstageRow(validationForm) %}
+    <div class="col s12 js-backstage-validation-item">
+        <a href="" class="js-remove-backstage-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+<div id="backstage" class="row container main">
+
+    {% if ( validationBackstage |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+        <h3>Backstage</h3>
+
+        <div class="color-cartouche">
+        {{form_row(numberForm.spectators_thesaurus, {
+            'label' : "Are there spectators within the scene ? + Is there a direct adress (camera look and / or stage frontality) (from thesaurus) (1 choice) (mandatory)"
+        })}}
+        {{form_row(numberForm.diegetic_thesaurus,{
+            'label' : "Is this an onstage number or a diegetic performance ? (from thesaurus) (1 choice) (mandatory)"
+        } )}}
+        {{form_row(numberForm.musician_thesaurus, {
+            'label' : "Are there diegetic musicians? (from thesaurus) (1 choice) (mandatory)"
+        })}}
+
+        {{ form_label(numberForm.commentBackstage, "Backstage comment(s)") }}
+        {{ form_widget(numberForm.commentBackstage, {
+            'attr': {'class': 'materialize-textarea'}
+        }) }}
+
+        {{ form_widget(numberForm.completeBackstage) }}
+        {{ form_label(numberForm.completeBackstage, "Completed?") }}
+        {{ form_errors(numberForm.completeBackstage) }}
+        {#{{form_row(numberForm.validationBackstage)}}#}
+        </div>
+
+        {% if is_granted('ROLE_EDITOR') %}
+            <div class="color-cartouche">
+                {%  if validationBackstage is defined %}
+                    {% for item in validationBackstage  %}
+                        <div class="chip js-backstage-validation-item">
+                            {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                            <a href="" class="js-remove-backstage-validation">
+                                {#<i class="material-icons black-text" >delete</i>#}
+                                <i class="close material-icons black-text">close</i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+                <div class="row js-backstage-validation-wrapper" data-prototype="{{ formMacros.printValidationBackstageRow(numberForm.validationBackstage.vars.prototype)|e('html_attr') }}">
+
+                    <div class="col s12">
+                        <a href="#" class="js-add-backstage-validation valign-wrapper col s12">
+                            <i class="material-icons black-text ">add</i>
+                            Add a validation
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hide">
+                    {{ form_widget(numberForm.validationBackstage) }}
+                </div>
+            </div>
+        {% endif %}
+    </article>
+
+    {% if ( validationBackstage |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+</div>

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/editor/number.css')}}">
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+
+    <div class="container center" id="preloader">
+        <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    {{ form_start(numberForm)}}
+        {{ include('CmsBundle:Number:_form.html.twig')}}
+        <div class="container main center" id="button">
+            <button class="btn black" type="submit" formnovalidate >Save Number</button>
+        </div>
+    {{ form_end(numberForm)}}
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/editor/number/timecode.js') }}"></script>
+    <script src="{{ asset('js/editor/number/displayApp.js') }}"></script>
+    <script src="{{ asset('js/editor/validation/validationApp.js') }}"></script>
+    
+{% endblock %}

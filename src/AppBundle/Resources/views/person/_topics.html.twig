@@ -1,0 +1,277 @@
+<section id="topics" class="card row">
+    <div class="col s12">
+
+        {#<p>Plusieurs réponses possibles</p>#}
+
+
+        <!-- Moods -->
+
+        <article class="col s12">
+
+            <h2 class="center">General Mood</h2>
+
+            <!-- Genres Modal Structure -->
+            <div id="modal_mood" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h3>General Moods</h3>
+                    <div class="row s12">
+
+                        <article class="col s6">
+                            <h4>{{ person.name }}</h4>
+                            <table class="striped mini-table tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in mood  %}
+                                    <tr>
+                                        <td><a href="{{ path('person_search_by_thesaurus' , {'personId': person.personId, 'id' : item.id, 'type' : 'mood' } ) }}" >{{ item.title }}</a></td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </article>
+
+                        <article class="col s6">
+
+                            <h4>All numbers</h4>
+                            <table class="striped mini-table tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in moods  %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </article>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualisations -->
+            <div class="row">
+                <article class="col s6">
+                    <h4 class="center">{{ person.name }}</h4>
+                    <div id="mood_container"></div>
+                </article>
+
+                <article class="col s6">
+                    <h4 class="center">All numbers</h4>
+                    <div id="moods_container"></div>
+                </article>
+            </div>
+
+            <!-- Genre Modal Trigger -->
+            <div class="row ">
+
+                <article class="col s12 ">
+                    <p class="center">
+                        <a class="modal-trigger black-text " href="#modal_mood">
+                            More informations
+                            <i class="material-icons">more</i>
+                        </a>
+                    </p>
+                </article>
+            </div>
+
+        </article>
+
+        <hr>
+
+        <!-- Genres -->
+
+        <article class="col s12">
+
+            <h2 class="center">Topics</h2>
+
+            <!-- Genres Modal Structure -->
+            <div id="modal_genre" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h3>Topics</h3>
+                    <div class="row s12">
+
+                        <article class="col s6">
+                            <h4>{{ person.name }}</h4>
+                            <table class="striped mini-table tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in genre %}
+                                    <tr>
+                                        <td><a href="{{ path('person_search_by_thesaurus' , {'personId': person.personId, 'id' : item.id, 'type' : 'topic' } ) }}" >{{ item.title }}</a></td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </article>
+
+                        <article class="col s6">
+
+                            <h4>All numbers</h4>
+                            <table class="striped mini-table tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in genres  %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </article>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <article class="col s6">
+                    <h4 class="center">{{ person.name }}</h4>
+                    <div id="genre_container"></div>
+                </article>
+
+                <article class="col s6">
+                    <h4 class="center">All numbers</h4>
+                    <div id="genres_container"></div>
+                </article>
+            </div>
+            <!-- Genre Modal Trigger -->
+            <div class="row ">
+
+                <article class="col s12 ">
+                    <p class="center">
+                        <a class="modal-trigger black-text " href="#modal_genre">
+                            More informations about topics
+                            <i class="material-icons">more</i>
+                        </a>
+
+                    </p>
+                </article>
+            </div>
+        </article>
+        <hr>
+
+
+
+        <!-- Exoticism -->
+
+        <article class="col s12">
+            <h2 class="center">Exoticisms</h3>
+
+                <!-- Exoticism Modal Structure -->
+                <div id="modal_exoticism" class="modal modal-fixed-footer">
+                    <div class="modal-content">
+                        <h3>Exoticisms</h3>
+                        <div class="row s12">
+
+                            <article class="col s6">
+                                <h4>{{ person.name }}</h4>
+                                <table class="striped mini-table tablesorter">
+                                    <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Numbers</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% for item in exoticism  %}
+                                        <tr>
+                                            <td><a href="{{ path('person_search_by_thesaurus' , {'personId': person.personId, 'id' : item.id, 'type' : 'exoticism' } ) }}" >{{ item.title }}</a></td>
+                                            <td>{{ item.nb }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+
+                                </table>
+                            </article>
+
+                            <article class="col s6">
+
+                                <h4>all numbers</h4>
+                                <table class="striped mini-table tablesorter">
+                                    <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Numbers</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in exoticisms  %}
+                                        <tr>
+                                            <td>{{ item.title }}</td>
+                                            <td>{{ item.nb }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </article>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            <div class="row">
+                <article class="col s6">
+                    <h4 class="center">{{ person.name }}</h4>
+                    <div id="exoticism_container"></div>
+                </article>
+
+                <article class="col s6">
+                    <h4 class="center">all numbers</h4>
+                    <div id="exoticisms_container"></div>
+                </article>
+            </div>
+
+            <!-- Exoticism Modal Trigger -->
+            <div class="row ">
+
+                <article class="col s12 ">
+                    <p class="center">
+                        <a class="modal-trigger black-text " href="#modal_exoticism">
+                            More informations about exoticisms
+                            <i class="material-icons">more</i>
+                        </a>
+                    </p>
+                </article>
+            </div>
+
+        </article>
+
+
+
+
+    </div>
+</section>

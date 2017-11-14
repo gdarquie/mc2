@@ -1,0 +1,70 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Quotation
+ *
+ * @ORM\Table(name="quotation")
+ * @ORM\Entity
+ */
+class Quotation
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=45, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="external", type="text", length=65535, nullable=true)
+     */
+    private $external;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="quotation_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $quotationId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Song", mappedBy="quotation")
+     */
+    private $song;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Person", mappedBy="quotation")
+     */
+    private $person;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Number", mappedBy="quotation")
+     */
+    private $numberNumber;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->song = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->person = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->numberNumber = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

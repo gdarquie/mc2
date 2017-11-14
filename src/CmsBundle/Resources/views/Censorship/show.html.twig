@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Censorship</h1>
+
+        <table>
+            <tbody>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ censorship.title }}</td>
+                </tr>
+                <tr>
+                    <th>Censorshipid</th>
+                    <td>{{ censorship.censorshipId }}</td>
+                </tr>
+                <tr>
+                    <th>Date_creation</th>
+                    <td>{% if censorship.datecreation %}{{ censorship.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Last_update</th>
+                    <td>{% if censorship.lastupdate %}{{ censorship.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('admin_censorship_index') }}">Back to the list</a>
+            </li>
+            <li>
+                <a href="{{ path('admin_censorship_edit', { 'censorshipId': censorship.censorshipId }) }}">Edit</a>
+            </li>
+
+        </ul>
+
+        <div>
+            {{ form_start(delete_form) }}
+            <input type="submit" class="btn red right" value="Delete">
+            {{ form_end(delete_form) }}
+        </div>
+        <br><br>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,101 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Dancing
+ *
+ * @ORM\Table(name="dancing")
+ * @ORM\Entity
+ */
+class Dancing
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=45, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=45, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mandatory", type="string", length=45, nullable=true)
+     */
+    private $mandatory;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="dancing_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $dancingId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Stagenumber", inversedBy="dancing")
+     * @ORM\JoinTable(name="dancing_has_stagenumber",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="dancing_id", referencedColumnName="dancing_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="stageNumber_id", referencedColumnName="stageNumber_id")
+     *   }
+     * )
+     */
+    private $stagenumber;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Number", inversedBy="dancing")
+     * @ORM\JoinTable(name="dancing_has_number",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="dancing_id", referencedColumnName="dancing_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="number_id", referencedColumnName="number_id")
+     *   }
+     * )
+     */
+    private $number;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tv", inversedBy="dancing")
+     * @ORM\JoinTable(name="tv_has_dancing",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="dancing_id", referencedColumnName="dancing_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="TV_id", referencedColumnName="TV_id")
+     *   }
+     * )
+     */
+    private $tv;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stagenumber = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->number = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tv = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

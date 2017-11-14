@@ -1,0 +1,735 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/nouislider/distribute/nouislider.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fullpage.js/jquery.fullPage.css') }}">
+
+    <style>
+        #recherche{
+            margin-top: 50px;
+        }
+        .billet{
+            /*border : 1px solid lightgrey;*/
+            margin: 10px;
+            padding: 15px;
+            border-radius: 3px;
+        }
+
+        #slider{
+            margin-bottom: 50px;
+        }
+
+
+        #modal1 {
+            width : 90%;
+            height : 90%;
+        }
+
+        .container_donut svg {
+            width:100%;
+            height:400px;
+        }
+
+        .melviz {
+            width: 100%;
+            height: 400px;
+        }
+
+
+    </style>
+
+{% endblock %}
+
+
+{% block body %}
+    <div id="fullpage">
+        <div class="section active" id="section1">
+            <div class="slide" id="slide1">
+
+                <section class="container large">
+
+                    <div class="row" id="recherche">
+
+                        <div class="col s5">
+
+                            <div class="row">
+                                <form class="col s12">
+
+                                    <div class="input-field col s12">
+                                        <select multiple id="exo">
+                                            <option value="" disabled selected>Select an exoticism (2 max)</option>
+                                            {% for item in exo %}
+                                                <option value="{{ item.id|e('html') }}">{{ item.title|e('html') }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label>Exoticism (multiple choice)</label>
+                                    </div>
+
+                                    <div class="input-field col s12" id="div_select_studio">
+                                        <select id="studio">
+                                            <option value="0" selected>Select a studio</option>
+                                            {% for item in studio %}
+                                                <option value="{{ item.id|e('html') }}">{{ item.title|e('html') }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label id="id_label_studio">Studio (1 choice)</label>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="row col s12">
+                                <div  id="slider"></div>
+                            </div>
+
+
+                            <article class="s12 col">
+                                <div class="center">
+                                    {{ form_start(selectionForm) }}
+                                    <button class="btn white red-text generate-viz" type="submit" formnovalidate>Générer une visualisation</button>
+                                    {{ form_end(selectionForm) }}
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="col s7" id="div_radio_boutons">
+
+                            <form id="form_radio_button">
+                                <input type="radio" name="radioButton" id="radioButton1" value="numbers" checked>
+                                <label for="radioButton1">Numbers</label>
+
+                                <input type="radio" name="radioButton" id="radioButton2" value="films" >
+                                <label for="radioButton2" style="margin-left: 25px;">Films</label>
+                            </form>
+
+                            <div class="s12 card" id="resultat"  style="overflow-y:scroll; height : 70vh"></div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <div class="slide" id="slide2">
+
+
+                <nav class="nav-extended">
+                    <div class="nav-content">
+                        <ul class="tabs tabs-transparent">
+                            <li class="tab" id="onglet_stat"><a class="active" href="#page_stats">Stats</a></li>
+                            <li class="tab" id="onglet_dance"><a href="#page_dance">Dance</a></li>
+                            <li class="tab" id="onglet_exo"><a href="#page_exoticism">Exoticism</a></li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div id="page_stats" class="row col s12" style="overflow-y: scroll; height : 70vh">
+                    <div class="songStats col s4"></div>
+                    <div class="filmStats col s4"></div>
+                    <div class="performerStats col s4"></div>
+                </div>
+
+                <div id="page_dance" class="col s12" style="overflow-y: scroll; height : 70vh">
+
+                    <div class="row">
+
+                        <div class="col s6" id="donut_test">
+                            <h2>Donut 1</h2>
+                            <svg style="height:500px;"></svg>
+                        </div>
+
+                        <div class="col s6" id="donut_test2" >
+                            <h2>Donut 2</h2>
+                            <svg style="height:500px; margin-top: 30px"></svg>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div id="timeline" class="col s10 offset-s1">
+                            <svg style="height: 300px;"></svg>
+                        </div>
+
+                    </div>
+
+                    </div>
+
+                <div id="page_exoticism" style="overflow-y: scroll; height : 70vh">
+
+                    <div class="row">
+
+                        <div id="melviz_performance" class="melviz col s10 offset-s1" style="margin-top: 30px"></div>
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/wnumb/wNumb.js') }}"></script>
+    <script src="{{ asset('assets/vendor/nouislider/distribute/nouislider.js') }}"></script>
+    <script src="{{ asset('js/donut_simple.js') }}"></script>
+    {#<script src="{{ asset('assets/vendor/d3-tip/index.js') }}"></script>#}
+    {#<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>#}
+    <script src="{{ asset('js/melviz.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/length_timeline.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/timeline_annee.js') }}"></script>
+
+
+    <script src="{{ asset('assets/vendor/fullpage.js/vendors/scrolloverflow.min.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/fullpage.js/jquery.fullPage.min.js') }}"></script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            Materialize.updateTextFields();
+            $('select').material_select();
+
+
+            $('#fullpage').fullpage({
+                verticalCentered: false,
+                autoScrolling : true,
+                scrollOverflow: true
+            });
+        });
+    </script>
+
+
+    {#déclaration des variables globales#}
+    <script>
+        var numbersOrFilms = "numbers";
+        var listeNumbers = [];
+    </script>
+
+
+    <script>
+
+
+        $('#onglet_exo').on('click', function() {
+            lancer_viz_exo();
+        });
+
+
+        $('#onglet_dance').on('click', function() {
+            lancer_viz_dance();
+        });
+
+        var data = [
+            {
+                "label": "Cadres et professions intellectuelles",
+                "value": 7896
+            },
+            {
+                "label": "Retraités",
+                "value": 2614
+            },
+            {
+                "label": "Employés",
+                "value": 1769
+            },
+            {
+                "label": "Indéterminé, personne ne désirant pas répondr",
+                "value": 1387
+            },
+            {
+                "label": "Professions intermédiaires (dont techniciens,",
+                "value": 1310
+            },
+            {
+                "label": "Elèves, étudiants",
+                "value": 776
+            },
+            {
+                "label": "Autres personnes sans activité professionnell",
+                "value": 286
+            },
+            {
+                "label": "Artisans, commerçants et chefs d'entreprise",
+                "value": 218
+            },
+            {
+                "label": "Chômeurs",
+                "value": 154
+            },
+            {
+                "label": "Ouvriers",
+                "value": 46
+            },
+            {
+                "label": "Agriculteurs exploitants",
+                "value": 19
+            }
+        ];
+
+
+
+        var data_timeline = [{"label":1483225200,"value":264,"day":"Dimanche"},{"label":1483311600,"value":206,"day":"Lundi"},{"label":1483398000,"value":190,"day":"Mardi"},{"label":1483484400,"value":203,"day":"Mercredi"},{"label":1483570800,"value":211,"day":"Jeudi"},{"label":1483657200,"value":162,"day":"Vendredi"},{"label":1483743600,"value":210,"day":"Samedi"},{"label":1483830000,"value":251,"day":"Dimanche"},{"label":1483916400,"value":151,"day":"Lundi"},{"label":1484002800,"value":137,"day":"Mardi"},{"label":1484089200,"value":131,"day":"Mercredi"},{"label":1484175600,"value":154,"day":"Jeudi"},{"label":1484262000,"value":174,"day":"Vendredi"},{"label":1484348400,"value":193,"day":"Samedi"},{"label":1484434800,"value":217,"day":"Dimanche"},{"label":1484521200,"value":183,"day":"Lundi"},{"label":1484607600,"value":176,"day":"Mardi"},{"label":1484694000,"value":150,"day":"Mercredi"},{"label":1484780400,"value":136,"day":"Jeudi"},{"label":1484866800,"value":161,"day":"Vendredi"},{"label":1484953200,"value":201,"day":"Samedi"},{"label":1485039600,"value":190,"day":"Dimanche"},{"label":1485126000,"value":122,"day":"Lundi"},{"label":1485212400,"value":153,"day":"Mardi"},{"label":1485298800,"value":151,"day":"Mercredi"},{"label":1485385200,"value":129,"day":"Jeudi"},{"label":1485471600,"value":123,"day":"Vendredi"},{"label":1485558000,"value":182,"day":"Samedi"},{"label":1485644400,"value":212,"day":"Dimanche"},{"label":1485730800,"value":146,"day":"Lundi"},{"label":1485817200,"value":180,"day":"Mardi"}];
+        
+        function lancer_viz_exo() {
+
+
+            var url = '{{ path("api_person_melviz_performance", {'personId': 638}) }}';
+            d3.json(url , function(error, data) {
+                viz_mediane("melviz_performance", data, 5);
+            });
+
+
+        }
+
+
+        function lancer_viz_dance() {
+
+            donut_simple_avec_legende("donut_test svg", data, true);
+            donut_simple_avec_legende("donut_test2 svg", data, true);
+
+            timeline_emprunt_annee("timeline svg", 2017, data_timeline);
+
+
+        }
+
+    </script>
+
+
+    <script>
+
+        $('.generate-viz').click(function(){
+            alert('hello');
+        });
+
+        function changementFiltre(){
+
+            _exo = $("#exo").val();
+            _studio = $('#studio').val();
+
+            if (_exo == "") {
+                _exo = "all";
+            }
+            if (_studio == null || _studio == "" || _studio == "0") {
+                _studio = "all";
+            }
+
+            slider_values = slider.noUiSlider.get();
+            min_slider = slider_values[0];
+            max_slider = slider_values[1];
+
+
+            var url = '{{ path("search_exoticism", {'exoticisms': 'varExo', 'studio': 'varStudio', 'begin': 'varBegin', 'end': 'varEnd'}) }}';
+            url = url.replace("varExo", _exo);
+            url = url.replace("varStudio", _studio);
+            url = url.replace("varBegin", min_slider);
+            url = url.replace("varEnd", max_slider);
+            d3.json(url , function(error, data) {
+                if(numbersOrFilms == "numbers") {
+                    afficherResultNumbers(data);
+                } else {
+                    afficherResultFilms(data);
+                }
+                afficherStats(data);
+            });
+        }
+
+        $("select").change(function(){
+            changementFiltre();
+        });
+
+
+
+        function afficherResultNumbers(n) {
+
+            billets = "";
+            listeNumbers = [];
+
+
+            var i;
+
+            for (var i=0; i<n.length; i++) {
+
+                var songs = "";
+
+                for (var p=0; p<Object.keys(n[i].songs).length; p++) {
+                    if (p==0) {
+                        songs += "<a href='/song/id/" + n[i].songs[p + 1].id + " '>" + n[i].songs[p + 1].title + "</a>";
+                    } else {
+                        songs += ", <a href='/song/id/" + n[i].songs[p + 1].id + " '>" + n[i].songs[p + 1].title + "</a>";
+                    }
+                }
+
+                var performers = "";
+
+                for (var b=0; b<Object.keys(n[i].performers).length; b++) {
+                    if (b==0) {
+                        performers += "<a href='/person/" + n[i].performers[b + 1].id + " '>" + n[i].performers[b + 1].name + "</a>";
+                    } else {
+                        performers += ", <a href='/person/" + n[i].performers[b + 1].id + " '>" + n[i].performers[b + 1].name + "</a>";
+                    }
+                }
+
+
+
+                billets += "<div class='billet card'>" +
+                    "<a href='/number/"+n[i].id+"'><h2>"+n[i].title+"</h2></a>" +
+                    "<a href='/film/id/"+n[i].film.id+" '><h3>"+n[i].film.title+ " (" + n[i].film.released + ")</h3></a>" +
+                    "<h3> Song(s) : " + songs + "</h3>" +
+                    "<h3> Performer(s) : " + performers + "</h3>" +
+                    "</div>";
+
+                listeNumbers.push(n[i].numberId);
+            }
+
+            infos = "<div>Number of results : "+i+" (only the first 20 numbers are displayed)</div>";
+            $("#resultat").html(infos+billets);
+
+//            $.fn.fullpage.reBuild();
+
+        }
+
+
+        function afficherResultFilms(n) {
+
+
+
+            var billets = "";
+
+            var films = [];
+
+            listeNumbers = [];
+
+
+            var bool;
+
+            for (var i=0; i<n.length; i++) {
+
+                bool = false;
+                listeNumbers.push(n[i].numberId);
+
+
+                for (var j=0; j<films.length; j++) {
+
+                    if (films[j].film.id == n[i].film.id)
+                    {
+                        bool = true;
+                    }
+                }
+
+                if (bool == false) {
+
+                    films.push(n[i]);
+
+                    var studios = "";
+
+                    for (var o=0; o<Object.keys(n[i].film.studios).length; o++) {
+                        if (o==0) {
+                            studios += n[i].film.studios[o + 1];
+                        } else {
+                            studios += " - " + n[i].film.studios[o + 1];
+                        }
+                    }
+
+                    var directors = "undefined";
+
+                    for (var p=0; p<Object.keys(n[i].film.directors).length; p++) {
+                        if (p==0) {
+                            directors = n[i].film.directors[p + 1];
+                        } else {
+                            directors += " - " + n[i].film.directors[p + 1];
+                        }
+                    }
+
+                    billets +=  "<div class='billet card'>" +
+                        "<a href='/film/id/"+n[i].film.id+"'><img class='poster col s3' src='http://img.omdbapi.com/?i="+n[i].film.imdb+"&apikey=1733f6a&h=300' alt='poster' class='poster' style='margin-right: 25px;'></a>" +
+                        "<a href='/film/id/"+n[i].film.id+"'><h3 style='margin-top: 45px'>"+n[i].film.title+" (" + n[i].film.released + ") </h3></a>" +
+                        "<h4> Studio(s) : " + studios + "</h4>" +
+                        "<h4> Director(s) : " + directors + "</h4>" +
+                        "</div>";
+                }
+            }
+
+            infos = "<div>Number of results : "+films.length+" (only the first 20 films are displayed)</div>";
+            $("#resultat").html(infos+billets);
+        }
+
+
+
+
+        function afficherStats(n) {
+
+            afficherStatsSongs(n);
+            afficherStatsFilms(n);
+            afficherStatsPerformers(n);
+
+
+        }
+
+
+        function afficherStatsSongs(n){
+
+            var allSongs = [];
+
+            var i;
+
+            for(i=0; i < n.length; i++){
+
+                for (var u=0; u <Object.keys(n[i].songs).length; u++) {
+
+                    //Songs
+
+                    var trouve = 0;
+                    allSongs.forEach(function (element) {
+                        if (element.id == n[i].songs[u+1].id) {
+                            element.nb++;
+                            trouve = 1;
+                        }
+                    });
+
+                    if (trouve == 0) {
+                        song = {};
+                        song.id = n[i].songs[u+1].id;
+                        song.title = n[i].songs[u+1].title;
+                        song.nb = 1;
+                        allSongs.push(song);
+                    }
+                }
+            }
+
+            var titleSongs = '';
+            var textForSongs;
+
+            allSongs.sort(function(a, b) {
+                return b.nb - a.nb;
+            });
+
+            for(var i = 0; i < allSongs.length; i++){
+
+                if (i != allSongs.length - 1) {
+                    titleSongs += "<a href='/song/id/"+allSongs[i].id+"'>"+allSongs[i].title+" ("+allSongs[i].nb+")"+"</a>, ";
+                } else {
+                    titleSongs += "<a href='/song/id/"+allSongs[i].id+"'>"+allSongs[i].title+" ("+allSongs[i].nb+")"+"</a>";
+                }
+            }
+
+            nbSongsInSelection = allSongs.length;
+            textForSongs = "<div><h3>"+nbSongsInSelection+" songs in the selection</h3><p>"+titleSongs+"</p></div>";
+            $(".songStats").html(textForSongs);
+        }
+
+        function afficherStatsFilms(n){
+
+            var allFilms = [];
+
+            var i;
+
+            for(i=0; i < n.length; i++){
+
+                var trouve = 0;
+                allFilms.forEach(function (element) {
+                    if (element.id == n[i].film.id) {
+                        element.nb++;
+                        trouve = 1;
+                    }
+                });
+
+                if (trouve == 0) {
+                    film = {};
+                    film.id = n[i].film.id;
+                    film.title = n[i].film.title;
+                    film.nb = 1;
+                    allFilms.push(film);
+                }
+            }
+
+            var titleFilms = '';
+            var textForFilms;
+
+            allFilms.sort(function(a, b) {
+                return b.nb - a.nb;
+            });
+
+            for(var i = 0; i < allFilms.length; i++){
+
+                if (i != allFilms.length - 1) {
+                    titleFilms += "<a href='/film/id/"+allFilms[i].id+"'>"+allFilms[i].title+" ("+allFilms[i].nb+")"+"</a>, ";
+                } else {
+                    titleFilms += "<a href='/film/id/"+allFilms[i].id+"'>"+allFilms[i].title+" ("+allFilms[i].nb+")"+"</a>";
+                }
+            }
+
+            nbFilmsInSelection = allFilms.length;
+            textForFilms = "<div><h3>"+nbFilmsInSelection+" films in the selection</h3><p>"+titleFilms+"</p></div>";
+            $(".filmStats").html(textForFilms);
+        }
+
+
+        function afficherStatsPerformers(n){
+
+            var allPerformers = [];
+
+            var i;
+
+            for(i=0; i < n.length; i++){
+
+                for (var u=0; u <Object.keys(n[i].performers).length; u++) {
+
+                    //Performers
+
+                    var trouve = 0;
+                    allPerformers.forEach(function (element) {
+                        if (element.id == n[i].performers[u+1].id) {
+                            element.nb++;
+                            trouve = 1;
+                        }
+                    });
+
+                    if (trouve == 0) {
+                        performer = {};
+                        performer.id = n[i].performers[u+1].id;
+                        performer.name = n[i].performers[u+1].name;
+                        performer.nb = 1;
+                        allPerformers.push(performer);
+                    }
+                }
+            }
+
+            var titlePerformers = '';
+            var textForPerformers;
+
+            allPerformers.sort(function(a, b) {
+                return b.nb - a.nb;
+            });
+
+            for(var i = 0; i < allPerformers.length; i++){
+
+                if (i != allPerformers.length - 1) {
+                    titlePerformers += "<a href='/performer/id/"+allPerformers[i].id+"'>"+allPerformers[i].name+" ("+allPerformers[i].nb+")"+"</a>, ";
+                } else {
+                    titlePerformers += "<a href='/performer/id/"+allPerformers[i].id+"'>"+allPerformers[i].name+" ("+allPerformers[i].nb+")"+"</a>";
+                }
+            }
+
+            nbPerformersInSelection = allPerformers.length;
+            textForPerformers = "<div><h3>"+nbPerformersInSelection+" performers in the selection</h3><p>"+titlePerformers+"</p></div>";
+            $(".performerStats").html(textForPerformers);
+        }
+
+
+
+
+    </script>
+
+
+    <script>
+
+
+    </script>
+
+
+
+    <script>
+
+
+
+        //////////////////////////////////////////////////////////////////////////////
+        //Slider
+        //////////////////////////////////////////////////////////////////////////////
+
+        var slider = document.getElementById('slider');
+        var _min = 1850;
+        var _max = 2000;
+
+        noUiSlider.create(slider, {
+            start: [1880, 1980],
+            connect: true,
+            range: {
+                'min': _min,
+                'max': _max
+            },
+            format: wNumb({
+                decimals: 0
+            }),
+            tooltips: true,
+            step: 1
+
+        });
+
+        slider_values = [];
+        var min_slider ='';
+        var max_slider ='';
+
+        slider.noUiSlider.on('end', function(){
+            slider_values = slider.noUiSlider.get();
+            min_slider = slider_values[0];
+            max_slider = slider_values[1];
+            changementFiltre();
+        });
+
+        //////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
+
+
+    </script>
+
+    {#Gestion du select one#}
+    {#<script>#}
+
+        {#var old = $("#studio").val();#}
+
+        {#$("#studio").on('change', function(){#}
+
+            {#if (old == $(this).val()) {#}
+                {#console.log( $(this).val());#}
+
+                {#$('#studio').prop('selectedIndex',0).change();#}
+
+
+{#//                $("#studio").val("0").change();#}
+{#//                $("#studio").text("");#}
+            {#}#}
+
+            {#old = $(this).val();#}
+
+        {#});#}
+
+    {#</script>#}
+
+
+    {#Listener sur le bouton radio numbers/films#}
+    <script>
+
+
+
+
+        $('#form_radio_button input').on('change', function() {
+
+            if ($('input[name=radioButton]:checked', '#form_radio_button').val() == "numbers") {
+                numbersOrFilms = "numbers";
+                changementFiltre();
+            } else {
+                numbersOrFilms = "films";
+                changementFiltre();
+            }
+        });
+
+    </script>
+
+{% endblock %}

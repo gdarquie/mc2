@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {#<link rel="stylesheet" href="{{ asset('css/number.css')}}">#}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <h1>Infos films</h1>
+
+        <p>Il y a <strong>{{ films|length }}</strong> films dont <strong>{{ filmsByStudio|length }}</strong> avec des studios connus.</p>
+
+        <p>Les films qui ont un même id imdb sont :
+
+
+        {% for film in filmsDuplicate %}
+            <li>{{ film.title }}</li>
+        {% endfor %}
+
+
+        <table class="striped">
+            {% for film in filmsImdb  %}
+                <tr><td>{{ film.title }}</td><td>{{ film.imdb }}</td><td>{{ film.nb }}</td></tr>
+            {% endfor %}
+        </table>
+        </p>
+        <table class="striped">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Id IMDB</th>
+                <th>Released</th>
+                <th>Studio</th>
+            </tr>
+
+
+        {% for film in filmsByStudio  %}
+
+            <tr>
+                <td>{{ film.filmId }}</td>
+                <td><a href="{{ path('film' , {'filmId' : film.filmId}) }}">{{ film.title }}</a></td>
+                <td>{{ film.idimdb }}</td>
+                <td>{{ film.released }}</td>
+                <td>{{ film.studio }}</td>
+            </tr>
+
+        {% endfor %}
+
+        </table>
+
+        <br>
+
+        <table class="striped">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Id IMDB</th>
+                <th>Released</th>
+                <th>Studio</th>
+            </tr>
+
+
+            {% for film in films  %}
+
+                <tr>
+                    <td>{{ film.filmid }}</td>
+                    <td>{{ film.title }}</td>
+                    <td>{{ film.idimdb }}</td>
+                    <td>{{ film.released }}</td>
+                    <td>{{ film.studio }}</td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+{% endblock %}

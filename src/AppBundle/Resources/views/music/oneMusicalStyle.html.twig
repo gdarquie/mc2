@@ -1,0 +1,251 @@
+{% extends 'base.html.twig' %}
+
+
+{%  block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card{
+            padding : 30px;
+        }
+
+        .donut{
+            height: 400px;
+        }
+
+        .list_film, .list_number {
+            color: #039be5;
+            cursor: pointer; cursor: hand;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+
+<section class="container">
+
+    <h1>Musical Style : {{ myMusicalStyle.title }}</h1>
+    <p><i>{{ myMusicalStyle.definition }}</i></p>
+
+    <article class="card row">
+        <h2>Production Numbers per Year</h2>
+        <div id="diagram" style="height: 300px;"></div>
+    </article>
+
+    <article class="card row">
+        <h2>Musical Ensemble</h2>
+        <h2><i>Formation</i></h2>
+
+        <div class='wordcloud col s12 row' id='wordcloud_style' style="height: 300px"></div>
+
+
+        {#<div class="col s12 donut" id="donut_ensemble"><svg></svg></div>#}
+
+    </article>
+
+    <article class="card row">
+        <h2>Song Types</h2>
+        <h2><i>Types de chanson</i></h2>
+
+        <div class="col s12 donut" id="donut_type"><svg></svg></div>
+
+    </article>
+
+    <article class="card row">
+
+        <h2>List of numbers</h2>
+
+        <div id="table_one_musical_style" class="row">
+            <input class="search" placeholder="Search" />
+            <table class="striped medium-table">
+                <thead>
+                <tr>
+                    <th onclick="sortPerso(this, 'list_number')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                    <th onclick="sortPerso(this, 'list_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                    <th onclick="sortPerso(this, 'list_release_date')" data-cpt="0">Release Date<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                    <th onclick="sortPerso(this, 'studio')" data-cpt="0">Studio<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                </tr>
+                </thead>
+                <tbody class="list">
+
+                {% for number in numbersFinal  %}
+
+                <tr>
+                    <td onclick="window.location.href='{{ path('number', {'id' : number.id}) }}';" class="list_number">{{ number.title }}</td>
+                    <td onclick="window.location.href='{{ path('film', {'filmId' : number.film.filmId}) }}';" class="list_film">{{ number.film.title }}</td>
+                    <td class="list_release_date">{{ number.film.released }}</td>
+                    <td class="list_studio">
+                        {% for studio in number.film.studios %}
+                            {{ studio.title }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <ul class="pagination"></ul>
+        </div>
+    </article>
+
+
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+
+    <script type="text/javascript">
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+        function drawBasic() {
+            //diagram
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Year');
+            data.addColumn('number', 'Numbers');
+
+            data.addRows([
+                {% for item in musicalStyleByYear %}
+                [new Date({{ item.released }}, 0, 1), {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var formatter = new google.visualization.DateFormat({pattern: 'yyyy'});
+            formatter.format(data, 0);
+
+            var options = {
+
+            };
+
+
+            var chart = new google.visualization.LineChart(document.getElementById('diagram'));
+
+            chart.draw(data, options);
+
+        }
+    </script>
+
+
+    <script>
+
+        nv.addGraph(function() {
+            var chart = nv.models.pieChart()
+                .x(function(d) { return d.label })
+                .y(function(d) { return d.value })
+                .showLabels(true)     //Display pie labels
+                .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+            ;
+
+            d3.select("#donut_ensemble svg")
+                .datum(exampleData3())
+                .transition().duration(350)
+                .call(chart);
+
+            return chart;
+        });
+
+        //Pie chart example data. Note how there is only a single array of key-value pairs.
+        function exampleData3() {
+            return  [
+                {% for item in musicalEnsemble %}
+                {
+                    "label" : "{{ item.title }}",
+                    "value" : {{ item.nb }} },
+                {% endfor %}
+            ];
+        }
+    </script>
+
+    <script>
+
+
+        words_style = [{% for item in musicalEnsemble  %}{ text : "{{ item.title }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_style').jQCloud(words_style);
+        $('#wordcloud_style').jQCloud('update', words_style, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+    </script>
+
+
+    <script>
+        nv.addGraph(function() {
+            var chart = nv.models.pieChart()
+                .x(function(d) { return d.label })
+                .y(function(d) { return d.value })
+                .showLabels(true)     //Display pie labels
+                .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+            ;
+
+            d3.select("#donut_type svg")
+                .datum(exampleData())
+                .transition().duration(350)
+                .call(chart);
+
+            return chart;
+        });
+
+        function exampleData() {
+            return  [
+                {% for item in songTypes %}
+                {
+                    "label" : "{{ item.title }}",
+                    "value" : {{ item.nb }} },
+                {% endfor %}
+            ];
+        }
+    </script>
+
+    <script>
+
+        {% if numbersFinal|length < 16 %}
+
+        var options = {
+            valueNames: ['list_number', 'list_film', 'list_release_date', 'list_studio']
+        };
+
+        {% endif %}
+
+
+        {% if numbersFinal|length > 15 %}
+
+        var options = {
+            valueNames: ['list_number', 'list_film', 'list_release_date', 'list_studio'],
+            page: 15,
+            pagination: true
+        };
+
+        {% endif %}
+
+        var numberList = new List('table_one_musical_style', options);
+
+    </script>
+
+    <script>
+        function sortPerso(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                numberList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                numberList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+    </script>
+
+{% endblock %}

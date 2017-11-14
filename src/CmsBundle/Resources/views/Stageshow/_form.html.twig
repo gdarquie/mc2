@@ -1,0 +1,33 @@
+
+<div class="row">
+
+    <div class="col s12">
+        <div class="cartouche mini-form ">
+            {{form_row(stageForm.title, {
+                'label' : "Title"
+            })}}
+            {{ form_row(stageForm.production) }}
+            {{ form_row(stageForm.opening, {
+                'attr': {'class': 'datepicker'},
+            }) }}
+            {{ form_row(stageForm.ibdb) }}
+            {{ form_row(stageForm.status) }}
+            {{ form_row(stageForm.closing) }}
+            {{ form_row(stageForm.count) }}
+            {{ form_row(stageForm.comment, {
+                'attr': {'class': 'materialize-textarea'},
+                'label' : "Comment"
+            }) }}
+            {{ form_row(stageForm.films) }}
+            {{ form_row(stageForm.race) }}
+            {{ form_row(stageForm.composers) }}
+            {{ form_row(stageForm.books) }}
+            {{ form_row(stageForm.lyricists) }}
+            {{ form_row(stageForm.choreographers) }}
+            {{ form_row(stageForm.directors) }}
+            {{ form_row(stageForm.designs) }}
+
+        </div>
+    </div>
+
+</div>

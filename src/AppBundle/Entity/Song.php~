@@ -1,0 +1,164 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Song
+ *
+ * @ORM\Table(name="song")
+ * @ORM\Entity
+ */
+class Song
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=500, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="date", type="string", length=45, nullable=true)
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=45, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
+     */
+    private $timestamp = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="song_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $songId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Radio", inversedBy="song")
+     * @ORM\JoinTable(name="song_has_radio",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="song_id", referencedColumnName="song_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="radio_id", referencedColumnName="radio_id")
+     *   }
+     * )
+     */
+    private $radio;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Stagenumber", inversedBy="song")
+     * @ORM\JoinTable(name="song_has_stagenumber",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="song_id", referencedColumnName="song_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="stageNumber_id", referencedColumnName="stageNumber_id")
+     *   }
+     * )
+     */
+    private $stagenumber;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Quotation", inversedBy="song")
+     * @ORM\JoinTable(name="song_has_quotation",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="song_id", referencedColumnName="song_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="quotation_id", referencedColumnName="quotation_id")
+     *   }
+     * )
+     */
+    private $quotation;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Disc", inversedBy="song")
+     * @ORM\JoinTable(name="song_has_disc",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="song_id", referencedColumnName="song_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="disc_id", referencedColumnName="disc_id")
+     *   }
+     * )
+     */
+    private $disc;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Songtype", inversedBy="song")
+     * @ORM\JoinTable(name="songtype_has_song",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="song_id", referencedColumnName="song_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="songType_id", referencedColumnName="songType_id")
+     *   }
+     * )
+     */
+    private $songtype;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tv", inversedBy="song")
+     * @ORM\JoinTable(name="song_has_tv",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="song_id", referencedColumnName="song_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="TV_id", referencedColumnName="TV_id")
+     *   }
+     * )
+     */
+    private $tv;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Number", mappedBy="song")
+     */
+    private $number;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->radio = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stagenumber = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->quotation = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->disc = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->songtype = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tv = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->number = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

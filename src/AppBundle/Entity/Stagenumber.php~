@@ -1,0 +1,142 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Stagenumber
+ *
+ * @ORM\Table(name="stageNumber", indexes={@ORM\Index(name="fk_stageNumber_setting1_idx", columns={"setting_id"}), @ORM\Index(name="fk_stageNumber_stageShow1_idx", columns={"stageShow_id"})})
+ * @ORM\Entity
+ */
+class Stagenumber
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="group_id", type="integer", nullable=true)
+     */
+    private $groupId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order", type="integer", nullable=true)
+     */
+    private $order;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ibdb", type="integer", nullable=true)
+     */
+    private $ibdb;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stageNumber_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $stagenumberId;
+
+    /**
+     * @var \AppBundle\Entity\Place
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="setting_id", referencedColumnName="place_id")
+     * })
+     */
+    private $setting;
+
+    /**
+     * @var \AppBundle\Entity\Stageshow
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Stageshow")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="stageShow_id", referencedColumnName="stageShow_id")
+     * })
+     */
+    private $stageshow;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Ensemble", mappedBy="stagenumber")
+     */
+    private $ensemble;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Number", mappedBy="stagenumber")
+     */
+    private $number;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Costumes", mappedBy="stagenumber")
+     */
+    private $costumes;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Musical", mappedBy="stagenumber")
+     */
+    private $musical;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dancing", mappedBy="stagenumber")
+     */
+    private $dancing;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Song", mappedBy="stagenumber")
+     */
+    private $song;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ensemble = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->number = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->costumes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->musical = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dancing = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->song = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

@@ -1,0 +1,364 @@
+<article class="card row">
+
+    {% if person.numbersChoregrapher|length == 0 and person.numbersArranger|length == 0 and person.numbersDirector|length == 0 and person.numbersPerformer|length == 0 and person.numbersFigurant|length == 0 and person.songLyricist|length == 0 and person.songComposer|length == 0 %}
+
+        <div class="no_info center">
+            <h3>No result</h3>
+            <p> {{ person.name }} is not involved in any number yet </p>
+        </div>
+
+    {% endif %}
+
+    <div class="col s12">
+
+        {% if person.numbersChoregrapher|length > 0 %}
+            <div class="row">
+                <article class="col s12">
+                    <h3>Number(s) where {{ person.name }} is a choreographer</h3>
+
+                    <div id="number_choreo_list">
+
+                        <input class="search" placeholder="Search" />
+
+                        <table class="striped medium-table">
+                            <thead>
+                            <tr>
+                                <th onclick="sortPersoNumberChoreoList(this, 'number_choreo_title')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberChoreoList(this, 'number_choreo_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberChoreoList(this, 'number_choreo_released')" data-cpt="0">Released<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+
+                            {% for item in person.numbersChoregrapher %}
+                                <tr>
+                                    <td onclick="window.location.href='{{ path('number', {'id' : item.id}) }}';" class="number_choreo_title link_perso">{{ item.title }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.film.filmId}) }}';" class="number_choreo_film link_perso">{{ item.film }}</td>
+                                    <td class="number_choreo_released">{{ item.film.released }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <ul class="pagination"></ul>
+
+                    </div>
+
+                </article>
+            </div>
+        {% endif %}
+
+        {% if person.numbersArranger|length > 0 %}
+            <div class="row">
+                <article class="col s12">
+                    <h3>Number(s) where {{ person.name }} is an arranger</h3>
+
+                    <div id="number_arranger_list">
+
+                        <input class="search" placeholder="Search" />
+
+                        <table class="striped medium-table">
+                            <thead>
+                            <tr>
+                                <th onclick="sortPersoNumberArrangerList(this, 'number_arranger_title')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberArrangerList(this, 'number_arranger_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberArrangerList(this, 'number_arranger_released')" data-cpt="0">Released<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+
+                            {% for item in person.numbersArranger %}
+                                <tr>
+                                    <td onclick="window.location.href='{{ path('number', {'id' : item.id}) }}';" class="number_arranger_title link_perso">{{ item.title }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.film.filmId}) }}';" class="number_arranger_film link_perso">{{ item.film }}</td>
+                                    <td class="number_arranger_released">{{ item.film.released }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <ul class="pagination"></ul>
+
+                    </div>
+
+                </article>
+            </div>
+        {% endif %}
+
+
+        {% if person.numbersDirector|length > 0 %}
+            <div class="row">
+                <article class="col s12">
+                    <h3>Number(s) where {{ person.name }} is a director</h3>
+
+                    <div id="number_director_list">
+
+                        <input class="search" placeholder="Search" />
+
+                        <table class="striped medium-table">
+                            <thead>
+                            <tr>
+                                <th onclick="sortPersoNumberDirectorList(this, 'number_director_title')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberDirectorList(this, 'number_director_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberDirectorList(this, 'number_director_released')" data-cpt="0">Released<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+
+                            {% for item in person.numbersDirector %}
+                                <tr>
+                                    <td onclick="window.location.href='{{ path('number', {'id' : item.id}) }}';" class="number_director_title link_perso"> {{ item.title }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.film.filmId}) }}';" class="number_director_film link_perso">{{ item.film }}</td>
+                                    <td class="number_director_released">{{ item.film.released }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <ul class="pagination"></ul>
+
+                    </div>
+                </article>
+            </div>
+        {% endif %}
+
+        {% if person.numbersPerformer|length > 0 %}
+            <div class="row">
+                <article class="col s12">
+                    <h3>Number(s) where {{ person.name }} is a performer</h3>
+
+                    <div id="number_performer_list">
+
+                        <input class="search" placeholder="Search" />
+
+                        <table class="striped medium-table">
+                            <thead>
+                            <tr>
+                                <th onclick="sortPersoNumberPerformerList(this, 'number_performer_title')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberPerformerList(this, 'number_performer_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberPerformerList(this, 'number_performer_released')" data-cpt="0">Released<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+
+                            {% for item in person.numbersPerformer %}
+                                <tr>
+                                    <td onclick="window.location.href='{{ path('number', {'id' : item.id}) }}';" class="number_performer_title link_perso">{{ item.title }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.film.filmId}) }}';" class="number_performer_film link_perso">{{ item.film }}</td>
+                                    <td class="number_performer_released">{{ item.film.released }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <ul class="pagination"></ul>
+                    </div>
+                </article>
+            </div>
+        {% endif %}
+
+        {% if person.numbersFigurant|length > 0 %}
+            <div class="row">
+                <article class="col s12">
+                <h3>Numbers where {{ person.name }} doesn't participate</h3>
+                    <p>{{ person.name }} is present but does not participate</p>
+
+                    <div id="number_not_list">
+
+                        <input class="search" placeholder="Search" />
+
+                        <table class="striped medium-table">
+                            <thead>
+                            <tr>
+                                <th onclick="sortPersoNumberNotList(this, 'number_not_title')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberNotList(this, 'number_not_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                                <th onclick="sortPersoNumberNotList(this, 'number_not_released')" data-cpt="0">Released<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+
+                            {% for item in person.numbersFigurant %}
+                                <tr>
+                                    <td onclick="window.location.href='{{ path('number', {'id' : item.id}) }}';" class="number_not_title link_perso">{{ item.title }}</td>
+                                    <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.film.filmId}) }}';" class="number_not_film link_perso">{{ item.film }}</td>
+                                    <td class="number_not_released">{{ item.film.released }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <ul class="pagination"></ul>
+
+                    </div>
+                </article>
+        {% endif %}
+        </div>
+
+    </div>
+
+</article>
+
+{% block javascript %}
+
+    {#<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>#}
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+
+    <script>
+
+        {% if person.numbersChoregrapher|length < 16 %}
+
+        var options = {
+            valueNames: ['number_choreo_title', 'number_choreo_film', 'number_choreo_released' ]
+        };
+
+        {% endif %}
+
+
+        {% if person.numbersChoregrapher|length > 15 %}
+
+        var options = {
+            valueNames: ['number_choreo_title', 'number_choreo_film', 'number_choreo_released' ],
+            page: 15,
+            pagination: true
+        };
+
+        {% endif %}
+
+        var numberChoreoList = new List('number_choreo_list', options);
+
+
+
+
+        {% if person.numbersArranger|length < 16 %}
+
+        var options2 = {
+            valueNames: ['number_arranger_title', 'number_arranger_film', 'number_arranger_released' ]
+        };
+
+        {% endif %}
+
+
+        {% if person.numbersArranger|length > 15 %}
+
+        var options2 = {
+            valueNames: ['number_arranger_title', 'number_arranger_film', 'number_arranger_released' ],
+            page: 15,
+            pagination: true
+        };
+
+        {% endif %}
+        var numberArrangerList = new List('number_arranger_list', options2);
+
+
+
+        {% if person.numbersDirector|length < 16 %}
+
+        var options3 = {
+            valueNames: ['number_director_title', 'number_director_film', 'number_director_released' ]
+        };
+        {% endif %}
+
+        {% if person.numbersDirector|length > 15 %}
+
+        var options3 = {
+            valueNames: ['number_director_title', 'number_director_film', 'number_director_released' ],
+            page: 15,
+            pagination: true
+        };
+        {% endif %}
+        var numberDirectorList = new List('number_director_list', options3);
+
+
+
+        {% if person.numbersPerformer|length < 16 %}
+        var options4 = {
+            valueNames: ['number_performer_title', 'number_performer_film', 'number_performer_released' ]
+        };
+        {% endif %}
+
+        {% if person.numbersPerformer|length > 15 %}
+        var options4 = {
+            valueNames: ['number_performer_title', 'number_performer_film', 'number_performer_released' ],
+            page: 15,
+            pagination: true
+        };
+        {% endif %}
+        var numberPerformerList = new List('number_performer_list', options4);
+
+
+
+        {% if person.numbersFigurant|length < 16 %}
+        var options5 = {
+            valueNames: ['number_not_title', 'number_not_film', 'number_not_released' ]
+        };
+        {% endif %}
+
+        {% if person.numbersFigurant|length > 15 %}
+        var options5 = {
+            valueNames: ['number_not_title', 'number_not_film', 'number_not_released' ],
+            page: 15,
+            pagination: true
+        };
+        {% endif %}
+
+        var numberNotList = new List('number_not_list', options5);
+
+
+    </script>
+
+    <script>
+        function sortPersoNumberChoreoList(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                numberChoreoList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                numberChoreoList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoNumberArrangerList(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                numberArrangerList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                numberArrangerList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoNumberDirectorList(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                numberDirectorList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                numberDirectorList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoNumberPerformerList(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                numberPerformerList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                numberPerformerList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+        function sortPersoNumberNotList(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                numberNotList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                numberNotList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+    </script>
+{% endblock %}

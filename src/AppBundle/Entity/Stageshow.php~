@@ -1,0 +1,96 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Stageshow
+ *
+ * @ORM\Table(name="stageShow", indexes={@ORM\Index(name="fk_stageShow_film1_idx", columns={"film_id"})})
+ * @ORM\Entity
+ */
+class Stageshow
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=500, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="production", type="string", length=255, nullable=true)
+     */
+    private $production;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="opening", type="date", nullable=true)
+     */
+    private $opening;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="film_id", type="integer", nullable=true)
+     */
+    private $filmId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ibdb", type="integer", nullable=true)
+     */
+    private $ibdb;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="race", type="string", length=45, nullable=true)
+     */
+    private $race;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=45, nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="closing", type="date", nullable=true)
+     */
+    private $closing;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="count", type="integer", nullable=true)
+     */
+    private $count;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="timestamp", type="datetime", nullable=false)
+     */
+    private $timestamp = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stageShow_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $stageshowId;
+
+
+}
+

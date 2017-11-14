@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="container">
+
+        <header>
+            <h1 class="center">Topics and spectacular archetypes</h1>
+            <h1 class="center"><i>Scènes de genre et thèmes</i></h1>
+
+            <p>The project aims at identifying spectacular archetypes and recurring topics in the numbers. Each number can have one or several topics and a “general mood” indicating the tone employed.</p>
+            <p class="center">***</p>
+            <p><i>Une partie du projet vise à repérer dans les numéros des archétypes spectaculaires récurrents et des scènes de genre. Chaque numéro peut comporter un ou plusieurs de ces motifs, de même qu’une indication sur la tonalité générale et le traitement.</i></p>
+        </header>
+
+        <div>
+            <h2>Topics</h2>
+
+            <article class="card card_thematique row">
+                <div class=" col s12 row">
+                    <p class="col m4 center">Existing topics : <span class="number">{{ moodGenre|length }}</span></p>
+                    <p class="col m4 center">Production numbers in the database : <span class="number">{{ totalNumberGenre.nb }}</span></p>
+                    <p class="col m4 center">Used topics : <span class="number">{{ totalGenre.nb }}</span></p>
+                    {#<p><span class="number"></span> different tones exist, <span class="number">{{ mostPopularGenre.title }}</span> is the most used, <span class="number"></span> moods have been saved for <span class="number"></span> different numbers.</p>#}
+                </div>
+
+                {#<div class='wordcloud col s12 row' id='wordcloud_topics' style="height: 500px"></div>#}
+
+                <div class="col s12">
+                    {% for item in popularmoodGenreCartouche %}
+                        <a href="{{ path('getOneMood', {'itemId' : item.itemId }) }}" class="chip">{{ item.title }} ({{ item.nb }})</a>
+                    {% endfor %}
+                </div>
+
+                <div id="chart_div3" class="col s12" style=" height: 400px; margin-bottom: 15px;"></div>
+
+            </article>
+
+            {#<article>#}
+
+            {#by decade?#}
+            {#</article>#}
+        </div>
+
+        <div>
+            <h2>General Mood</h2>
+            <article class="card card_thematique row">
+                <div class=" col s12 row">
+                    <p class="col m6 center">Existing moods : <span class="number">{{ mood|length }}</span></p>
+                    <p class="col m6 center">Used moods : <span class="number">{{ total.nb }}</span></p>
+                    {#<p><span class="number"></span> different moods exist, <span class="number">{{ mostPopular.title }}</span> is the most used, <span class="number">{{ total.nb }}</span> moods have been saved for <span class="number">{{ totalNumber.nb }}</span> different numbers.</p>#}
+                </div>
+
+                {#<div class='wordcloud col s12 row' id='wordcloud_general' style="height: 250px"></div>#}
+
+                <div class="col s12">
+                    {% for item in popularmoodCartouche %}
+                        <a href="{{ path('getOneMood', {'itemId' : item.itemId }) }}" class="chip">{{ item.title }} ({{ item.nb }})</a>
+                    {% endfor %}
+                </div>
+
+                <div id="chart_div" class="col s12" style=" height: 400px;"></div>
+
+            </article>
+
+
+            {#<article>#}
+
+            {#by decade?#}
+            {#</article>#}
+        </div>
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in popularmood %}
+                ['{{ item.title }}' , {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Production Numbers per General Mood',
+                legend: { position: 'none' }
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+
+
+            var options = {
+                title: 'Ratio',
+                pieHole: 0.4,
+            };
+
+            var data3 = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for i in 1..20 %}
+                ['{{ popularmoodGenre[i].title }}' , {{ popularmoodGenre[i].nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Production numbers per topic',
+                legend: { position: 'none' },
+            };
+            var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
+            chart3.draw(data3, options);
+
+        }
+    </script>
+
+
+
+    <script>
+        words_topics = [{% for item in popularmoodGenre  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneMood', {'itemId' : item.itemId }) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_topics').jQCloud(words_topics);
+        $('#wordcloud_topics').jQCloud('update', words_topics, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+
+        words_general = [{% for item in popularmood  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneMood', {'itemId' : item.itemId }) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_general').jQCloud(words_general);
+        $('#wordcloud_general').jQCloud('update', words_general, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,431 @@
+<div class="container">
+
+    <!-- Performance -->
+
+    <article class="row">
+        <div class="card col s12">
+
+            <h2 class="center">Performances <a class="modal-trigger black-text " href="#modal_def_performance"><i class="material-icons">help</i></a></h2>
+
+            <!-- Definition Modal Structure -->
+            <div id="modal_def_performance" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h3>Definitions</h3>
+                    <div class="row s12">
+
+                        <article class="col s12">
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Performance</th>
+                                    <th>Definition</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in performances  %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.definition }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Genres Modal Structure -->
+            <div id="modal_performance" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h3>Performances </h3>
+                    <div class="row s12">
+
+                        <article class="col s6">
+                            <h4>{{ person.name }}</h4>
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in performance  %}
+                                    <tr>
+                                        <td><a href="{{ path('person_search_by_thesaurus' , {'personId': person.personId, 'id' : item.id, 'type' : 'performance' } ) }}" >{{ item.title }}</a></td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </article>
+
+                        <article class="col s6">
+
+                            <h4>all numbers</h4>
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in performances  %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </article>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualisations -->
+            <div id="melviz_performance" class="melviz"></div>
+
+            <!-- Genre Modal Trigger -->
+            <div class="row ">
+
+                <article class="col s12 ">
+                    <p class="center">
+                        <a class="modal-trigger black-text " href="#modal_performance">
+                            More information
+                            <i class="material-icons">more</i>
+                        </a>
+                    </p>
+                </article>
+            </div>
+
+        </div>
+        <hr>
+    </article>
+
+    <!-- Structure -->
+
+    <article class="row">
+        <div class="card col s12">
+
+            <h2 class="center">Structures <a class="modal-trigger black-text " href="#modal_def_structure"><i class="material-icons">help</i></a></h2>
+
+            <!-- Definition Modal Structure -->
+            <div id="modal_def_structure" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h3>Definitions</h3>
+                    <div class="row s12">
+
+                        <article class="col s12">
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Performance</th>
+                                    <th>Definition</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in structures  %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.definition }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Genres Modal Structure -->
+            <div id="modal_structure" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h3>Structures</h3>
+                    <div class="row s12">
+
+                        <article class="col s6">
+                            <h4>{{ person.name }}</h4>
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in structure  %}
+                                    <tr>
+                                        <td><a href="{{ path('person_search_by_thesaurus' , {'personId': person.personId, 'id' : item.id, 'type' : 'structure' } ) }}" >{{ item.title }}</a></td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </article>
+
+                        <article class="col s6">
+
+                            <h4>all numbers</h4>
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in structures  %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </article>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualisations -->
+            <div id="melviz_structure" class="melviz"></div>
+
+            <!-- Genre Modal Trigger -->
+            <div class="row ">
+
+                <article class="col s12 ">
+                    <p class="center">
+                        <a class="modal-trigger black-text " href="#modal_structure">
+                            More information
+                            <i class="material-icons">more</i>
+                        </a>
+                    </p>
+                </article>
+            </div>
+
+        </div>
+        <hr>
+    </article>
+
+    {#<article class="card row">#}
+
+    {#<div class="col s12">#}
+    {#<h2>Ratio performance type</h2>#}
+
+    {#<div id="melviz_performance" class="melviz"></div>#}
+
+    {#<div class="row">#}
+
+    {#<div class="col s6">#}
+    {#<h3>All</h3>#}
+    {#{% for item in performances  %}#}
+    {#{{ item.title }}({{ item.nb }})<br>#}
+    {#{% endfor %}#}
+    {#</div>#}
+
+    {#<div class="col s6">#}
+    {#<h3>For {{ person.name }}</h3>#}
+    {#{% for item in performance  %}#}
+    {#{{ item.title }}({{ item.nb }})<br>#}
+    {#{% endfor %}#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+
+    {#</article>#}
+
+    {#<article class="card row">#}
+    {#<div class="col s12">#}
+    {#<h2>Dancing types</h2>#}
+
+    {#<div class="row">#}
+    {#<div class="col s12">#}
+    {#<h3>For {{ person.name  }}</h3>#}
+    {#{% for item in dancing  %}#}
+    {#{{ item.title }}({{ item.nb }})#}
+    {#{% endfor %}#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</article>#}
+
+    {#<article class="card row">#}
+    {#<div class="col s12">#}
+    {#<h2>Musical types</h2>#}
+
+    {#<div class="row">#}
+    {#<div class="col s12">#}
+    {#<h3>For {{ person.name  }}</h3>#}
+    {#{% for item in musical  %}#}
+    {#{{ item.title }}({{ item.nb }})#}
+    {#{% endfor %}#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</article>#}
+
+    <!-- Completeness -->
+
+    <article class="row">
+        <div class="card col s12">
+
+
+            {#<h2 class="center">Completeness : {{ (((complete.nb * 100)/completes.nb))|round(1) }}</span>%</h2>#}
+            <h2 class="center">Completeness <a class="modal-trigger black-text " href="#modal_def_completeness"><i class="material-icons">help</i></a></h2>
+
+
+            <!-- Definition Modal Structure -->
+            <div id="modal_def_completeness" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h3>Definitions</h3>
+                    <div class="row s12">
+
+                        <article class="col s12">
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Performance</th>
+                                    <th>Definition</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in completenesses  %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.definition }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Genres Modal Structure -->
+            <div id="modal_completeness" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h3>Completeness</h3>
+                    <div class="row s12">
+
+                        <article class="col s6">
+                            <h4>{{ person.name }}</h4>
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in completeness  %}
+                                    <tr>
+                                        <td><a href="{{ path('person_search_by_thesaurus' , {'personId': person.personId, 'id' : item.id, 'type' : 'completeness' } ) }}" >{{ item.title }}</a></td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </article>
+
+                        <article class="col s6">
+
+                            <h4>all numbers</h4>
+                            <table class="striped tablesorter">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Numbers</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in completenesses  %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.nb }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </article>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualisations -->
+            <div id="melviz_completeness" class="melviz"></div>
+
+
+            <!-- Genre Modal Trigger -->
+            <div class="row ">
+
+                <article class="col s12 ">
+                    <p class="center">
+                        <a class="modal-trigger black-text " href="#modal_completeness">
+                            More information
+                            <i class="material-icons">more</i>
+                        </a>
+                    </p>
+                </article>
+            </div>
+
+        </div>
+        <hr>
+    </article>
+
+
+
+
+    {#<article class="card row">#}
+    {#<div class="col s12">#}
+    {#<h2>Solos</h2>#}
+
+    {#<div class="row">#}
+    {#<div class="col s12">#}
+    {#<h3>Multiple occurences</h3>#}
+    {#<p>Ratio : {{ occurences.nb }} / {{ completOptions.nb }} = {{ ((occurences.nb * 100)/completOptions.nb) }}</p>#}
+    {#</div>#}
+
+    {#</div>#}
+    {#</div>#}
+    {#</article>#}
+
+    {#<article class="card row">#}
+    {#<div class="col s12">#}
+    {#<h2>Solos</h2>#}
+
+    {#<div class="row">#}
+    {#<div class="col s6">#}
+    {#<h3>All</h3>#}
+
+    {#</div>#}
+
+    {#<div class="col s6">#}
+    {#<h3>For {{ person.name  }}</h3>#}
+
+    {#</div>#}
+    {#</div>#}
+{#</div>#}

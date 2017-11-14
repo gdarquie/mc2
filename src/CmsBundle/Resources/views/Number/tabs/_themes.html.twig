@@ -1,0 +1,107 @@
+{% import _self as formMacros %}
+
+{% macro printValidationThemeRow(validationForm) %}
+    <div class="col s12 js-theme-validation-item">
+        <a href="" class="js-remove-theme-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+
+<div id="themes" class="row container main">
+
+    {% if ( validationTheme |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+    <h3>Themes, spaces and exoticisms</h3>
+
+    <div class="color-cartouche">
+    {{form_row(numberForm.costumes, {
+        'label' : "Costumes (from thesaurus) (multi) (mandatory)"
+    })}}
+
+    {{ form_row(numberForm.stereotype, {
+        'label' : "Ethnic stereotypes : is there any ethnic impersonation (accent,  make up, ...)? (from thesaurus) (multi)"
+    }) }}
+    {#{{ form_row(numberForm.diegeticPlace) }}#}
+    {#{{ form_row(numberForm.socialPlace) }}#}
+    {{ form_row(numberForm.diegetic_place_thesaurus, {
+        'label' : "Diegetic place (from thesaurus) (multi) (mandatory)"
+    }) }}
+    {{ form_row(numberForm.general_localisation, {
+        "label" : "General localisation (from thesaurus) (multi) (optional)"
+    }) }}
+    {{form_row(numberForm.imaginary, {
+        'label' : "Imaginary place (from thesaurus) (multi) (optional)"
+    })}}
+
+    {{form_row(numberForm.exoticism_thesaurus, {
+        "label" : "General exoticism (linked to dancing styles, settings, ...) (from thesaurus) (multi) (optional)"
+    })}}
+
+    {{ form_label(numberForm.commentTheme, "Theme comment(s)") }}
+    {{ form_widget(numberForm.commentTheme, {
+        'attr': {'class': 'materialize-textarea'}
+    }) }}
+
+    {{ form_widget(numberForm.completeTheme) }}
+    {{ form_label(numberForm.completeTheme, "Completed?") }}
+    {{ form_errors(numberForm.completeTheme) }}
+
+    {#{{form_row(numberForm.validationTheme)}}#}
+    </div>
+
+    {% if is_granted('ROLE_EDITOR') %}
+
+        <div class="color-cartouche">
+
+            {%  if validationTheme is defined %}
+                {% for item in validationTheme  %}
+                    <div class="chip js-theme-validation-item">
+                        {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                        <a href="" class="js-remove-theme-validation">
+                            {#<i class="material-icons black-text" >delete</i>#}
+                            <i class="close material-icons black-text">close</i>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+
+            <div class="row js-theme-validation-wrapper" data-prototype="{{ formMacros.printValidationThemeRow(numberForm.validationTheme.vars.prototype)|e('html_attr') }}">
+
+                <div class="col s12">
+                    <a href="#" class="js-add-theme-validation valign-wrapper col s12">
+                        <i class="material-icons black-text ">add</i>
+                        Add a validation
+                    </a>
+                </div>
+            </div>
+
+            <div class="hide">
+                {{ form_widget(numberForm.validationTheme) }}
+            </div>
+
+        </div>
+
+    {% endif %}
+
+    </article>
+
+    {% if ( validationTheme |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+
+</div>

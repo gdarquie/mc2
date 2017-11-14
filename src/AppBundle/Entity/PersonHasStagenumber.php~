@@ -1,0 +1,53 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PersonHasStagenumber
+ *
+ * @ORM\Table(name="person_has_stageNumber", indexes={@ORM\Index(name="fk_person_has_stageNumber_stageNumber1_idx", columns={"stageNumber_id"}), @ORM\Index(name="fk_person_has_stageNumber_person1_idx", columns={"person_id"}), @ORM\Index(name="fk_person_has_stageNumber_profession1_idx", columns={"profession_id"})})
+ * @ORM\Entity
+ */
+class PersonHasStagenumber
+{
+    /**
+     * @var \AppBundle\Entity\Stagenumber
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Stagenumber")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="stageNumber_id", referencedColumnName="stageNumber_id")
+     * })
+     */
+    private $stagenumber;
+
+    /**
+     * @var \AppBundle\Entity\Profession
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Profession")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="profession_id", referencedColumnName="profession_id")
+     * })
+     */
+    private $profession;
+
+    /**
+     * @var \AppBundle\Entity\Person
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Person")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="person_id", referencedColumnName="person_id")
+     * })
+     */
+    private $person;
+
+
+}
+

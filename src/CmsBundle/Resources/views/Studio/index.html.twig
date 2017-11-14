@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+    <h1>Studios list</h1>
+
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>Studio id</th>
+                <th>Title</th>
+                <th>Date_creation</th>
+                <th>Last_update</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for studio in studios %}
+            <tr>
+                <td><a href="{{ path('admin_studio_show', { 'studioId': studio.studioId }) }}">{{ studio.studioId }}</a></td>
+                <td>{{ studio.title }}</td>
+                <td>{% if studio.datecreation %}{{ studio.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if studio.lastupdate %}{{ studio.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_studio_show', { 'studioId': studio.studioId }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_studio_edit', { 'studioId': studio.studioId }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_studio_new') }}">Create a new studio</a>
+        </li>
+    </ul>
+
+    </div>
+{% endblock %}

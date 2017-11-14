@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="container">
+
+		<h1>Add a Stage Number</h1>
+
+		{{ form_start(stagenumberForm)}}
+
+		{{ include('editor/film/_form.html.twig')}}
+		<button class="btn black" type="submit" formnovalidate >New Stage Number</button>
+		{{ form_end(stagenumberForm)}}
+
+	</div>
+
+{% endblock %}

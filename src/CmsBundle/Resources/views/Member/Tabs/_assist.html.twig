@@ -1,0 +1,60 @@
+<div class="col s12 row" id="assist">
+    <article class="col s12" >
+
+
+        <div id="my-help-list">
+
+            <div class="row valign-wrapper">
+
+                <div class="col">
+                    <h2>Please, help me <span class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="You can filter the complete, uncomplete or numbers where help is needed when writing 'unfinished', 'incomplete' or 'help' in the search field"><i class="material-icons circle white-text grey lighten-1">help</i></span></h2>
+                </div>
+
+
+                <div class="col">
+
+                    <div class="search-wrapper input-field">
+
+                        <input id="searchMyNumbers" class="search" type="text">
+                        <label for="searchMyNumbers">Search</label>
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    Sort :
+                    <span class="sort chip pointer" data-sort="title">title</span>
+                    <span class="sort chip pointer" data-sort="film">film</span>
+                    <span class="sort chip pointer" data-sort="timestamp">last edition</span>
+                    {#<span class="sort chip pointer" data-sort="check">status</span>#}
+                </div>
+
+                {#<div class="col">#}
+                    {#Filter:#}
+                    {#<span class="sort chip pointer" data-filter="title">title</span>#}
+                    {#<span class="sort chip pointer" data-filter="timecode">timecode</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="shots">shots</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="structure">structure</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="performance">performance</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="backstage">backstage</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="theme">theme</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="mood">mood</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="music">music</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="reference">reference</span>#}
+                    {#<span class="sort chip pointer" data-check-completeness="all">all</span>#}
+                {#</div>#}
+            </div>
+
+            <ul class="list collection number-list">
+                {% for number in help  %}
+                {% include 'CmsBundle:Member:Modals/_number.html.twig' %}
+                {% endfor %}
+            </ul>
+
+            <ul class="pagination"></ul>
+
+        </div>
+
+
+    </article>
+</div>

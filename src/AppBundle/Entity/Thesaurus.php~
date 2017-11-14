@@ -1,0 +1,75 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Thesaurus
+ *
+ * @ORM\Table(name="thesaurus")
+ * @ORM\Entity
+ */
+class Thesaurus
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=500, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="text", length=65535, nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string", length=255, nullable=true)
+     */
+    private $link;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="definition", type="text", length=65535, nullable=true)
+     */
+    private $definition;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="example", type="text", length=65535, nullable=true)
+     */
+    private $example;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string", length=500, nullable=true)
+     */
+    private $category;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="thesaurus_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $thesaurusId;
+
+
+}
+

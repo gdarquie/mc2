@@ -1,0 +1,49 @@
+
+{% if number.completeTitle == 2 or number.completeTc == 2 or number.completeStructure == 2 or number.completeShots == 2 or number.completePerformance == 2 or number.completeBackstage == 2 or number.completeTheme == 2 or number.completeMood == 2 or number.completeMusic == 2 or number.completeReference  == 2 %}
+<li class="collection-item avatar film{{ number.film.filmId }} number-item number-assist">
+    <i class="material-icons circle orange">movie</i>
+{% else %}
+
+    {% if (number.completeTitle and number.completeTc and number.completeStructure and number.completeShots and number.completePerformance and number.completeBackstage and number.completeTheme and number.completeMood and number.completeMusic and number.completeReference )  == 1 %}
+    <li class="collection-item avatar film{{ number.film.filmId }} number-item number-complete">
+        <i class="material-icons circle green">movie</i>
+
+    {% else %}
+    <li class="collection-item avatar film{{ number.film.filmId }} number-item number-uncomplete">
+        <i class="material-icons circle red">movie</i>
+
+    {% endif %}
+{% endif %}
+
+
+<a href="{{ path('number_edit', {'id': number.id}) }}"><span class="title">{{ number.title }}</span></a>
+<span class="film"> - {{ number.film }}</span>
+<span class="timestamp">{{ number.lastUpdate|date() }}</span>
+
+<p class="number-check">
+
+    <span data-complete-title="{{ number.completeTitle }}">title {% if number.completeTitle == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeTitle == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-timecode="{{ number.completeTc }}">timecode {% if number.completeTc == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeTc == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-shots="{{ number.completeShots }}">shots {% if number.completeShots == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeShots == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-structure="{{ number.completeStructure }}">structure {% if number.completeStructure == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeStructure == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-performance="{{ number.completePerformance }}">performance {% if number.completePerformance == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completePerformance == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-backstage="{{ number.completeBackstage }}">backstage {% if number.completeBackstage == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeBackstage == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-theme="{{ number.completeTheme}}"->theme {% if number.completeTheme == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeTheme == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-mood="{{ number.completeMood }}"->mood {% if number.completeMood == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeMood == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-music="{{ number.completeMusic }}"->music {% if number.completeMusic == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeMusic == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+
+    <span data-complete-reference="{{ number.completeReference }}"->reference {% if number.completeReference == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeReference == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>
+    {#<span data-complete-cost="{{ number.completeCost }}">complement {% if number.completeCost == 1 %}<i class="material-icons tiny green-text">done</i>{% elseif number.completeCost == 2 %}<span class="grey-text">?</span>{% else %}<i class="material-icons tiny red-text">not_interested</i>{% endif %}</span>#}
+
+</p>
+
+{#<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>#}
+</li>

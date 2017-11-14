@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <section class="container">
+
+        <h1>{{ censorship.title }} [censorship]</h1>
+
+        <p>{% for item in censorship.film %}{{ item.title }}{% endfor %}</p>
+        <p>{{ censorship.dateCreation|date() }}</p>
+        <p>{{ censorship.lastUpdate|date() }}</p>
+
+    </section>
+
+{% endblock %}
+

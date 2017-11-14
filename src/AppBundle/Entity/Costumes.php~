@@ -1,0 +1,62 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Costumes
+ *
+ * @ORM\Table(name="costumes")
+ * @ORM\Entity
+ */
+class Costumes
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="costumes_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $costumesId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Stagenumber", inversedBy="costumes")
+     * @ORM\JoinTable(name="stagenumber_has_costumes",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="costumes_id", referencedColumnName="costumes_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="stageNumber_id", referencedColumnName="stageNumber_id")
+     *   }
+     * )
+     */
+    private $stagenumber;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stagenumber = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

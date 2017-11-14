@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>State</h1>
+
+        <table>
+            <tbody>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ state.title }}</td>
+                </tr>
+                <tr>
+                    <th>Lat</th>
+                    <td>{{ state.lat }}</td>
+                </tr>
+                <tr>
+                    <th>Long</th>
+                    <td>{{ state.long }}</td>
+                </tr>
+                <tr>
+                    <th>Stateid</th>
+                    <td>{{ state.stateId }}</td>
+                </tr>
+                <tr>
+                    <th>Date_creation</th>
+                    <td>{% if state.datecreation %}{{ state.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Last_update</th>
+                    <td>{% if state.lastupdate %}{{ state.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('admin_state_index') }}">Back to the list</a>
+            </li>
+            <li>
+                <a href="{{ path('admin_state_edit', { 'stateId': state.stateId }) }}">Edit</a>
+            </li>
+
+        </ul>
+
+        <div>
+            {{ form_start(delete_form) }}
+            <input class="btn red right" type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </div>
+
+        <br><br>
+    </div>
+{% endblock %}

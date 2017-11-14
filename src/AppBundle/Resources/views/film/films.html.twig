@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+
+<table class='striped'>
+	<thead>
+		<th>Title</th>
+		<th>Released</th>
+	</thead>
+	<tbody>
+	{% for film in films| slice(page,10) %}
+		<tr>
+			<td>{{film.title}}</td>
+			<td>{{film.released}}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+
+<article>
+<p><i>[ Système de pagination à continuer ...]</i></p>
+
+{% set total = (films|length / 10)| round %}
+
+<ul class="pagination">
+	<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    
+	{% for i in (page-2)..(page+3)  %}
+		{% if i == page %}
+			<li class="active"><a href="{{path('films',{page : page})}}">{{i}}</a></li>
+		{% elseif i != page %}
+			<li class="waves-effect"><a href="{{path('films',{page : i})}}">{{i}}</a></li>
+		{% endif %}
+	{% endfor %}
+	
+	<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+	</div>
+</ul>
+</article>
+
+{% endblock %}

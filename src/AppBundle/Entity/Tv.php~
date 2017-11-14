@@ -1,0 +1,84 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Tv
+ *
+ * @ORM\Table(name="TV")
+ * @ORM\Entity
+ */
+class Tv
+{
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tv_show", type="string", length=255, nullable=true)
+     */
+    private $tvShow;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="TV_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $tvId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Song", mappedBy="tv")
+     */
+    private $song;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Musical", mappedBy="tv")
+     */
+    private $musical;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dancing", mappedBy="tv")
+     */
+    private $dancing;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->song = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->musical = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dancing = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

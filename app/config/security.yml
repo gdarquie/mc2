@@ -1,0 +1,47 @@
+# app/config/security.yml
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_MEMBER:      ROLE_USER
+        ROLE_EXPERT:      ROLE_MEMBER
+        ROLE_EDITOR:      ROLE_EXPERT
+        ROLE_ADMIN:       ROLE_EDITOR
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                # if you are using Symfony < 2.8, use the following config instead:
+                # csrf_provider: form.csrf_provider
+
+            logout:       true
+            anonymous:    true
+            switch_user:  true
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: ROLE_USER }
+        - { path: ^/thesaurus, role: ROLE_USER }
+        - { path: ^/resetting, role: ROLE_MEMBER }
+
+        - { path: ^/member, role: ROLE_MEMBER } #attention, il faut promovoir les users
+        - { path: ^/editor, role: ROLE_EDITOR }
+        - { path: ^/expert, role: ROLE_EXPERT }
+        - { path: ^/admin, role: ROLE_ADMIN }
+
+        - { path: ^/censorship, role: ROLE_USER }
+        - { path: ^/mood, role: ROLE_USER }
+        - { path: ^/exoticism, role: ROLE_USER }
+        - { path: ^/dance, role: ROLE_USER }
+        - { path: ^/person, role: ROLE_USER }
+
+

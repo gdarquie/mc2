@@ -1,0 +1,76 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Disc
+ *
+ * @ORM\Table(name="disc")
+ * @ORM\Entity
+ */
+class Disc
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="reference", type="string", length=9999, nullable=true)
+     */
+    private $reference;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="obc", type="string", length=45, nullable=true)
+     */
+    private $obc;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="date", type="integer", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="disc_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $discId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Song", mappedBy="disc")
+     */
+    private $song;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Musical", mappedBy="disc")
+     */
+    private $musical;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->song = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->musical = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

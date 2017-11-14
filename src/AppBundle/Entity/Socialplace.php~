@@ -1,0 +1,47 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Socialplace
+ *
+ * @ORM\Table(name="socialPlace")
+ * @ORM\Entity
+ */
+class Socialplace
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="socialPlace_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $socialplaceId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Number", mappedBy="socialplace")
+     */
+    private $numberNumber;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->numberNumber = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

@@ -1,0 +1,434 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card{
+            padding : 20px;
+        }
+
+        body{
+            background: #f7f7f7;
+        }
+
+        .parallax-container {
+            height: 340px;
+            margin-bottom: 2em;
+        }
+
+        .stats {
+            font-size: 25px;
+            margin: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="parallax-container">
+        <br><br>
+        <h1 class="center uppercase">Dance</h1>
+        <h1 class="center uppercase"><i>Danse</i></h1>
+
+        <div class="parallax"><img src="{{ asset('img/gentlemen prefer blondes.jpg') }}"></div>
+    </div>
+
+    <section class="container">
+
+        <div class="center">
+
+            <p>This page provides information on the dance numbers. Numbers are labeled by dancing type, dance sub-genre, and dance content.</p>
+            <p class="center">***</p>
+            <p><i>Cette page propose des informations sur les numéros dansés , caractérisés en fonction de trois catégories : type de danse, sous-genre et contenu spécifique de la danse.</i></p>
+
+        </div>
+
+        <article class="card card_thematique">
+            <div class=" col s12 row">
+                <p class="col m6 center">Dance Numbers : <span class="number">{{ numberDancedNumber.nb }}</span></p>
+                <p class="col m6 center">Films with at least one dance number : <span class="number">{{ nbfilmsWithDancedNumber.nb }}</span></p>
+                {#<p><span class="number"></span> different tones exist, <span class="number">{{ mostPopularGenre.title }}</span> is the most used, <span class="number"></span> moods have been saved for <span class="number"></span> different numbers.</p>#}
+            </div>
+        </article>
+
+        {#<article>#}
+
+            {#<article class="card">#}
+                {#<div class="col s12">#}
+                    {#<h2>Average shots length for year </h2>#}
+                    {#<div id="diagram"></div>#}
+                {#</div>#}
+            {#</article>#}
+
+        {#</article>#}
+    </section>
+
+<!-- Dancing type-->
+    <div class="parallax-container">
+        <br><br>
+        <h1 class="center">Dancing Type, Sub-genre, and Content</h1>
+        <h1 class="center"><i>Type de danse, Sous-genres, Contenu spécifique</i></h1>
+        <div class="parallax"><img src="{{ asset('img/my gal sal.jpg') }}"></div>
+    </div>
+
+    <section class="container">
+
+        <article class="card card_thematique">
+
+            <h2>Dancing type</h2>
+
+            <div class="center">
+
+                <p>Choreographic branchs including defined figures, coming from theatrical or popular traditions</p>
+                <p class="center">***</p>
+                <p><i>Tendances chorégraphiques contenant des figures-type, issues de traditions spectaculaires ou populaires</i></p>
+
+            </div>
+
+            <p class="stats"><span>{{ dancing|length }}</span> dancing types :</p>
+
+
+            {#<div class='wordcloud col s12 row' id='wordcloud_type' style="height: 300px"></div>#}
+
+            {% for item in populardancing  %}
+                <a href="{{ path('getOneDancingType', {'dance' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
+            {% endfor %}
+
+            <div id="chart_div" style="height: 400px; margin-top: 20px;"></div>
+        </article>
+
+        <article class="card card_thematique">
+
+            <h2>Sub-Genre</h2>
+
+            <div class="center">
+                <p>Danced figures coming from theatrical or popular traditions and specifying the "dancing types"</p>
+                <p class="center">***</p>
+                <p><i>Figures dansées issues de traditions spectaculaires ou populaires, participant à préciser le contenu des "dancing types"</i></p>
+            </div>
+
+            <p class="stats"><span>{{ subgenre|length }}</span> dance sub-genres : </p>
+
+            {#<div class='wordcloud col s12 row' id='wordcloud_subgenre' style="height: 300px"></div>#}
+
+            {% for item in popularsubgenre  %}
+
+               <a href="{{ path('getOneDanceSubgenre', {'dance' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
+
+            {% endfor %}
+
+            <div id="chart_div2" style="height: 400px; margin-top: 20px;"></div>
+        </article>
+
+        <article class="card card_thematique">
+
+            <h2>Dance Content</h2>
+
+            <div class="center">
+                <p>Gestural patterns or style nuances regularly used</p>
+                <p class="center">***</p>
+                <p><i>Motifs gestuels ou nuances de style récurrents</i></p>
+            </div>
+
+            <p class="stats"><span>{{ content|length }}</span> dance contents : </p>
+
+            {#<div class='wordcloud col s12 row' id='wordcloud_content' style="height: 300px"></div>#}
+
+            {% for item in popularcontent  %}
+
+               <a href="{{ path('getOneDanceContent', {'dance' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
+
+            {% endfor %}
+
+            <div id="chart_div3" style="height: 400px; margin-top: 20px;"></div>
+
+
+        </article>
+
+
+    </section>
+
+{#<!-- Dancing subgenre-->#}
+    {#<div class="parallax-container">#}
+        {#<br><br>#}
+        {#<h1 class="center">Dance Sub-genre</h1>#}
+        {#<h1 class="center"><i>Sous-genres</i></h1>#}
+
+            {#<div class="parallax"><img src="{{ asset('img/my fair lady.jpg') }}"></div>#}
+    {#</div>#}
+
+    {#<section class="container">#}
+
+
+
+     {#</section>#}
+
+    <!-- Choreographers-->
+    <div class="parallax-container">
+        <br><br>
+        <h1 class="center">Choreographers</h1>
+        <h1 class="center"><i>Chorégraphes</i></h1>
+
+        <div class="parallax"><img src="{{ asset('img/gold-diggers-1933.jpg') }}"></div>
+    </div>
+
+    <section class="container">
+
+
+
+
+
+        <article class="card card_thematique">
+
+
+            <div id="choreo_top_list">
+
+                <input class="search" placeholder="Search" />
+                <table class="striped medium-table">
+                    <thead>
+                    <tr>
+                        <th onclick="sortPerso(this, 'choreo_name_top')" data-cpt="0">choreographer<i class="material-icons icone_perso">arrow_drop_down</i> </th>
+                        <th onclick="sortPerso(this, 'choreo_total_top')" data-cpt="0">Production numbers<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for item in top_associated_choreographers  %}
+                        <tr>
+                            <td class="choreo_name_top">{{ item.name }}</td>
+                            <td class="choreo_total_top">{{ item.total }}</td>
+                            <td><a class="waves-effect waves-light choreo_btn_top" href="#modal1" data-name="{{ item.name }}">Show More</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+                <ul class="pagination"></ul>
+
+            </div>
+
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <div id="choreo_list">
+
+                        <input class="search" placeholder="Search" />
+
+                        <table class="striped medium-table tablesorter">
+                            <thead>
+                            <tr>
+                                <th>Associated choreographers</th>
+                                <th>Number</th>
+                                <th>Film</th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+                            {% for item in associated_choreographers  %}
+                                <tr>
+                                    <td class="choreo_name">{{ item.name }}</td>
+                                    <td class="choreo_number"><a href="{{ path('number' ,{'id' : item.id}) }}">{{ item.title }}</a></td>
+                                    <td class="choreo_film"><a href="{{ path('film' ,{'filmId' : item.filmId}) }}">{{ item.film }}</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <ul class="pagination"></ul>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+            </div>
+        </article>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in populardancing %}
+                ['{{ item.title }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Production numbers per dancing type',
+                legend: { position: 'none' },
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+
+            var data2 = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in popularsubgenre %}
+                ['{{ item.title }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Production numbers per dance sub-genre',
+                legend: { position: 'none' }
+            };
+            var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+            chart2.draw(data2, options);
+
+            var data3 = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in popularcontent %}
+                ['{{ item.title }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Production numbers per dance content',
+                legend: { position: 'none' }
+            };
+            var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
+            chart3.draw(data3, options);
+
+        }
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+        function drawBasic() {
+            //diagram
+            {#var data4 = new google.visualization.DataTable();#}
+            {#data4.addColumn('number', 'Year');#}
+            {#data4.addColumn('number', 'Average shots length in seconds');#}
+
+            {#data4.addRows([#}
+                {#{% for item in avgNbShots %}#}
+                {#[{{ item.released }}, {{ item.nb |number_format(0) }}],#}
+                {#{% endfor %}#}
+
+            {#]);#}
+
+            {#var options = {#}
+                {#hAxis: {#}
+                    {#title: 'Years'#}
+                {#},#}
+                {#vAxis: {#}
+                    {#title: 'Average shots length in seconds'#}
+                {#},#}
+            {#};#}
+
+
+            {#var chart4 = new google.visualization.LineChart(document.getElementById('diagram'));#}
+
+            {#chart4.draw(data4, options);#}
+        }
+
+    </script>
+
+
+    <script>
+
+        var options = {
+            valueNames: ['choreo_name_top', 'choreo_total_top']
+        };
+
+        var choreoTopList = new List('choreo_top_list', options);
+
+
+        var options2 = {
+            valueNames: ['choreo_name', 'choreo_number', 'choreo_film' ],
+            page: 10,
+            pagination: true
+        };
+
+        var choreoList = new List('choreo_list', options2);
+
+        var choreo_name = document.getElementsByClassName("choreo_btn_top");
+        for (var i = 0; i < choreo_name.length; i++) {
+            choreo_name[i].addEventListener('click', function () {
+                if(this.dataset.name == "Total") {
+                    choreoList.search("");
+                } else {
+                    choreoList.search(this.dataset.name);
+                }
+            });
+        }
+
+
+        options = {
+            valueNames: ['choreo_name_top', 'choreo_total_top'],
+            page: 15,
+            pagination: true
+        };
+
+        choreoTopList = new List('choreo_top_list', options);
+
+
+    </script>
+
+
+    <script>
+
+        words_type = [{% for item in populardancing  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneDancingType', {'dance' : item.id}) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_type').jQCloud(words_type);
+        $('#wordcloud_type').jQCloud('update', words_type, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+
+
+        words_subgenre = [{% for item in popularsubgenre  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneDanceSubgenre', {'dance' : item.id}) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_subgenre').jQCloud(words_subgenre);
+        $('#wordcloud_subgenre').jQCloud('update', words_subgenre, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+
+        words_content = [{% for item in popularcontent  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneDanceContent', {'dance' : item.id}) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_content').jQCloud(words_content);
+        $('#wordcloud_content').jQCloud('update', words_content, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+
+        {#{% for item in popularcontent  %}#}
+        {#<a href="{{ path('getOneDanceContent', {'dance' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>#}
+        {#{% endfor %}#}
+
+
+    </script>
+
+
+    <script>
+
+        function sortPerso(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                choreoTopList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                choreoTopList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+
+    </script>
+
+{% endblock %}

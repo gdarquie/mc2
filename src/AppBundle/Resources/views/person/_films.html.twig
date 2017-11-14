@@ -1,0 +1,280 @@
+<article id="films" class="card row">
+
+
+    <div>
+
+
+        {% if person.numbersChoregrapher|length == 0 and person.numbersArranger|length == 0 and person.numbersDirector|length == 0 and person.numbersPerformer|length == 0 and person.numbersFigurant|length == 0 and person.songLyricist|length == 0 and person.songComposer|length == 0 %}
+            <div class="no_info center">
+                <h3>No result</h3>
+                <p> {{ person.name }} is not involved in any film yet </p>
+            </div>
+        {% else %}
+
+            <h2>All films linked to {{ person.name }}</h2>
+
+        {% endif %}
+
+
+        {% set tabAll = [] %}
+        {% for item in person.numbersChoregrapher  %}
+            {% if item.film.filmId not in tabAll %}
+                {% set tabAll = tabAll|merge([item.film.filmId]) %}
+                <div class="col s2 card film">
+                    <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                        <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for item in person.numbersArranger  %}
+            {% if item.film.filmId not in tabAll %}
+                {% set tabAll = tabAll|merge([item.film.filmId]) %}
+                <div class="col s2 card film">
+                    <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                        <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for item in person.numbersDirector  %}
+            {% if item.film.filmId not in tabAll %}
+                {% set tabAll = tabAll|merge([item.film.filmId]) %}
+                <div class="col s2 card film">
+                    <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                        <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for item in person.numbersPerformer  %}
+            {% if item.film.filmId not in tabAll %}
+                {% set tabAll = tabAll|merge([item.film.filmId]) %}
+                <div class="col s2 card film">
+                    <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                        <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for item in person.numbersFigurant  %}
+            {% if item.film.filmId not in tabAll %}
+                {% set tabAll = tabAll|merge([item.film.filmId]) %}
+                <div class="col s2 card film">
+                    <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                        <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for item in person.songLyricist  %}
+            {% for itemNumber in item.number  %}
+            {% if itemNumber.film.filmId not in tabAll %}
+                {% set tabAll = tabAll|merge([itemNumber.film.filmId]) %}
+                <div class="col s2 card film">
+                    <a href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
+                        <h4 class="center">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
+                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ itemNumber.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% endfor %}
+
+        {% for item in person.songComposer  %}
+            {% for itemNumber in item.number  %}
+                {% if itemNumber.film.filmId not in tabAll %}
+                    {% set tabAll = tabAll|merge([itemNumber.film.filmId]) %}
+                    <div class="col s2 card film">
+                        <a href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
+                            <h4 class="center">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
+                            <img class="poster col s12" src="http://img.omdbapi.com/?i={{ itemNumber.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+
+    {% if person.numbersChoregrapher|length > 0 %}
+        <div class="row">
+            <article class="col s12">
+                <h2>Film(s) where {{ person.name }} is choreographer of at least one number</h2>
+
+                {% set tabChoreo = [] %}
+                {% for item in person.numbersChoregrapher  %}
+                    {% if item.film.filmId not in tabChoreo %}
+                    {% set tabChoreo = tabChoreo|merge([item.film.filmId]) %}
+                    <div class="col s2 card film">
+                        <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                            <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                            <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </article>
+        </div>
+    {% endif %}
+
+    {% if person.numbersArranger|length > 0 %}
+
+        <div class="row">
+            <article class="col s12">
+                <h2>Film(s) where {{ person.name }} is arranger of at least one number</h2>
+
+                {% set tabArranger = [] %}
+                {% for item in person.numbersArranger  %}
+                    {% if item.film.filmId not in tabArranger %}
+                        {% set tabArranger = tabArranger|merge([item.film.filmId]) %}
+                        <div class="col s2 card film">
+                            <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                                <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                                <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </article>
+        </div>
+    {% endif %}
+
+
+    {% if person.numbersDirector|length > 0 %}
+
+        <div class="row">
+            <article class="col s12">
+                <h2>Film(s) where {{ person.name }} is director of at least one number</h2>
+
+                {% set tabDirector = [] %}
+                {% for item in person.numbersDirector  %}
+                    {% if item.film.filmId not in tabDirector %}
+                        {% set tabDirector = tabDirector|merge([item.film.filmId]) %}
+                        <div class="col s2 card film">
+                            <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                                <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                                <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </article>
+        </div>
+    {% endif %}
+
+
+    {% if person.numbersPerformer|length > 0 %}
+
+        <div class="row">
+            <article class="col s12">
+                <h2>Film(s) where {{ person.name }} is a performer in at least one number</h2>
+
+                {% set tabPerformer = [] %}
+                {% for item in person.numbersPerformer  %}
+                    {% if item.film.filmId not in tabPerformer %}
+                        {% set tabPerformer = tabPerformer|merge([item.film.filmId]) %}
+                        <div class="col s2 card film">
+                            <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
+                                <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
+                                <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </article>
+        </div>
+    {% endif %}
+
+
+    {#{% if person.numbersFigurant|length > 0 %}#}
+
+        {#<div class="row">#}
+            {#<article class="col s12">#}
+                {#<h2>Film(s) where {{ person.name }} doesn't participate in at least one number</h2>#}
+
+                {#{% set tabFigurant = [] %}#}
+                {#{% for item in person.numbersFigurant  %}#}
+                    {#{% if item.film.filmId not in tabFigurant %}#}
+                        {#{% set tabFigurant = tabFigurant|merge([item.film.filmId]) %}#}
+                        {#<div class="col s2 card film">#}
+                            {#<a href="{{ path('film', {'filmId' : item.film.filmId}) }}">#}
+                                {#<h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>#}
+                                {#<img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">#}
+                            {#</a>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                {#{% endfor %}#}
+            {#</article>#}
+        {#</div>#}
+    {#{% endif %}#}
+
+
+    {% if person.songLyricist|length > 0 %}
+
+        <div class="row">
+            <article class="col s12">
+                <h2>Film(s) where {{ person.name }} is lyricist</h2>
+
+                {% set tabLyricist = [] %}
+                {% for item in person.songLyricist  %}
+                    {% for itemNumber in item.number  %}
+                        {% if itemNumber.film.filmId not in tabLyricist %}
+                            {% set tabLyricist = tabLyricist|merge([itemNumber.film.filmId]) %}
+                            <div class="col s2 card film">
+                                <a href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
+                                    <h4 class="center">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
+                                    <img class="poster col s12" src="http://img.omdbapi.com/?i={{ itemNumber.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </article>
+        </div>
+    {% endif %}
+
+    {% if person.songComposer|length > 0 %}
+
+        <div class="row">
+            <article class="col s12">
+                <h2>Film(s) where {{ person.name }} is composer</h2>
+
+                {% set tabComposer = [] %}
+                {% for item in person.songComposer  %}
+                    {% for itemNumber in item.number  %}
+                        {% if itemNumber.film.filmId not in tabComposer %}
+                            {% set tabComposer = tabComposer|merge([itemNumber.film.filmId]) %}
+                            <div class="col s2 card film">
+                                <a href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
+                                    <h4 class="center">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
+                                    <img class="poster col s12" src="http://img.omdbapi.com/?i={{ itemNumber.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </article>
+        </div>
+    {% endif %}
+</article>
+
+{% block javascript %}
+
+    <script>
+        function standby() {
+//            document.getElementById('foo').src = 'https://www.google.com/images/srpr/logo11w.png'
+
+        }
+    </script>
+
+{% endblock %}
+
+
+

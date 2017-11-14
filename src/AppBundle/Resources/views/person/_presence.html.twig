@@ -1,0 +1,143 @@
+<div class="container">
+
+    <article  class="card row">
+        <h2>Average shot length for {{ person.name }}</h2>
+
+        {#<p>Sum of all the length's number where {{ person.name }} is a performer divided by the sum of all the shots of this numbers : <span class="number">{{ sumLengthShot.average|round(2) }}</span> seconds</p>#}
+
+        <p>Average length of {{ person.name }}'s numbers divided by her/his average number of shots for one number : <span class="number">{{ avgLengthShot.average|round(2) }}</span> seconds</p>
+
+    </article>
+
+    <article class="card row">
+
+
+        <h2>Presence of {{ person.name }} in numbers</h2>
+
+        <article>
+
+            <p> Number of films : <span class="number">{{ lengthTotal|length}}</span></p>
+
+
+                {#<h3 class="title-mini">List of films chronologically sorted by release date with the duration in seconds of all numbers (even the numbers where {{ person.name }} is not present)</h3>#}
+
+            <div id="presence_list">
+
+                <input class="search" placeholder="Search" />
+
+                <table class="striped medium-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortPersoPresence(this, 'presence_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            <th onclick="sortPersoPresence(this, 'presence_released')" data-cpt="0">Release date<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            <th onclick="sortPersoPresence(this, 'presence_total_duration')" data-cpt="0">Total length of the numbers in the film (in sec)<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            <th onclick="sortPersoPresence(this, 'presence_person_duration')" data-cpt="0">Total length of the numbers where {{ person.name }} performs<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                            <th onclick="sortPersoPresence(this, 'presence_ratio')" data-cpt="0">Presence in the numbers<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                {% for item in lengthTotal  %}
+                    <tr>
+                        <td onclick="window.location.href='{{ path('film' ,{'filmId' : item.filmId}) }}';" class="presence_film link_perso">{{ item.title }}</td>
+                        <td class="presence_released">{{ item.released }}</td>
+                        <td class="presence_total_duration">{{ item.total }}</td>
+                        <td class="presence_person_duration">{{ lengthTotalForPerson[loop.index0].total }}</td>
+                        <td class="presence_ratio">{{ ((ratio[loop.index0].one / ratio[loop.index0].all)*100)|round() }}%</td>
+                {% endfor %}
+                    </tbody>
+                </table>
+                <ul class="pagination"></ul>
+            </div>
+
+        </article>
+
+        {#<article class="s6 col">#}
+        {#<h3 class="title-mini">List of films chronologically sorted by release date with the duration in seconds of all numbers (even the numbers where {{ person.name }} is present)</h3>#}
+
+        {#<table class="striped tablesorter mini-table">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th>Length of numbers where {{ person.name }} is present</th>#}
+                {#<th>Date</th>#}
+                {#<th>Total (sec)</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+                {#{% for item in lengthTotalForPerson  %}#}
+                    {#<tr>#}
+                        {#<td>{{ item.title }}</td>#}
+                        {#<td>{{ item.released }}</td>#}
+                        {#<td>{{ item.total }}</td></tr>#}
+                {#{% endfor %}#}
+            {#</tbody>#}
+        {#</table>#}
+
+
+        {#<h3 class="title-mini">Ratio performer’s presence duration / total duration of numbers for each film</h3>#}
+
+
+            {#<table class="striped tablesorter mini-table">#}
+                {#<thead>#}
+                {#<tr>#}
+                    {#<th>Title</th>#}
+                    {#<th>Date</th>#}
+                    {#<th>Presence</th>#}
+                {#</tr>#}
+                {#</thead>#}
+                {#<tbody>#}
+                {#{% for item in ratio  %}#}
+                    {#<tr>#}
+                        {#<td>{{ item.title }}</td>#}
+                        {#<td>{{ item.released }}</td>#}
+                        {#<td>{{ ((item.one / item.all)*100)|round()  }}%</td></tr>#}
+                {#{% endfor %}#}
+                {#</tbody>#}
+            {#</table>#}
+
+        {#</article>#}
+
+</article>
+</div>
+
+{% block javascript %}
+
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+    <script>
+
+        {% if lengthTotal|length < 16 %}
+
+        var options = {
+            valueNames: ['presence_film', 'presence_released', 'presence_total_duration', 'presence_person_duration', 'presence_ratio' ]
+        };
+
+        {% endif %}
+
+
+        {% if lengthTotal|length > 15 %}
+
+        var options = {
+            valueNames: ['presence_film', 'presence_released', 'presence_total_duration', 'presence_person_duration', 'presence_ratio' ],
+            page: 15,
+            pagination: true
+        };
+
+        {% endif %}
+
+        var presenceList = new List('presence_list', options);
+
+    </script>
+
+    <script>
+
+        function sortPersoPresence(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                presenceList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                presenceList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+    </script>
+{% endblock %}

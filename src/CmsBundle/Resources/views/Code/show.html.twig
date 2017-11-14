@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+    <h1>Code</h1>
+
+        <table class="striped">
+            <tbody>
+                <tr>
+                    <th>Codeid</th>
+                    <td>{{ code.codeId }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ code.title }}</td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td>{{ code.content }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ code.description }}</td>
+                </tr>
+                <tr>
+                    <th>Date_creation</th>
+                    <td>{% if code.datecreation %}{{ code.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Last_update</th>
+                    <td>{% if code.lastupdate %}{{ code.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('admin_code_index') }}">Back to the list</a>
+            </li>
+            <li>
+                <a href="{{ path('admin_code_edit', { 'codeId': code.codeId }) }}">Edit</a>
+            </li>
+
+        </ul>
+
+    </div>
+{% endblock %}

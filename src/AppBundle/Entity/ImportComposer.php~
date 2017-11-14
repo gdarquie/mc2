@@ -1,0 +1,54 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ImportComposer
+ *
+ * @ORM\Table(name="import_composer")
+ * @ORM\Entity
+ */
+class ImportComposer
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="song", type="string", length=45, nullable=true)
+     */
+    private $song;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="person", type="string", length=255, nullable=true)
+     */
+    private $person;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="song_id", type="integer", nullable=true)
+     */
+    private $songId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="person_id", type="integer", nullable=true)
+     */
+    private $personId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

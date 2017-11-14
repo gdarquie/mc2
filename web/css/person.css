@@ -1,0 +1,93 @@
+div.jqcloud {
+    font-family: "Helvetica", "Arial", sans-serif;
+    font-size: 6pt;
+    line-height: normal;
+}
+
+div.jqcloud span.w10 { font-size: 550%; }
+div.jqcloud span.w9 { font-size: 500%; }
+div.jqcloud span.w8 { font-size: 450%; }
+div.jqcloud span.w7 { font-size: 400%; }
+div.jqcloud span.w6 { font-size: 350%; }
+div.jqcloud span.w5 { font-size: 300%; }
+div.jqcloud span.w4 { font-size: 250%; }
+div.jqcloud span.w3 { font-size: 200%; }
+div.jqcloud span.w2 { font-size: 150%; }
+div.jqcloud span.w1 { font-size: 100%; }
+
+.small-h1{
+    font-size: 0.8em;
+}
+
+.wordcloud{
+    height: 500px;
+}
+
+#mood, #moods{
+    height:220px;
+}
+
+#exoticism, #exoticisms{
+    height:300px;
+}
+
+#source, #sources{
+    height:200px;
+}
+
+#topics h2{
+    margin-top : 5px;
+}
+
+#topics h3{
+    margin-top : 2px;
+}
+
+#sub_nav{
+    margin-top: 30px;
+    padding: 7px;
+    background: white!important;
+    overflow: auto;
+}
+
+#sub_nav a{
+    color : black!important;
+}
+#sub_nav .active{
+    color : #CC0000!important;
+}
+
+.btn {
+    background-color: #CC0000;
+}
+
+.btn:hover {
+    background-color: #a21318;
+}
+
+.pagination{
+    text-align: center;
+}
+
+
+.pagination .active  {
+    background:#CC0000!important;
+}
+
+
+.medium-table tbody tr td {
+    padding: 5px;
+}
+
+
+.no_info {
+    height: 300px;
+}
+
+.link_perso {
+    color: #039be5;
+    cursor: pointer; cursor: hand;
+}
+
+
+

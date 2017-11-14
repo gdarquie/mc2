@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Edit a Stage Number</h1>
+
+        {{ form_start(stagenumberForm)}}
+
+        {{ include('CmsBundle:Stagenumber:_form.html.twig')}}
+        <button class="btn black" type="submit" formnovalidate >Edit Stage Number</button>
+        {{ form_end(stagenumberForm)}}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .adjust{
+            padding-left: 10px;
+            padding-top: 10px;
+        }
+
+
+        .collection .collection-item.avatar {
+            min-height: 65px;
+        }
+
+        .subtitle{
+            color: #CC0000;
+
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+
+        <div class="card">
+
+            <div >
+                <div class="row valign-wrapper">
+
+                    <h1>{{ song.title }}</h1>
+
+                    {% if is_granted("ROLE_EDITOR") %}
+                        <span class="left-align valign adjust"> - <a href="{{ path('song_edit' , {'songId' : song.songId}) }}">Edit</a></span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <p class="col s6"><span class="subtitle">Date : </span> {{ song.date }}</p>
+                <p class="col s6"><span class="subtitle">Song type :</span> {%  for item in song.songtype  %}{{ item.title }}{% if loop.last %} {% else %}; {% endif %}{% endfor %}</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col s6">
+                    <h2>Lyricist{% if (song.lyricist |length) > 1 %}s{% else %}{% endif %}</h2>
+                    <ul class="collection">
+                        {% for item in song.lyricist  %}
+                            <a href="{{ path('person', {'personId' : item.personId}) }}">
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle">folder</i>
+                                    <span class="title">{{ item.name }}</span>
+                                    <p>{{ item.firstname }} {{ item.lastname }}<br>{{ item.gender }}
+                                    </p>
+                                </li>
+                            </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col s6">
+                    <h2>Composer{% if (song.composer |length) > 1 %}s{% else %}{% endif %}</h2>
+                    <ul class="collection">
+                        {% for item in song.composer  %}
+                            <a href="{{ path('person', {'personId' : item.personId}) }}">
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle">folder</i>
+                                    <span class="title">{{ item.name }}</span>
+                                    <p>{{ item.firstname }} {{ item.lastname }}<br>{{ item.gender }}
+                                    </p>
+                                </li>
+                            </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Numbers</h2>
+            <ul class="collection">
+                {% for item in song.number %}
+                    <a href="{{ path('number', {'id' : item.id}) }}"> <li class="collection-item avatar">
+                            <img src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&amp;apikey=1733f6a&amp;h=300" alt="" class="circle">
+                            {{ item.title }}</li></a>
+                {% endfor %}
+            </ul>
+
+            <h2>Films</h2>
+            <ul class="collection">
+                {% for item in films %}
+                    <a href="{{ path('film', {'filmId' : item.filmId}) }}"> <li class="collection-item avatar">
+                            <img src="http://img.omdbapi.com/?i={{ item.imdb }}&amp;apikey=1733f6a&amp;h=300" alt="" class="circle">
+                            {{ item.title }}</li></a>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+
+    </section>
+{% endblock %}

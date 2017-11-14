@@ -1,0 +1,78 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ensemble
+ *
+ * @ORM\Table(name="ensemble")
+ * @ORM\Entity
+ */
+class Ensemble
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ensemble_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $ensembleId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Stagenumber", inversedBy="ensemble")
+     * @ORM\JoinTable(name="stagenumber_has_ensemble",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="ensemble_id", referencedColumnName="ensemble_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="stageNumber_id", referencedColumnName="stageNumber_id")
+     *   }
+     * )
+     */
+    private $stagenumber;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Number", inversedBy="ensemble")
+     * @ORM\JoinTable(name="number_has_ensemble",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="ensemble_id", referencedColumnName="ensemble_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="number_id", referencedColumnName="number_id")
+     *   }
+     * )
+     */
+    private $number;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stagenumber = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->number = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

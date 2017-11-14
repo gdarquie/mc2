@@ -1,0 +1,344 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .donut{
+            height: 400px;
+        }
+        .chip a{
+            color:black;
+        }
+
+        .card{
+            padding:2em;
+            height:auto;
+        }
+
+        body{
+            background: #f7f7f7;
+        }
+
+        .parallax-container {
+            height: 340px;
+        }
+
+
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="parallax-container">
+        <br><br>
+        <h1 class="center">Censorship</h1>
+        <h1 class="center"><i>Censure</i></h1>
+        {#<p class="center white-text">Informations about censorship : verdicts, legion, harrison, etc.</p>#}
+        <div class="parallax"><img src="{{ asset('img/42nd-street-poster.jpg') }}"></div>
+    </div>
+
+    <section class="container">
+
+        <article class="card card_thematique">
+            <h2>PCA verdict</h2>
+
+                    <p>Production Code Administration verdict on the first version of the script submitted by the producer.
+                        These data come out of the PCA collection at the Margaret Herrick Library (physical and <a href="http://digitalcollections.oscars.org/cdm/landingpage/collection/p15759coll30"> digital</a>).</p>
+                    <p class="center">***</p>
+                    <p><i>Avis de l'administration du Code de production (PCA) sur la première soumission du scénario par le producteur.
+                          Ces données ont été reportées après consultation des dossiers de censure des films conservés à la Margaret Herrick Library (archives physiques et <a href="http://digitalcollections.oscars.org/cdm/landingpage/collection/p15759coll30">numériques</a>).</i></p>
+
+            <p>Number of films with information : <span class="number">{{ nbFilmsWithVerdict.nb }}</span> films</p>
+
+            <div class="espace_kibana"></div>
+
+
+            <div class="row ">
+
+                <div id="chart_div" class="donut s7 col"></div>
+
+                {#<div class='wordcloud col s5 row' id='wordcloud_pca' style="height: 300px"></div>#}
+
+
+                <div class="col s5">
+                    <h3>List of items</h3>
+                    {% for item in verdict  %}
+                    <span class="chip"><a href="{{ path('censorship_verdict', {'verdict' : item.verdict}) }}">{{ item.verdict }}({{ item.nb }})</a></span>
+                {% endfor %}</div>
+            </div>
+
+        </article>
+
+        <article class="card card_thematique">
+            <h2>Censored contents</h2>
+
+            <p>Film contents identified as problematic by the PCA (Several contents sometimes for one film and same films as above).</p>
+            <p class="center">***</p>
+            <p><i>Contenus du film désignés comme problématiques par la PCA. (Plusieurs contenus parfois pour un même film et mêmes films que précédemment).</i></p>
+
+            <p>Censored items : <span class="number">{{ nbFilmsWithCensorship.nb }}</span></p>
+
+            <div class="espace_kibana"></div>
+
+            <div class="row ">
+
+                <div id="chart_div2" class="donut s6 col"></div>
+
+                <div id="table_def_censored" class="s6 col">
+                    <table class="striped mini-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Definition</th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                            <tr>
+                                <td class="list_name_censorship">Dialogue</td>
+                                <td class="list_def_censorship">Some lines have to be rewritten, usually because of profanity or double meaning</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Narrative-major</td>
+                                <td class="list_def_censorship">The script has to be modified and rewritten because of a major narrative issue (prostitution, religion, adultery, crime, the image given of institutions, alcoholism...)</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Narrative-minor</td>
+                                <td class="list_def_censorship">Usual remarks on the cautious treatment of alcohol drinking, gambling, toilets, representation of marriage. This implies minor cuts in the script</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Sex perversion</td>
+                                <td class="list_def_censorship">What the PCA refers to as «sex perversion», which means suggested or implied homosexuality</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Ethnic representation</td>
+                                <td class="list_def_censorship">The PCA warns the studio about the accents, or the image given of ethnic communities or foreign populations</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Costumes–standard</td>
+                                <td class="list_def_censorship">Usual warning given to any producer about revealing costumes and reaffirmation of the necessity of being cautious</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Costumes–specific</td>
+                                <td class="list_def_censorship">The PCA forbids a specific costume, usually based on its photography sent by the studio</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Dance</td>
+                                <td class="list_def_censorship">Choreographic contents are censored, because of suggestive moves. This concerns a lot of numbers based on burlesque dancing (fan dances in particular)</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Lyrics–unsignificant</td>
+                                <td class="list_def_censorship">Usual criticism on the lyrics : sexual innuendo or possible double entendre, coarse language</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Lyrics</td>
+                                <td class="list_def_censorship">Specific rewriting of some lines of a song</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Forbidden song</td>
+                                <td class="list_def_censorship">A song is fully forbidden, or has to be entirely rewritten</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">Other</td>
+                                <td class="list_def_censorship">Includes inappropriate gestures (pat on the botton, "razzberry sound"), the treatment of animals, playing with fire (smoking in bed...), advertising...</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+            <div id="wordcloud_content" class="raw">
+
+                {#<div class='wordcloud col s12 row' id='wordcloud_content' style="height: 200px"></div>#}
+
+                {% for item in censorship  %}
+                    <p class="chip"><a href="{{ path('censorship_content', {'content' : item.title}) }}">{{ item.title }} ({{ item.nb }})</a></p>
+                {% endfor %}
+            </div>
+
+        </article>
+
+
+        <article class="card card_thematique">
+
+            <h2>Legion of Decency Notations</h2>
+
+            <p style="color : #CC0000;"><i>Avis de la ligue de Décence catholique</i></p>
+
+            <p>Number of films with information : <span class="number">{{ nbFilmsWithLegion.nb }}</span> films</p>
+
+            <div class="row ">
+
+
+                <div id="div_donut" class="col s7" style="height: 500px">
+                    <svg style="height: 500px;"></svg>
+                </div>
+
+                {#<div id="chart_div3" class="donut s7 col"></div>#}
+
+                {#<div class='wordcloud col s5 row' id='wordcloud_legion' style="height: 300px"></div>#}
+
+
+                <div class="col s5">
+                {% for item in legion  %}
+                    <p class="chip"><a href="{{ path('censorship_legion' , {'legion' : item.legion}) }}">{{ item.legion }}({{ item.nb }})</a></p>
+                {% endfor %}
+                </div>
+        </article>
+
+
+        {#<h2>Harrison</h2>#}
+        {#<p>(pb avec l'import, doublons de protestant - à refaire avec la bonne colonne)</p>#}
+        {#{% for item in harrison  %}#}
+            {#<p>{{ item.harrison }}({{ item.nb }})</p>#}
+        {#{% endfor %}#}
+
+        {#<h2>Protestant</h2>#}
+        {#{% for item in protestant  %}#}
+            {#<p>{{ item.protestant }}({{ item.nb }})</p>#}
+        {#{% endfor %}#}
+
+        {#<h2>Board</h2>#}
+        {#{% for item in board  %}#}
+            {#<p>{{ item.board }}({{ item.nb }})</p>#}
+        {#{% endfor %}#}
+
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('js/donut_simple.js') }}"></script>
+    <script type="text/javascript">
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+
+            //Donuts verdict
+            var data = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in verdict  %}
+                ['{{ item.verdict }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+
+            var options = {
+                title: 'PCA verdict',
+                pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+
+
+            //Donuts Censorship
+            var data2 = google.visualization.arrayToDataTable([
+                ['Name', 'Occurences'],
+                {% for item in censorship  %}
+                ['{{ item.title|raw }}', {{ item.nb }}],
+                {% endfor %}
+            ]);
+
+
+            var options = {
+                title: 'Censored content',
+                pieHole: 0.4
+            };
+
+            var chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
+            chart2.draw(data2, options);
+
+            {#//Donuts censorship#}
+            {#var data3 = google.visualization.arrayToDataTable([#}
+                {#['Name', 'Occurences'],#}
+                {#{% for item in legion  %}#}
+                {#['{{ item.legion }}', {{ item.nb }}],#}
+                {#{% endfor %}#}
+            {#]);#}
+
+
+            {#var options = {#}
+                {#pieHole: 0.4#}
+            {#};#}
+
+            {#var chart3 = new google.visualization.PieChart(document.getElementById('chart_div3'));#}
+            {#chart3.draw(data3, options);#}
+
+        }
+
+        donut_simple_avec_legende("div_donut svg", {{ legionJSON.content|raw }});
+
+
+    </script>
+
+
+    <script>
+
+        function decodeHtml(text) {
+            console.log(text);
+            return text
+                .replace(/&amp;/g, "&")
+                .replace(/&quot;/g, "\"")
+                .replace(/&#039;/g, "\'")
+                .replace(/%20/g, " ")
+                .replace(/%22/g, "\"");
+        }
+
+    </script>
+
+    <script>
+
+        {#words_pca = [{% for item in verdict  %}{ text : decodeHtml("{{ item.verdict }}"), weight : {{ item.nb }}, link : decodeHtml("{{ path('censorship_verdict', {'verdict' : item.verdict}) }}")  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];#}
+
+        {#$('#wordcloud_pca').jQCloud(words_pca);#}
+        {#$('#wordcloud_pca').jQCloud('update', words_pca, {#}
+            {#fontSize: {#}
+                {#colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],#}
+                {#from: 0.1,#}
+                {#to: 0.05#}
+            {#}#}
+        {#});#}
+
+
+        {#words_content = [{% for item in censorship  %}{ text : decodeHtml("{{ item.title }}"), weight : {{ item.nb }}, link : decodeHtml("{{ path('censorship_content', {'content' : item.title}) }}")  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];#}
+        {#$('#wordcloud_content').jQCloud(words_content);#}
+        {#$('#wordcloud_content').jQCloud('update', words_content, {#}
+            {#fontSize: {#}
+                {#colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],#}
+                {#from: 0.1,#}
+                {#to: 0.05#}
+            {#}#}
+        {#});#}
+
+
+        {#words_legion = [{% for item in legion  %}{ text : decodeHtml("{{ item.legion }}"), weight : {{ item.nb }}, link : decodeHtml("{{ path('censorship_legion', {'legion' : item.legion}) }}")  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];#}
+        {#$('#wordcloud_legion').jQCloud(words_legion);#}
+        {#$('#wordcloud_legion').jQCloud('update', words_legion, {#}
+            {#fontSize: {#}
+                {#colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],#}
+                {#from: 0.1,#}
+                {#to: 0.05#}
+            {#}#}
+        {#});#}
+
+
+        {#{% for item in legion  %}#}
+        {#<p class="chip"><a href="{{ path('censorship_legion' , {'legion' : item.legion}) }}">{{ item.legion }}({{ item.nb }})</a></p>#}
+        {#{% endfor %}#}
+    </script>
+
+
+
+{% endblock %}
+

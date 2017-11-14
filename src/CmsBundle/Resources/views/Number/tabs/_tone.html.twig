@@ -1,0 +1,88 @@
+{% import _self as formMacros %}
+
+{% macro printValidationMoodRow(validationForm) %}
+    <div class="col s12 js-mood-validation-item">
+        <a href="" class="js-remove-mood-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+
+<div id="tone" class="row container main">
+
+    {% if ( validationMood |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+    <h3>Tone and topics</h3>
+
+    <div class="color-cartouche">
+    {{ form_row(numberForm.general_mood, {
+        "label" : "Tone (from thesaurus) (multi) (optional if genre is completed)",
+    }) }}
+    {{ form_row(numberForm.genre, {
+        "label" : "Topic(s) (from thesaurus) (multi) (optional)"
+    }) }}
+    {{ form_label(numberForm.commentMood, "Comment(s)") }}
+    {{ form_widget(numberForm.commentMood, {
+        'attr': {'class': 'materialize-textarea'}
+    }) }}
+
+    {{ form_widget(numberForm.completeMood) }}
+    {{ form_label(numberForm.completeMood, "Completed?") }}
+    {{ form_errors(numberForm.completeMood) }}
+
+    {#{{form_row(numberForm.validationMood)}}#}
+    </div>
+
+    {% if is_granted('ROLE_EDITOR') %}
+        <div class="color-cartouche">
+
+            {%  if validationMood is defined %}
+                {% for item in validationMood  %}
+                    <div class="chip js-mood-validation-item">
+                        {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                        <a href="" class="js-remove-mood-validation">
+                            {#<i class="material-icons black-text" >delete</i>#}
+                            <i class="close material-icons black-text">close</i>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+
+                <div class="row js-mood-validation-wrapper" data-prototype="{{ formMacros.printValidationMoodRow(numberForm.validationMood.vars.prototype)|e('html_attr') }}">
+
+                    <div class="col s12">
+                        <a href="#" class="js-add-mood-validation valign-wrapper col s12">
+                            <i class="material-icons black-text ">add</i>
+                            Add a validation
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hide">
+                    {{ form_widget(numberForm.validationMood) }}
+                </div>
+
+
+        </div>
+    {% endif %}
+
+    </article>
+
+    {% if ( validationMood |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+</div>

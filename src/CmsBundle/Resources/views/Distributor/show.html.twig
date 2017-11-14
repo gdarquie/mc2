@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1>Distributor</h1>
+
+    <table class="striped">
+        <tbody>
+            <tr>
+                <th>Distributor id</th>
+                <td>{{ distributor.distributorId }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ distributor.title }}</td>
+            </tr>
+            <tr>
+                <th>Date_creation</th>
+                <td>{% if distributor.datecreation %}{{ distributor.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Last_update</th>
+                <td>{% if distributor.lastupdate %}{{ distributor.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_distributor_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_distributor_edit', { 'distributorId': distributor.distributorId }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" class="red btn right" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+
+    <br><br>
+
+</div>
+{% endblock %}

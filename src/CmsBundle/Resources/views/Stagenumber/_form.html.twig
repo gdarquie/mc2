@@ -1,0 +1,37 @@
+
+<div class="row">
+
+    <div class="col s12">
+        <div class="cartouche mini-form ">
+            {{form_row(stagenumberForm.title, {
+                'label' : "Title"
+            })}}
+            {{ form_row(stagenumberForm.order) }}
+            {{ form_row(stagenumberForm.costumes) }}
+            {{ form_row(stagenumberForm.musical_thesaurus) }}
+            {{ form_row(stagenumberForm.dancingType) }}
+            {{ form_row(stagenumberForm.danceContent) }}
+            {{ form_row(stagenumberForm.danceSubgenre) }}
+            {{ form_row(stagenumberForm.genre) }}
+            {{ form_row(stagenumberForm.general_mood) }}
+            {{ form_row(stagenumberForm.characters) }}
+            {{ form_row(stagenumberForm.description, {
+                'attr': {'class': 'materialize-textarea'},
+                'label' : "Setting"
+            }) }}
+            {{ form_row(stagenumberForm.ibdb) }}
+            {{ form_row(stagenumberForm.setting, {
+                'attr': {'class': 'materialize-textarea'},
+                'label' : "Setting"
+            }) }}
+            {#{{ form_row(stagenumberForm.number) }}#}
+            {{ form_row(stagenumberForm.song) }}
+            {{ form_row(stagenumberForm.dancemble) }}
+            {{ form_row(stagenumberForm.musensemble) }}
+            {{ form_row(stagenumberForm.performers) }}
+            {{ form_row(stagenumberForm.cast) }}
+
+        </div>
+    </div>
+
+</div>

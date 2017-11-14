@@ -1,0 +1,47 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ImportLocation
+ *
+ * @ORM\Table(name="import_location")
+ * @ORM\Entity
+ */
+class ImportLocation
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="film", type="integer", nullable=true)
+     */
+    private $film;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="timecode", type="integer", nullable=true)
+     */
+    private $timecode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
+     */
+    private $location;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

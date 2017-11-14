@@ -1,0 +1,107 @@
+{% import _self as formMacros %}
+
+{% macro printValidationMusicRow(validationForm) %}
+    <div class="col s12 js-music-validation-item">
+        <a href="" class="js-remove-music-validation right">
+            <i class="material-icons black-text" >delete</i>
+        </a>
+
+        {{ form_errors(validationForm) }}
+        {{ form_row(validationForm.title, {'label' : "title"}) }}
+
+    </div>
+{% endmacro %}
+
+
+<div id="music" class="row container main">
+
+    {% if ( validationMusic |length < 2 or is_granted('ROLE_EDITOR')) %}
+    <article class="col s12">
+    {% else %}
+    <article class="col s12 hide">
+    {% endif %}
+
+        <h3>Music</h3>
+
+        <div class="color-cartouche">
+
+            {{form_row(numberForm.song)}}
+            <a href="{{ path('editorNewSong') }}" target="_blank" title="Create a new song if not already in the database">add a song</a>
+            <br><br><br>
+            {{form_row(numberForm.musensemble, {
+                "label" : "music ensemble (from thesaurus) (multi) (mandatory)"
+            })}}
+            {{form_row(numberForm.dubbing, {
+                "label" : "Dubber name + star name in brackets. Ex. Martha Mears (Rita Hayworth). If no dubbing : \"no\""
+            })}}
+            {{form_row(numberForm.tempo_thesaurus, {
+                "label" : "Tempo (from thesaurus) (1 choice) (mandatory)"
+            })}}
+
+            {{form_row(numberForm.musical_thesaurus, {
+                'label' : "Musical style (from thesaurus) (multi) (mandatory)"
+            })}}
+
+            {{form_row(numberForm.arrangers )}}
+            <a href="{{ path('editorNewPerson') }}" target="_blank" title="Create a new person if not already in the database">add a person</a>
+            <br><br><br>
+
+            {{form_row(numberForm.arrangerComment)}}
+
+            {{ form_label(numberForm.commentMusic, "music comment(s) (for openings please list here the order of the musical themes)") }}
+            {{ form_widget(numberForm.commentMusic, {
+                'attr': {'class': 'materialize-textarea'}
+            }) }}
+
+            {{ form_widget(numberForm.completeMusic) }}
+            {{ form_label(numberForm.completeMusic, "Completed?") }}
+            {{ form_errors(numberForm.completeMusic) }}
+
+            {#{{form_row(numberForm.validationMusic)}}#}
+        </div>
+
+        {% if is_granted('ROLE_EDITOR') %}
+
+            <div class="color-cartouche">
+
+                {%  if validationMusic is defined %}
+                    {% for item in validationMusic  %}
+                        <div class="chip js-music-validation-item">
+                            {{  item.title }} by {{ item.user }}, {{ item.dateCreation|date() }}
+                            <a href="" class="js-remove-music-validation">
+                                {#<i class="material-icons black-text" >delete</i>#}
+                                <i class="close material-icons black-text">close</i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+
+                <div class="row js-music-validation-wrapper" data-prototype="{{ formMacros.printValidationMusicRow(numberForm.validationMusic.vars.prototype)|e('html_attr') }}">
+
+                    <div class="col s12">
+                        <a href="#" class="js-add-music-validation valign-wrapper col s12">
+                            <i class="material-icons black-text ">add</i>
+                            Add a validation
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hide">
+                    {{ form_widget(numberForm.validationMusic) }}
+                </div>
+
+            </div>
+        {% endif %}
+
+    </article>
+
+    {% if ( validationMusic |length < 2 or is_granted('ROLE_EDITOR')) %}
+
+    {% else %}
+        {% include 'CmsBundle:Number:modal/_validationComplete.html.twig' %}
+    {% endif %}
+
+
+</div>

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Censorships list</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Censorshipid</th>
+                    <th>Date_creation</th>
+                    <th>Last_update</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for censorship in censorships %}
+                <tr>
+                    <td><a href="{{ path('admin_censorship_show', { 'censorshipId': censorship.censorshipId }) }}">{{ censorship.title }}</a></td>
+                    <td>{{ censorship.censorshipId }}</td>
+                    <td>{% if censorship.datecreation %}{{ censorship.datecreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if censorship.lastupdate %}{{ censorship.lastupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_censorship_show', { 'censorshipId': censorship.censorshipId }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_censorship_edit', { 'censorshipId': censorship.censorshipId }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('admin_censorship_new') }}">Create a new censorship</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

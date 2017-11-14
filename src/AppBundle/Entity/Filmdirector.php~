@@ -1,0 +1,61 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Filmdirector
+ *
+ * @ORM\Table(name="filmDirector")
+ * @ORM\Entity
+ */
+class Filmdirector
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="film", type="string", length=500, nullable=true)
+     */
+    private $film;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imdb", type="string", length=255, nullable=true)
+     */
+    private $imdb;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=500, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="person_id", type="integer", nullable=true)
+     */
+    private $personId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="film_id", type="integer", nullable=true)
+     */
+    private $filmId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

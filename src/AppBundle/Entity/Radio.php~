@@ -1,0 +1,83 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Radio
+ *
+ * @ORM\Table(name="radio")
+ * @ORM\Entity
+ */
+class Radio
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="show_title", type="string", length=255, nullable=true)
+     */
+    private $showTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="radio_show", type="string", length=255, nullable=true)
+     */
+    private $radioShow;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="radio_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $radioId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Song", mappedBy="radio")
+     */
+    private $song;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Musical", mappedBy="radio")
+     */
+    private $musical;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->song = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->musical = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

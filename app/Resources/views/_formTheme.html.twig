@@ -1,0 +1,10 @@
+{% block form_row -%}
+
+    {#{{ dump() }}#}
+    <div class="form-group validate{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}" {% if (not compound or force_error|default(false)) and not valid %}data-error="wrong"{% endif %} >
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+
+{%- endblock form_row %}

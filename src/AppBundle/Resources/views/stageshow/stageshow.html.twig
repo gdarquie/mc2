@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+
+
+        h2 {
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .row{
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        h1 .btn{
+            text-transform: lowercase;
+            font-size: 0.7em;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+
+        <div class="row">
+            <h1 class="center">{{ stageshow.title }}
+                {% if is_granted("ROLE_EDITOR") %}
+                   <a class="waves-effect waves-light btn red darken-2" href="{{ path('stageshow_edit' , {"stageshowId" : stageshow.stageshowId}) }}">edit</a>
+                    <a class="waves-effect waves-light btn" href="{{ path('stagenumber_new', {'stageshowId': stageshow.stageshowId}) }}">Add a stage number</a>
+                {% endif %} </h1>
+        </div>
+
+        <div class="card">
+            <table class="striped middle-table">
+                <tr>
+                    <th>Production</td>
+                    <th>Opening</td>
+                    <th>Ibdb</td>
+                    <th>Status</td>
+                    <th>Race</th>
+                    <th>Closing</td>
+                    <th>Count</th>
+                </tr>
+                <tr>
+                    <td>{{ stageshow.production }}</td>
+                    <td>{{ stageshow.opening|date("d/m/Y") }}</td>
+                    <td>{{ stageshow.ibdb }}</td>
+                    <td>{{ stageshow.status }}</td>
+                    <td>{{ stageshow.race }}</td>
+                    <td>{{ stageshow.closing|date("d/m/Y") }}</td>
+                    <td>{{ stageshow.count }}</td>
+                </tr>
+            </table>
+
+        </div>
+
+        {% if stageshow.stagenumbers|length > 0 %}
+        <div class="card">
+            <h2>Stage numbers</h2>
+
+            {% for item in stageshow.stagenumbers  %}
+                <a class="chip" href="{{ path('stagenumber_edit', { 'stagenumberId' : item.stagenumberId}) }}">{{ item.title }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </section>
+{% endblock %}

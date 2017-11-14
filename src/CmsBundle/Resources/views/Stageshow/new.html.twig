@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <section class="container">
+
+        <h1>Add a Stageshow</h1>
+
+        {{ form_start(stageForm)}}
+
+        {{ include('CmsBundle:Stageshow:_form.html.twig')}}
+        <button class="btn black" type="submit" formnovalidate >Create Stage Show</button>
+        {{ form_end(stageForm)}}
+
+    </section>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <section class="container">
+        <h1>Stageshows</h1>
+
+        <p>There are <span class="number">{{ stageshows|length }}</span> stage shows in the database.</p>
+
+        <table class="highlight tablesorter mini-table displaytable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Opening</th>
+                    <th>Closing</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in stageshows  %}
+                <tr>
+                    <td><a href="{{ path('stageshow' , { 'stageshowId' : item.stageshowId }) }}">{{ item.title }}</a></td> <!-- lien vers une notice de stageshow -->
+                    <td>{{ item.opening |date("m/d/Y")}}</td>
+                    <td>{{ item.closing |date("m/d/Y")}}</td>
+                    <td>{{ item.count }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </section>
+
+{% endblock %}
+

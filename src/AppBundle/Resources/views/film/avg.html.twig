@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="container">
+
+        <article class="card col s12">
+
+            <div class="card col s6">
+                <h3>Ratio nombre de films avec numbers sur nombre de films total</h3>
+                <p>{{ ((filmsWithNumber.total/totalFilms.total)*100)|round(1) }}% </p>
+            </div>
+
+            <div class="card col s6">
+                <h3>Moyenne de Numbers par films</h3>
+                <p>{{ (sumNumbers/countNumbers)|round(0) }} numbers en moyenne par films avec numbers</p>
+            </div>
+
+            <div class="card col s6">
+                <h3>Nombre de film ayant un nombre de numbers supérieur à la moyenne</h3>
+                <p>{{ NbFilm }} films. </p>
+                <h5>Soit {{ ((NbFilm/countNumbers)*100)|round(1) }}% du nombre de films avec des numbers</h5>
+
+            </div>
+
+            <div class="card col s6">
+                <h3>Liste des films avec le total de leurs numbers</h3>
+                {% for item in NameFilmWithCountNumbers  %}
+                    <p>{{ item.NameFilm }} : {{ item.NbOfNumbers }} number(s).</p>
+                {% endfor %}
+            </div>
+
+        </article>
+
+    </div>
+
+{% endblock %}

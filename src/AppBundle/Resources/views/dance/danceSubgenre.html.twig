@@ -1,0 +1,613 @@
+{% extends 'base.html.twig' %}
+
+{%  block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card{
+            padding: 20px;
+        }
+
+        .donut{
+            height: 400px;
+        }
+
+        .list_film, .list_number {
+            color: #039be5;
+            cursor: pointer; cursor: hand;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <section class="container">
+        <h1>Dance : {{ myDance.title }}</h1>
+        <p><i>{{ myDance.definition }}</i></p>
+
+
+        <article class="card card_thematique">
+
+            <h2>Production Numbers per Year</h2>
+
+            {#<p>There are <span class="number">{{ numbers|length }}</span> numbers in <span class="number">{{ filmsByDance|length }}</span> films with {{ myDance.title }} dance sub-genre.</p>#}
+
+            {#<p>[visualisation générale???  http://nvd3.org/examples/scatter.html or  http://bl.ocks.org/mbostock/4063570]</p>#}
+
+            <div id="diagram" style="height: 300px;"></div>
+
+        </article>
+
+        {#<article class="card row">#}
+            {#<h2>Dancing type</h2>#}
+
+            {#<div class="col s7 donut" id="donut_type">#}
+                {#<svg></svg>#}
+            {#</div>#}
+
+            {#<div class='wordcloud col s5 row' id='wordcloud_type' style="height: 300px"></div>#}
+
+            {#<div class="col s5">#}
+            {#{% for item in dancings  %}#}
+                {#<a href="{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'type' : 'dancing' , 'itemId' :item.id }) }}"><span class="chip">{{ item.title }} ({{ item.nb }})</span></a>#}
+            {#{% endfor %}#}
+            {#</div>#}
+        {#</article>#}
+
+        {#<article class="card row">#}
+            {#<h2>Dance content</h2>#}
+
+            {#<div class="col s7 donut" id="donut_content">#}
+                {#<svg></svg>#}
+            {#</div>#}
+
+            {#<div class='wordcloud col s5 row' id='wordcloud_content' style="height: 300px"></div>#}
+
+            {#<div class="col s5">#}
+            {#{% for item in contents %}#}
+                {#<a href="{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'type' : 'content' , 'itemId' :item.id }) }}"><span class="chip">{{ item.title }}({{ item.nb }})</span></a>#}
+            {#{% endfor %}#}
+            {#</div>#}
+        {#</article>#}
+
+        <article class="card card_thematique row">
+            <h2>Dancing ensemble</h2>
+            <h2><i>Formation</i></h2>
+
+            {#<div class="col s7 donut" id="donut_ensemble">#}
+                {#<svg></svg>#}
+            {#</div>#}
+
+            <div class='wordcloud col s12 row' id='wordcloud_dancemble' style="height: 150px"></div>
+
+            {#<div class="col s5">#}
+            {#{% for item in dancembles %}#}
+                {#<a href="{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'type' : 'ensemble' , 'itemId' :item.id }) }}"><span class="chip">{{ item.title }}({{ item.nb }})</span></a>#}
+            {#{% endfor %}#}
+            {#</div>#}
+        </article>
+
+        {#<article class="card row">#}
+            {#<h2>Costumes</h2>#}
+
+            {#<div class="col s7 donut" id="donut_costumes">#}
+                {#<svg></svg>#}
+            {#</div>#}
+
+            {#<div class='wordcloud col s5 row' id='wordcloud_costume' style="height: 300px"></div>#}
+
+            {#<div class="col s5">#}
+            {#{% for item in costumes %}#}
+                {#<a href="{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'type' : 'costume' , 'itemId' :item.id }) }}"><span class="chip truncate">{{ item.title }}({{ item.nb }})</span></a>#}
+            {#{% endfor %}#}
+            {#</div>#}
+        {#</article>#}
+
+
+        <article class="card card_thematique row">
+
+            <h2>List of numbers</h2>
+
+            <div id="table_one_dancesubgenre" class="row">
+                <input class="search" placeholder="Search" />
+                <table class="striped medium-table">
+                    <thead>
+                    <tr>
+                        <th onclick="sortPerso(this, 'list_number')" data-cpt="0">Number<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortPerso(this, 'list_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortPerso(this, 'list_release_date')" data-cpt="0">Release Date<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortPerso(this, 'list_studio')" data-cpt="0">Studio<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortPerso(this, 'list_style')" data-cpt="0">Musical Style<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+
+                    {% for number in numbersFinal  %}
+
+                    <tr>
+                        <td onclick="window.location.href='{{ path('number', {'id' : number.id}) }}';" class="list_number">{{ number.title }}</td>
+                        <td onclick="window.location.href='{{ path('film', {'filmId' : number.film.filmId}) }}';" class="list_film">{{ number.film.title }}</td>
+                        <td class="list_release_date">{{ number.film.released }}</td>
+                        <td class="list_studio">
+                            {% for studio in number.film.studios %}
+                                {{ studio.title }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="list_style">
+                            {% for style in number.musicalThesaurus %}
+                                {{ style.title }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <ul class="pagination"></ul>
+            </div>
+        </article>
+
+        {#<article class="card row">#}
+            {#<h2>Exoticism</h2>#}
+
+            {#<div class="col s7 donut" id="donut_exoticisms">#}
+                {#<svg></svg>#}
+            {#</div>#}
+
+            {#<div class="col s5">#}
+            {#{% for item in exoticisms %}#}
+                {#<a href="{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'type' : 'exoticism' , 'itemId' :item.id }) }}"><span class="chip">{{ item.title }}({{ item.nb }})</span></a>#}
+            {#{% endfor %}#}
+            {#</div>#}
+        {#</article>#}
+
+        {#<article>#}
+            {#<h2>List of movies with {{ myDance.title }} dance</h2>#}
+
+            {#<div class="liste row">#}
+                {#{% for film in filmsByDance  %}#}
+                    {#<div class="card horizontal col s4 ">#}
+                        {#{% if film.imdb %}#}
+                            {#<img src="http://img.omdbapi.com/?i={{ film.imdb }}&apikey=1733f6a&h=100" alt="poster">#}
+                        {#{% endif %}#}
+                        {#<a href="{{ path('film', {'filmId' : film.filmId}) }}"><h3>{{ film.title }} ({{ film.released }})</h3></a>#}
+                    {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
+        {#</article>#}
+
+        {#<h2>List of numbers with {{ myDance.title }} dance</h2>#}
+
+        {#<table class="striped">#}
+        {#{% for item in numbers %}#}
+            {#<tr>#}
+                {#<td><a href="{{ path('number', { 'id' : item.id }) }}">{{ item.number }}</a></td>#}
+                {#<td>{{ item.film }}</td>#}
+            {#</tr>#}
+        {#{% endfor %}#}
+        {#</table>#}
+
+    </section>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
+    <script type="text/javascript">
+        {#google.charts.load("current", {packages:["corechart"]});#}
+        {#google.charts.setOnLoadCallback(drawChart);#}
+        {#function drawChart() {#}
+            {#var data = google.visualization.arrayToDataTable([#}
+                {#['Name', 'Occurences'],#}
+                {#{% for genre in genres %}#}
+                {#['{{ genre.title }}', {{ genre.nb }}],#}
+                {#{% endfor %}#}
+            {#]);#}
+
+            {#var options = {#}
+                {#title: 'Ratio',#}
+                {#pieHole: 0.4,#}
+            {#};#}
+
+            {#var chart = new google.visualization.PieChart(document.getElementById('chart_div'));#}
+            {#chart.draw(data, options);#}
+
+        {#}#}
+
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+        function drawBasic() {
+            //diagram
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Year');
+            data.addColumn('number', 'All dance numbers');
+            data.addColumn('number', 'Numbers');
+
+            data.addRows([
+                {% for item in danceSubgenreByYearAll %}
+
+                {% set bool = 0 %}
+
+                [new Date({{ item.released }}, 0, 1), {{ item.nb }},
+                    {% for item2 in danceSubgenreByYear %}
+                    {% if item2.released == item.released %}
+                    {{ item2.nb }}
+                    {% set bool = 1 %}
+                    {% endif %}
+                    {% endfor %}
+                    {% if bool == 0 %}
+                    0
+                    {% endif %}
+                ],
+
+                {% endfor %}
+            ]);
+            var options = {
+                colors: [ '#adc2eb' , '#3366cc']
+            };
+
+            var formatter = new google.visualization.DateFormat({pattern: 'yyyy'});
+            formatter.format(data, 0);
+
+            var chart = new google.visualization.LineChart(document.getElementById('diagram'));
+
+            chart.draw(data, options);
+
+
+            //Regular pie chart example
+            nv.addGraph(function() {
+                var chart = nv.models.pieChart()
+                        .x(function(d) { return d.label })
+                        .y(function(d) { return d.value })
+                        .showLabels(true);
+
+                d3.select("#chart svg")
+                        .datum(exampleData())
+                        .transition().duration(350)
+                        .call(chart);
+
+                return chart;
+            });
+
+        //Donut type
+            nv.addGraph(function() {
+                var chart = nv.models.pieChart()
+                                .x(function(d) { return d.label })
+                                .y(function(d) { return d.value })
+                                .showLabels(true)     //Display pie labels
+                                .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                                .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                                .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                                .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                        ;
+
+                d3.select("#donut_type svg")
+                        .datum(exampleData())
+                        .transition().duration(350)
+                        .call(chart);
+
+                return chart;
+            });
+
+            function exampleData() {
+                return  [
+                    {% for item in dancings %}
+                    {
+                        "label" : "{{ item.title }}",
+                        "value" : {{ item.nb }} },
+                    {% endfor %}
+                ];
+            }
+
+        }
+
+        //Donut content
+        nv.addGraph(function() {
+            var chart = nv.models.pieChart()
+                            .x(function(d) { return d.label })
+                            .y(function(d) { return d.value })
+                            .showLabels(true)     //Display pie labels
+                            .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                            .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                            .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                            .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                    ;
+
+            d3.select("#donut_content svg")
+                    .datum(exampleData2())
+                    .transition().duration(350)
+                    .call(chart);
+
+            return chart;
+        });
+
+        //Pie chart example data. Note how there is only a single array of key-value pairs.
+        function exampleData2() {
+            return  [
+                {% for item in contents %}
+                {
+                    "label" : "{{ item.title }}",
+                    "value" : {{ item.nb }} },
+                {% endfor %}
+            ];
+        }
+
+        //Donut ensemble
+        nv.addGraph(function() {
+            var chart = nv.models.pieChart()
+                            .x(function(d) { return d.label })
+                            .y(function(d) { return d.value })
+                            .showLabels(true)     //Display pie labels
+                            .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                            .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                            .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                            .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                    ;
+
+            d3.select("#donut_ensemble svg")
+                    .datum(exampleData3())
+                    .transition().duration(350)
+                    .call(chart);
+
+            return chart;
+        });
+
+        //Pie chart example data. Note how there is only a single array of key-value pairs.
+        function exampleData3() {
+            return  [
+                {% for item in dancembles %}
+                {
+                    "label" : "{{ item.title }}",
+                    "value" : {{ item.nb }} },
+                {% endfor %}
+            ];
+        }
+
+        //Donut costumes
+        nv.addGraph(function() {
+            var chart = nv.models.pieChart()
+                            .x(function(d) { return d.label })
+                            .y(function(d) { return d.value })
+                            .showLabels(true)     //Display pie labels
+                            .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                            .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                            .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                            .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                    ;
+
+            d3.select("#donut_costumes svg")
+                    .datum(exampleData4())
+                    .transition().duration(350)
+                    .call(chart);
+
+            return chart;
+        });
+
+        //Pie chart example data. Note how there is only a single array of key-value pairs.
+        function exampleData4() {
+            return  [
+                {% for item in costumes %}
+                {
+                    "label" : "{{ item.title }}",
+                    "value" : {{ item.nb }} },
+                {% endfor %}
+            ];
+        }
+
+        //Donut exoticisms
+        nv.addGraph(function() {
+            var chart = nv.models.pieChart()
+                            .x(function(d) { return d.label })
+                            .y(function(d) { return d.value })
+                            .showLabels(true)     //Display pie labels
+                            .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                            .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                            .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                            .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                    ;
+
+            d3.select("#donut_exoticisms svg")
+                    .datum(exampleData5())
+                    .transition().duration(350)
+                    .call(chart);
+
+            return chart;
+        });
+
+        //Pie chart example data. Note how there is only a single array of key-value pairs.
+        function exampleData5() {
+            return  [
+                {% for item in exoticisms %}
+                {
+                    "label" : "{{ item.title }}",
+                    "value" : {{ item.nb }} },
+                {% endfor %}
+            ];
+        }
+
+    </script>
+
+    <script>
+
+        {% if numbers|length < 16 %}
+
+        var options = {
+            valueNames: ['list_number', 'list_film', 'list_release_date', 'list_studio', 'list_style']
+        };
+
+        {% endif %}
+
+
+        {% if numbers|length > 15 %}
+
+        var options = {
+            valueNames: ['list_number', 'list_film', 'list_release_date', 'list_studio', 'list_style'],
+            page: 15,
+            pagination: true
+        };
+
+        {% endif %}
+
+        var numberList = new List('table_one_dancesubgenre', options);
+
+    </script>
+
+    <script>
+
+        words_type = [{% for item in dancings  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'code' : 'dancing_style' , 'itemId' :item.id }) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_type').jQCloud(words_type);
+        $('#wordcloud_type').jQCloud('update', words_type, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+        words_content = [{% for item in contents  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'code' : 'dance_content' , 'itemId' :item.id }) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_content').jQCloud(words_content);
+        $('#wordcloud_content').jQCloud('update', words_content, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+
+        words_dancemble = [{% for item in dancembles  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'code' : 'dancemble' , 'itemId' :item.id }) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_dancemble').jQCloud(words_dancemble);
+        $('#wordcloud_dancemble').jQCloud('update', words_dancemble, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+
+
+        words_costume = [{% for item in costumes  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneItemFromDanceSubgenre', {'subgenreId': myDance.id, 'code' : 'costumes' , 'itemId' :item.id }) }}"  } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        $('#wordcloud_costume').jQCloud(words_costume);
+        $('#wordcloud_costume').jQCloud('update', words_costume, {
+            fontSize: {
+                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
+                from: 0.1,
+                to: 0.05
+            }
+        });
+
+
+    </script>
+
+    <script>
+        function sortPerso(element, col) {
+
+            if (element.dataset.cpt%2 == 0) {
+                numberList.sort(col, {order : "asc"});
+                element.dataset.cpt++;
+            } else {
+                numberList.sort(col, {order : "desc"});
+                element.dataset.cpt++;
+            }
+        }
+    </script>
+
+    {#<script>#}
+
+        {#var margin = {top: 20, right: 20, bottom: 30, left: 40},#}
+                {#width = 960 - margin.left - margin.right,#}
+                {#height = 500 - margin.top - margin.bottom;#}
+
+        {#var x = d3.scale.linear()#}
+                {#.range([0, width]);#}
+
+        {#var y = d3.scale.linear()#}
+                {#.range([height, 0]);#}
+
+        {#var color = d3.scale.category10();#}
+
+        {#var xAxis = d3.svg.axis()#}
+                {#.scale(x)#}
+                {#.orient("bottom");#}
+
+        {#var yAxis = d3.svg.axis()#}
+                {#.scale(y)#}
+                {#.orient("left");#}
+
+        {#var svg = d3.select("body").append("svg")#}
+                {#.attr("width", width + margin.left + margin.right)#}
+                {#.attr("height", height + margin.top + margin.bottom)#}
+                {#.append("g")#}
+                {#.attr("transform", "translate(" + margin.left + "," + margin.top + ")");#}
+
+        {#d3.tsv("data.tsv", function(error, data) {#}
+            {#if (error) throw error;#}
+
+            {#data.forEach(function(d) {#}
+                {#d.sepalLength = +d.sepalLength;#}
+                {#d.sepalWidth = +d.sepalWidth;#}
+            {#});#}
+
+            {#x.domain(d3.extent(data, function(d) { return d.sepalWidth; })).nice();#}
+            {#y.domain(d3.extent(data, function(d) { return d.sepalLength; })).nice();#}
+
+            {#svg.append("g")#}
+                    {#.attr("class", "x axis")#}
+                    {#.attr("transform", "translate(0," + height + ")")#}
+                    {#.call(xAxis)#}
+                    {#.append("text")#}
+                    {#.attr("class", "label")#}
+                    {#.attr("x", width)#}
+                    {#.attr("y", -6)#}
+                    {#.style("text-anchor", "end")#}
+                    {#.text("Sepal Width (cm)");#}
+
+            {#svg.append("g")#}
+                    {#.attr("class", "y axis")#}
+                    {#.call(yAxis)#}
+                    {#.append("text")#}
+                    {#.attr("class", "label")#}
+                    {#.attr("transform", "rotate(-90)")#}
+                    {#.attr("y", 6)#}
+                    {#.attr("dy", ".71em")#}
+                    {#.style("text-anchor", "end")#}
+                    {#.text("Sepal Length (cm)")#}
+
+            {#svg.selectAll(".dot")#}
+                    {#.data(data)#}
+                    {#.enter().append("circle")#}
+                    {#.attr("class", "dot")#}
+                    {#.attr("r", 3.5)#}
+                    {#.attr("cx", function(d) { return x(d.sepalWidth); })#}
+                    {#.attr("cy", function(d) { return y(d.sepalLength); })#}
+                    {#.style("fill", function(d) { return color(d.species); });#}
+
+            {#var legend = svg.selectAll(".legend")#}
+                    {#.data(color.domain())#}
+                    {#.enter().append("g")#}
+                    {#.attr("class", "legend")#}
+                    {#.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });#}
+
+            {#legend.append("rect")#}
+                    {#.attr("x", width - 18)#}
+                    {#.attr("width", 18)#}
+                    {#.attr("height", 18)#}
+                    {#.style("fill", color);#}
+
+            {#legend.append("text")#}
+                    {#.attr("x", width - 24)#}
+                    {#.attr("y", 9)#}
+                    {#.attr("dy", ".35em")#}
+                    {#.style("text-anchor", "end")#}
+                    {#.text(function(d) { return d; });#}
+
+        {#});#}
+
+
+
+    {#</script>#}
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+
+        <h1>{{ stagenumber.title }}</h1>
+
+        <p>{{ stagenumber.order }}</p>
+        <p>musicals : {% for item in stagenumber.musicalThesaurus  %}{{ item.title }}{% endfor %}</p>
+        <p>dancing type : {% for item in stagenumber.dancingType  %}{{ item.title }}{% endfor %}</p>
+        <p>dance subgenre : {% for item in stagenumber.danceSubgenre  %}{{ item.title }}{% endfor %}</p>
+        <p>dance content : {% for item in stagenumber.danceContent  %}{{ item.title }}{% endfor %}</p>
+        <p>genre : {% for item in stagenumber.genre  %}{{ item.title }}{% endfor %}</p>
+        <p>Mood : {% for item in stagenumber.generalMood  %}{{ item.title }}{% endfor %}</p>
+        <p>characters: {% for item in stagenumber.characters  %}{{ item.title }}{% endfor %}</p>
+        <p>ibdb : {% for item in stagenumber.ibdb  %}{{ item.title }}{% endfor %}</p>
+        <p>setting : {% for item in stagenumber.setting  %}{{ item.title }}{% endfor %}</p>
+        <p>stageshow {% for item in stagenumber.stageshow  %}{{ item.title }}{% endfor %}</p>
+        <p>costumes : {% for item in stagenumber.costumes  %}{{ item.title }}{% endfor %}</p>
+        <p>number : {% for item in stagenumber.number  %}{{ item.title }}{% endfor %}</p>
+        <p>song : {% for item in stagenumber.song  %}{{ item.title }}{% endfor %}</p>
+        <p>dancemble: {% for item in stagenumber.dancemble  %}{{ item.title }}{% endfor %}</p>
+        <p>description : {{ stagenumber.description }}</p>
+        <p>music ensemble : {% for item in stagenumber.musensemble  %}{{ item.title }}{% endfor %}</p>
+        <p>performers : {% for item in stagenumber.performers  %}{{ item.title }}{% endfor %}</p>
+        <p>cast : {% for item in stagenumber.cast  %}{{ item.title }}{% endfor %}</p>
+        <p>selected : {% for item in stagenumber.selected  %}{{ item.title }}{% endfor %}</p>
+        <p>code : {{ stagenumber.code }}</p>
+        <p>creation date : {{ stagenumber.dateCreation|date() }}</p>
+        <p>last update : {{ stagenumber.lastUpdate|date() }}</p>
+
+    </section>
+{% endblock %}

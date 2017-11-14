@@ -1,0 +1,107 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Link
+ *
+ * @ORM\Table(name="link", indexes={@ORM\Index(name="fk_link_number1_idx", columns={"number_id"}), @ORM\Index(name="fk_link_TV1_idx", columns={"TV_id"}), @ORM\Index(name="fk_link_disc1_idx", columns={"disc_id"}), @ORM\Index(name="fk_link_radio1_idx", columns={"radio_id"}), @ORM\Index(name="fk_link_stageNumber1_idx", columns={"stageNumber_id"}), @ORM\Index(name="fk_link_stageShow1_idx", columns={"stageShow_id"})})
+ * @ORM\Entity
+ */
+class Link
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=45, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=45, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="link_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $linkId;
+
+    /**
+     * @var \AppBundle\Entity\Stageshow
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Stageshow")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="stageShow_id", referencedColumnName="stageShow_id")
+     * })
+     */
+    private $stageshow;
+
+    /**
+     * @var \AppBundle\Entity\Tv
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tv")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="TV_id", referencedColumnName="TV_id")
+     * })
+     */
+    private $tv;
+
+    /**
+     * @var \AppBundle\Entity\Stagenumber
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Stagenumber")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="stageNumber_id", referencedColumnName="stageNumber_id")
+     * })
+     */
+    private $stagenumber;
+
+    /**
+     * @var \AppBundle\Entity\Radio
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Radio")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="radio_id", referencedColumnName="radio_id")
+     * })
+     */
+    private $radio;
+
+    /**
+     * @var \AppBundle\Entity\Number
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Number")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="number_id", referencedColumnName="number_id")
+     * })
+     */
+    private $number;
+
+    /**
+     * @var \AppBundle\Entity\Disc
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Disc")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="disc_id", referencedColumnName="disc_id")
+     * })
+     */
+    private $disc;
+
+
+}
+

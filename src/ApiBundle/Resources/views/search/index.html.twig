@@ -1,0 +1,941 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendor/nouislider/distribute/nouislider.css') }}">
+
+    <style>
+        #recherche{
+            margin-top: 50px;
+        }
+        .billet{
+            /*border : 1px solid lightgrey;*/
+            margin: 10px;
+            padding: 15px;
+            border-radius: 3px;
+        }
+
+        #slider{
+            margin-bottom: 50px;
+        }
+
+
+        #modal1 {
+            width : 90%;
+            height : 90%;
+        }
+
+        .container_donut svg {
+            width:100%;
+            height:400px;
+        }
+
+        .melviz {
+            width: 100%;
+            height: 400px;
+        }
+
+
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    <section class="container-fluid">
+
+        <div class="row" id="recherche">
+
+            <div class="col s5">
+
+                <div class="row">
+                    <form class="col s12">
+
+                        <div class="input-field col s12">
+                            <select multiple id="sources">
+                                <option value="" disabled selected>Select a source (2 max)</option>
+                                {% for item in sources %}
+                                    <option value="{{ item.title|e('html') }}">{{ item.title|e('html') }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Sources (muliple choice, max 2)</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <select id="performance">
+                                <option value="" disabled selected>Select a performance</option>
+                                {% for item in performances %}
+                                    <option value="{{ item.title|e('html') }}">{{ item.title|e('html') }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Performances (1 choice)</label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row col s12">
+                    <div  id="slider"></div>
+                </div>
+
+                <article class="s12 col card">
+                    <h2>Some stats</h2>
+
+                    <div class="songsSelection"></div>
+                    <div class="filmsSelection"></div>
+                    <div class="performersSelection"></div>
+
+                </article>
+
+            </div>
+
+            <div class="col s7">
+                <div class="s12 card" id="resultat"></div>
+            </div>
+
+        </div>
+
+
+        <article class="s12 col card">
+            <h2>Some donuts</h2>
+
+            <div class="row">
+                <div id="donutsDanceEnsemble" class="s3 col card container_donut">
+                    <h3>Dance Ensemble : </h3>
+                    <svg></svg>
+                </div>
+                <div id="donutsDanceType"  class="s3 col card container_donut">
+                    <h3>Dance Type : </h3>
+                    <svg></svg>
+                </div>
+
+                <div id="donutsDanceSubgenre"  class="s3 col card container_donut">
+                    <h3>Dance Subgenre : </h3>
+                    <svg></svg>
+                </div>
+                <div id="donutsDanceContent"  class="s3 col card container_donut">
+                    <h3>Dance Content : </h3>
+                    <svg></svg>
+                </div>
+            </div>
+
+            <article>
+                <div class="row">
+                    <h3>Dance Types : </h3>
+                    <div id="melviz_dance_types" class="melviz"></div>
+                </div>
+            </article>
+
+            <article>
+                <div class="row">
+                    <h3>Dance Contents : </h3>
+                    <div id="melviz_dance_contents" class="melviz"></div>
+                </div>
+            </article>
+
+
+            <article>
+                <div class="row">
+                    <h3>Dance Ensembles : </h3>
+                    <div id="melviz_dance_ensembles" class="melviz"></div>
+                </div>
+
+            </article>
+
+            <article>
+
+                <div class="row">
+                    <h3>Dance Subgenres : </h3>
+                    <div id="melviz_dance_subgenres" class="melviz"></div>
+                </div>
+            </article>
+
+
+
+
+
+        </article>
+
+
+    </section>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/wnumb/wNumb.js') }}"></script>
+    <script src="{{ asset('assets/vendor/nouislider/distribute/nouislider.js') }}"></script>
+    <script src="{{ asset('js/donut_simple.js') }}"></script>
+    {#<script src="{{ asset('assets/vendor/d3-tip/index.js') }}"></script>#}
+    {#<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>#}
+    <script src="{{ asset('js/melviz.js') }}"></script>
+
+
+
+    <script>
+
+        var data = [
+
+            {% for number in numbers  %}
+
+            {
+
+                'id' : {{ number.id }},
+                'title' : '{{ number.title() }}',
+                'performance' : '{{ number.performanceThesaurus }}',
+                'sources' : [ {% for source in number.sourceThesaurus %}'{{source.title}}'{% if loop.last %}{% else %},{% endif %}{% endfor %} ],
+                'filmId' : '{{ number.film.filmId }}',
+                'film' : '{{ number.film.title }}',
+                'released' : {{ number.film.released }},
+                'choreographers' : [ {% for person in number.choregraphers %}'{{person.name|json_encode()}}'{% if loop.last %}{% else %},{% endif %}{% endfor %} ],
+                'danceensemble': [{% for item in number.dancemble %}'{{item.title|e("html")}}'{% if loop.last %}{% else %},{% endif %}{% endfor %}],
+                'dancetype' : [{% for item in number.dancingType %}'{{item.title|e("html")}}'{% if loop.last %}{% else %},{% endif %}{% endfor %}],
+                'dancesubgenre' : [{% for item in number.danceSubgenre %}'{{item.title|e("html")}}'{% if loop.last %}{% else %},{% endif %}{% endfor %}],
+                'dancecontent' : [{% for item in number.danceContent %}'{{item.title|e("html")}}'{% if loop.last %}{% else %},{% endif %}{% endfor %}],
+                'performers' : [ {% for person in number.performers %}{ 'performerId' : {{person.personId}}, 'performerTitle' : '{{person.name}}' }{% if loop.last %}{% else %},{% endif %}{% endfor %} ],
+                'songs' : [{% for item in number.song %} { 'songId' : {{item.songId}}, 'songTitle' : '{{item.title}}' }{% if loop.last %}{% else %},{% endif %}{% endfor %}]
+
+            }
+
+            {% if loop.last %}{% else %},{% endif %}
+
+            {% endfor %}
+
+
+
+        ];
+
+
+
+
+        var _performance = '';
+        var sources = '';
+        var _source1 = '';
+        var _source2 = '';
+        var _compteur = '';
+        var listSongs = [];
+        var listPerformers = [];
+        var allSongs = [];
+        var allFilms = [];
+        var allPerformers = [];
+        var allDanceEnsembles = [];
+        var allDanceEnsemblesMelviz = [];
+        var allDanceEnsemblesGlobal = [];
+        var allDanceTypes = [];
+        var allDanceTypesMelviz = [];
+        var allDanceSubgenres = [];
+        var allDanceSubgenresMelviz = [];
+        var allDanceContents = [];
+        var allDanceContentsMelviz = [];
+        var song = {'id' : '', 'title'  : '', 'nb' : 0};
+        var film = {'id' : '', 'title'  : '', 'nb' : 0};
+        var performer = {'id' : '', 'title'  : '', 'nb' : 0};
+        var dance = {'label' : '', 'value' : 0};
+        var itemMelviz = {'label' : '', 'all_items' : 0, 'one_item' : 0};
+
+        var _min = 1850;
+        var _max = 2000;
+
+        //////////////////////////////////////////////////////////////////////////////
+
+        String.prototype.like = function(search) {
+            // Remove special chars
+            search = search.replace(new RegExp("([\\.\\\\\\+\\*\\?\\[\\^\\]\\$\\(\\)\\{\\}\\=\\!\\<\\>\\|\\:\\-])", "g"), "\\$1");
+            // Check matches
+            return RegExp('^.*' + search + '$', 'i').test(this);
+        };
+
+
+        //////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
+
+        function filter(_performance, _source1, _source2, _min, _max){
+
+            $("#resultat").html('');
+            var billets = '';
+            allSongs = [];
+            allFilms = [];
+            allPerformers = [];
+            allDanceEnsembles = [];
+            allDanceEnsemblesMelviz = [];
+            allDanceTypes = [];
+            allDanceTypesMelviz = [];
+            allDanceSubgenres = [];
+            allDanceSubgenresMelviz = [];
+            allDanceContents = [];
+            allDanceContentsMelviz = [];
+            _compteur = 0;
+
+            var source1Finale;
+            var source2Finale;
+
+            if (_performance == null) {
+                _performance = "";
+            }
+            if (typeof(_source1) == "undefined") {
+                _source1 = "";
+            }
+            if (typeof(_source2) == "undefined") {
+                _source2 = "";
+            }
+
+
+            <!-- Sélection des items via la fonction grep -->
+
+            $.grep( data, function( n, i ) {
+
+                if (typeof(n.sources[0]) == "undefined") {
+                    n.sources[0] = "";
+                }
+                if (typeof(n.sources[1]) == "undefined") {
+                    n.sources[1] = "";
+                }
+                if (typeof(n.performance) == "undefined") {
+                    n.performance = "";
+                }
+
+//                console.log(typeof(_min));
+
+//                if (n.performance === _performance && n.sources[0] == _source1 && n.sources[1] == _source2 && n.released > _min && n.released < _max ){
+
+                if (n.sources[0].like(_source1) && n.sources[1].like(_source2) && n.performance.like(_performance) && n.released > _min && n.released < _max) {
+
+                    if (n.sources[0] == "") {
+                        source1Finale = "";
+                    }
+                    else {
+                        source1Finale = n.sources[0];
+                    }
+                    if (n.sources[1] == "") {
+                        source2Finale = "";
+                    } else {
+                        source2Finale = "; " + n.sources[1];
+                    }
+
+                    getStats(n);
+                    listSongs = getListSongs(n);
+                    listPerformers = getListPerformers(n);
+
+                    if(_compteur < 20){
+                        billets += "<div class='billet card'><div><a href='/number/"+n.id+"'><h2>"+n.title+"</h2></a><a href='/film/id/"+n.filmId+" '><h3>"+n.film+" ("+n.released+")"+"</h3></a><p> Performance type : "+n.performance+"</p><p>Sources : "+n.sources[0]+", "+n.sources[1]+"</p></div><div><p>Choreographers : "+n.choreographers+"</p></div><div><p>Performers : "+listPerformers+"</p></div><div><p>Song(s) : "+listSongs+"</p></div></div>";
+                    }
+                    _compteur ++;
+
+                    //ajouter les résultats dans un tableau
+
+                    infos = "<div>Number of results : "+_compteur+" (only the first 20 numbers are displayed)</div>";
+                    $("#resultat").html(infos+billets);
+
+
+                }
+
+            });
+
+            afficherStatsSongs(allSongs);
+            afficherStatsFilms(allFilms);
+            afficherStatsPerformers(allPerformers);
+
+
+        }//end of filter()
+
+        //////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
+
+        function getStats(n) {
+
+            for(i=0; i < n.songs.length; i++){
+
+                //Songs
+
+                var trouve = 0;
+                allSongs.forEach(function (element) {
+                    if (element.id == n.songs[i].songId) {
+                        element.nb++;
+                        trouve = 1;
+                    }
+                });
+
+                if (trouve == 0) {
+                    song = {};
+                    song.id = n.songs[i].songId;
+                    song.title = n.songs[i].songTitle;
+                    song.nb = 1;
+                    allSongs.push(song);
+                }
+            }
+
+
+            // performers
+            for(u=0; u < n.performers.length; u++){
+
+                allPerformers.forEach(function (element) {
+                    if (element.id == n.performers[u].performerId) {
+                        element.nb++;
+                        trouve = 1;
+                    }
+                });
+
+                if (trouve == 0) {
+                    performer = {};
+                    performer.id = n.performers[u].performerId;
+                    performer.title = n.performers[u].performerTitle;
+                    performer.nb = 1;
+                    allPerformers.push(performer);
+                }
+            }
+
+            //films
+            allFilms.forEach(function (element) {
+                if (element.id == n.filmId) {
+                    element.nb++;
+                    trouve = 1;
+                }
+            });
+
+            if (trouve == 0) {
+                film = {};
+                film.id = n.filmId;
+                film.title = n.film;
+                film.nb = 1;
+                allFilms.push(film);
+            }
+
+            //dance ensmebles
+            for(p=0; p < n.danceensemble.length; p++){
+
+                allDanceEnsembles.forEach(function (element) {
+                    if (element.label == n.danceensemble[p]) {
+                        element.value++;
+                        trouve = 1;
+                    }
+                });
+
+                if (trouve == 0) {
+                    dance = {};
+                    dance.label = n.danceensemble[p];
+                    dance.value = 1;
+                    allDanceEnsembles.push(dance);
+                }
+            }
+
+
+            //dance type
+            for(p=0; p < n.dancetype.length; p++){
+
+                allDanceTypes.forEach(function (element) {
+                    if (element.label == n.dancetype[p]) {
+                        element.value++;
+                        trouve = 1;
+                    }
+                });
+
+                if (trouve == 0) {
+                    dance = {};
+                    dance.label = n.dancetype[p];
+                    dance.value = 1;
+                    allDanceTypes.push(dance);
+                }
+            }
+
+
+            //dance subgenres
+            for(p=0; p < n.dancesubgenre.length; p++){
+
+                allDanceSubgenres.forEach(function (element) {
+                    if (element.label == n.dancesubgenre[p]) {
+                        element.value++;
+                        trouve = 1;
+                    }
+                });
+
+                if (trouve == 0) {
+                    dance = {};
+                    dance.label = n.dancesubgenre[p];
+                    dance.value = 1;
+                    allDanceSubgenres.push(dance);
+                }
+            }
+
+
+            //dance contents
+            for(p=0; p < n.dancecontent.length; p++){
+
+                allDanceContents.forEach(function (element) {
+                    if (element.label == n.dancecontent[p]) {
+                        element.value++;
+                        trouve = 1;
+                    }
+                });
+
+                if (trouve == 0) {
+                    dance = {};
+                    dance.label = n.dancecontent[p];
+                    dance.value = 1;
+                    allDanceContents.push(dance);
+                }
+            }
+
+        }
+
+        function getListSongs(n) {
+
+            var listSongs = "";
+
+            for(i=0; i < n.songs.length; i++){
+
+                listSongs+= "<a href='/song/id/"+n.songs[i].songId+"'>"+n.songs[i].songTitle+"</a>";
+
+                if(i == (n.songs.length)-1){
+                    listSongs += " ";
+                }
+                else{
+                    listSongs += " , ";
+                }
+            }
+            return listSongs;
+        }
+
+
+        function getListPerformers(n) {
+
+            var listPerformers = "";
+
+            for(i=0; i < n.performers.length; i++){
+
+                listPerformers+= "<a href='/person/"+n.performers[i].performerId+"'>"+n.performers[i].performerTitle+"</a>";
+
+                if(i == (n.performers.length)-1){
+                    listPerformers += " ";
+                }
+                else{
+                    listPerformers += " , ";
+                }
+            }
+            return listPerformers;
+        }
+
+
+        function afficherStatsSongs(allSongs) {
+
+            console.log("allSongs : " + allSongs);
+
+            var titleSongs = '';
+            var textForSongs;
+
+            allSongs.sort(function(a, b) {
+                return b.nb - a.nb;
+            });
+
+            for(var i = 0; i < allSongs.length; i++){
+
+                if (i != allSongs.length - 1) {
+                    titleSongs += "<a href='/song/id/"+allSongs[i].id+"'>"+allSongs[i].title+" ("+allSongs[i].nb+")"+"</a>, ";
+                } else {
+                    titleSongs += "<a href='/song/id/"+allSongs[i].id+"'>"+allSongs[i].title+" ("+allSongs[i].nb+")"+"</a>";
+                }
+            }
+
+            nbSongsInSelection = allSongs.length;
+            textForSongs = "<div><h3>"+nbSongsInSelection+" songs in the selection</h3><p>"+titleSongs+"</p></div>";
+            $(".songsSelection").html(textForSongs);
+        }
+
+
+        function afficherStatsFilms(allFilms) {
+
+            var titleFilms = '';
+            var textForFilms;
+
+            allFilms.sort(function(a, b) {
+                return b.nb - a.nb;
+            });
+
+            for(var i = 0; i < allFilms.length; i++){
+
+                if (i != allFilms.length - 1) {
+                    titleFilms += "<a href='/film/id/"+allFilms[i].id+"'>"+allFilms[i].title+" ("+allFilms[i].nb+")"+"</a>, ";
+                } else {
+                    titleFilms += "<a href='/film/id/"+allFilms[i].id+"'>"+allFilms[i].title+" ("+allFilms[i].nb+")"+"</a>";
+                }
+            }
+
+            nbFilmsInSelection = allFilms.length;
+            textForFilms = "<div><h3>"+nbFilmsInSelection+" films in the selection</h3><p>"+titleFilms+"</p></div>";
+            $(".filmsSelection").html(textForFilms);
+        }
+
+
+        function afficherDonuts() {
+            donut_simple_avec_legende("donutsDanceEnsemble svg", allDanceEnsembles);
+            donut_simple_avec_legende("donutsDanceType svg", allDanceTypes);
+            donut_simple_avec_legende("donutsDanceContent svg", allDanceContents);
+            donut_simple_avec_legende("donutsDanceSubgenre svg", allDanceSubgenres);
+        }
+
+        function afficherMelviz() {
+            getDataMelviz();
+            viz_mediane("melviz_dance_subgenres", allDanceSubgenresMelviz, allDanceSubgenresMelviz.length);
+            viz_mediane("melviz_dance_ensembles", allDanceEnsemblesMelviz, allDanceEnsemblesMelviz.length);
+            viz_mediane("melviz_dance_contents", allDanceContentsMelviz, allDanceContentsMelviz.length);
+            viz_mediane("melviz_dance_types", allDanceTypesMelviz, allDanceTypesMelviz.length);
+        }
+
+        function getDataMelviz() {
+
+            allDanceEnsemblesGlobal = [];
+
+            data.forEach(function (elementData) {
+                for(p=0; p < elementData.danceensemble.length; p++) {
+
+                    var trouve = 0;
+
+                    for (var item in allDanceEnsemblesGlobal) {
+                        if (allDanceEnsemblesGlobal[item].label == elementData.danceensemble[p]) {
+                            allDanceEnsemblesGlobal[item].value++;
+                            trouve = 1;
+                        }
+                    }
+
+                    if (trouve == 0) {
+                        dance = {};
+                        dance.label = elementData.danceensemble[p];
+                        dance.value = 1;
+                        allDanceEnsemblesGlobal[dance.label] = dance;
+                    }
+                }
+
+            });
+
+
+            var total = 0;
+            var totalGlobal = 0;
+
+            allDanceEnsembles.forEach(function (element) {
+                total+=element.value;
+            });
+
+
+            for (var item in allDanceEnsemblesGlobal) {
+                totalGlobal += allDanceEnsemblesGlobal[item].value;
+            }
+
+            for (var key in allDanceEnsemblesGlobal) {
+
+                itemMelviz = {};
+                itemMelviz.label = allDanceEnsemblesGlobal[key].label;
+                itemMelviz.all_items = (allDanceEnsemblesGlobal[key].value/totalGlobal)*100;
+
+                var bool = 0;
+                allDanceEnsembles.forEach(function (element) {
+                    if (element.label == key) {
+                        itemMelviz.one_item = (element.value/total)*100;
+                        bool=1;
+                    }
+                });
+                if(bool == 0) {
+                    itemMelviz.one_item = 0;
+                }
+
+                allDanceEnsemblesMelviz.push(itemMelviz);
+
+            }
+
+            allDanceEnsemblesMelviz.sort(function(a, b) {
+                return b.one_item - a.one_item;
+            });
+
+
+
+
+
+            allDanceSubgenresGlobal = [];
+
+            data.forEach(function (elementData) {
+                for(p=0; p < elementData.dancesubgenre.length; p++) {
+
+                    var trouve = 0;
+
+                    for (var item in allDanceSubgenresGlobal) {
+                        if (allDanceSubgenresGlobal[item].label == elementData.dancesubgenre[p]) {
+                            allDanceSubgenresGlobal[item].value++;
+                            trouve = 1;
+                        }
+                    }
+
+                    if (trouve == 0) {
+                        dance = {};
+                        dance.label = elementData.dancesubgenre[p];
+                        dance.value = 1;
+                        allDanceSubgenresGlobal[dance.label] = dance;
+                    }
+                }
+
+            });
+
+
+            total = 0;
+            totalGlobal = 0;
+
+            allDanceSubgenres.forEach(function (element) {
+                total+=element.value;
+            });
+
+
+            for (var item in allDanceSubgenresGlobal) {
+                totalGlobal += allDanceSubgenresGlobal[item].value;
+            }
+
+            for (var key in allDanceSubgenresGlobal) {
+
+                itemMelviz = {};
+                itemMelviz.label = allDanceSubgenresGlobal[key].label;
+                itemMelviz.all_items = (allDanceSubgenresGlobal[key].value/totalGlobal)*100;
+
+                var bool = 0;
+                allDanceSubgenres.forEach(function (element) {
+                    if (element.label == key) {
+                        itemMelviz.one_item = (element.value/total)*100;
+                        bool=1;
+                    }
+                });
+                if(bool == 0) {
+                    itemMelviz.one_item = 0;
+                }
+
+                allDanceSubgenresMelviz.push(itemMelviz);
+
+            }
+
+            allDanceSubgenresMelviz.sort(function(a, b) {
+                return b.one_item - a.one_item;
+            });
+
+            allDanceContentsGlobal = [];
+
+            data.forEach(function (elementData) {
+                for(p=0; p < elementData.dancecontent.length; p++) {
+
+                    var trouve = 0;
+
+                    for (var item in allDanceContentsGlobal) {
+                        if (allDanceContentsGlobal[item].label == elementData.dancecontent[p]) {
+                            allDanceContentsGlobal[item].value++;
+                            trouve = 1;
+                        }
+                    }
+
+                    if (trouve == 0) {
+                        dance = {};
+                        dance.label = elementData.dancecontent[p];
+                        dance.value = 1;
+                        allDanceContentsGlobal[dance.label] = dance;
+                    }
+                }
+
+            });
+
+
+            total = 0;
+            totalGlobal = 0;
+
+            allDanceContents.forEach(function (element) {
+                total+=element.value;
+            });
+
+
+            for (var item in allDanceContentsGlobal) {
+                totalGlobal += allDanceContentsGlobal[item].value;
+            }
+
+            for (var key in allDanceContentsGlobal) {
+
+                itemMelviz = {};
+                itemMelviz.label = allDanceContentsGlobal[key].label;
+                itemMelviz.all_items = (allDanceContentsGlobal[key].value/totalGlobal)*100;
+
+                var bool = 0;
+                allDanceContents.forEach(function (element) {
+                    if (element.label == key) {
+                        itemMelviz.one_item = (element.value/total)*100;
+                        bool=1;
+                    }
+                });
+                if(bool == 0) {
+                    itemMelviz.one_item = 0;
+                }
+
+                allDanceContentsMelviz.push(itemMelviz);
+
+            }
+
+            allDanceContentsMelviz.sort(function(a, b) {
+                return b.one_item - a.one_item;
+            });
+
+            allDanceTypesGlobal = [];
+
+            data.forEach(function (elementData) {
+                for(p=0; p < elementData.dancetype.length; p++) {
+
+                    var trouve = 0;
+
+                    for (var item in allDanceTypesGlobal) {
+                        if (allDanceTypesGlobal[item].label == elementData.dancetype[p]) {
+                            allDanceTypesGlobal[item].value++;
+                            trouve = 1;
+                        }
+                    }
+
+                    if (trouve == 0) {
+                        dance = {};
+                        dance.label = elementData.dancetype[p];
+                        dance.value = 1;
+                        allDanceTypesGlobal[dance.label] = dance;
+                    }
+                }
+
+            });
+
+
+            total = 0;
+            totalGlobal = 0;
+
+            allDanceTypes.forEach(function (element) {
+                total+=element.value;
+            });
+
+
+            for (var item in allDanceTypesGlobal) {
+                totalGlobal += allDanceTypesGlobal[item].value;
+            }
+
+            for (var key in allDanceTypesGlobal) {
+
+                itemMelviz = {};
+                itemMelviz.label = allDanceTypesGlobal[key].label;
+                itemMelviz.all_items = (allDanceTypesGlobal[key].value/totalGlobal)*100;
+
+                var bool = 0;
+                allDanceTypes.forEach(function (element) {
+                    if (element.label == key) {
+                        itemMelviz.one_item = (element.value/total)*100;
+                        bool=1;
+                    }
+                });
+                if(bool == 0) {
+                    itemMelviz.one_item = 0;
+                }
+
+                allDanceTypesMelviz.push(itemMelviz);
+
+            }
+
+            allDanceTypesMelviz.sort(function(a, b) {
+                return b.one_item - a.one_item;
+            });
+
+        }
+
+        function afficherStatsPerformers(allPerformers){
+
+            var titlePerformers = '';
+            var textForPerformers;
+
+            allPerformers.sort(function(a, b) {
+                return b.nb - a.nb;
+            });
+
+            for(var i = 0; i < allPerformers.length; i++){
+
+                if (i != allPerformers.length - 1) {
+                    titlePerformers += "<a href='/person/"+allPerformers[i].id+"'>"+allPerformers[i].title+" ("+allPerformers[i].nb+")"+"</a>, ";
+                } else {
+                    titlePerformers += "<a href='/person/"+allPerformers[i].id+"'>"+allPerformers[i].title+" ("+allPerformers[i].nb+")"+"</a>";
+                }
+            }
+
+            nbPerformersInSelection = allPerformers.length;
+            textForPerformers = "<div><h3>"+nbPerformersInSelection+" performers in the selection</h3><p>"+titlePerformers+"</p></div>";
+            $(".performersSelection").html(textForPerformers);
+
+        }
+
+
+        $("select").change(function(){
+
+            sources = $("#sources").val();
+            _performance = $('#performance').val();
+
+            _source1 = sources[0];
+            _source2 = sources [1];
+
+
+            if ($('#sources').val().length >2 ) {
+                alert('You can only choose 2!');
+            } else {
+                filter(_performance, _source1, _source2, _min, _max);
+                afficherDonuts();
+                afficherMelviz();
+            }
+
+        })
+
+
+        //////////////////////////////////////////////////////////////////////////////
+        //Slider
+        //////////////////////////////////////////////////////////////////////////////
+
+                var slider = document.getElementById('slider');
+
+                noUiSlider.create(slider, {
+                    start: [1880, 1980],
+                    connect: true,
+                    range: {
+                        'min': _min,
+                        'max': _max
+                    },
+                    format: wNumb({
+                        decimals: 0
+                    }),
+                    tooltips: true,
+                    step: 1
+
+                });
+
+                slider_values = [];
+                var min_slider ='';
+                var max_slider ='';
+
+                console.log(max_slider);
+
+                slider.noUiSlider.on('end', function(){
+                    slider_values = slider.noUiSlider.get();
+                    min_slider = slider_values[0];
+                    max_slider = slider_values[1];
+                    console.log(max_slider);
+                    filter(_performance, _source1, _source2, min_slider, max_slider);
+                });
+
+        //////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
+
+        $(document).ready(function() {
+            Materialize.updateTextFields();
+            $('select').material_select();
+
+        });
+
+
+        $(document).ready(function(){
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+        });
+
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,396 @@
+<div class="col s12 tab" id="activity">
+
+
+    <ul class="collapsible popout" data-collapsible="accordion">
+
+        <!-- Numbers Management -->
+        <li>
+            <div class="collapsible-header active"><i class="material-icons">whatshot</i>Last numbers</div>
+            <article class="card collapsible-body active">
+
+
+                <table class="responsive-table mini-table striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Film</th>
+                        <th>Last Update</th>
+                        <th>Editor(s)</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for item in lastnumbers  %}
+                        <tr>
+                            <td><a href="{{ path('number' , {'id' : item.id}) }}">{{ item.title }}</a></td>
+                            <td><a href="{{ path('film' , {'filmId' : item.film.filmId}) }}">{{ item.film }}</a></td>
+                            <td>{{ item.lastUpdate | date() }}</td>
+                            <td>
+                                {% for editor in item.editors  %}
+                                    {{ editor.username }} {% if loop.last %}{% else %} ;{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('number_edit' , {'id' : item.id}) }}"><i class="material-icons tiny">mode_edit</i></a></td>
+                            {#<td><a href="{{ path('number_delete', { id : item.id}) }}"  ><i class="material-icons tiny red-text text-darken-2">delete</i></a></td>#}
+                            <td><a href="#numbers{{ item.id }}" class="modal-trigger"><i class="material-icons tiny red-text text-darken-2">delete_forever</i></a></td>
+                            {#class="js-remove-number" data-url="{{ path('number_ajax_delete', { numberId : item.id}) }}"#}
+
+                        </tr>
+
+
+                    {% endfor %}
+                </table>
+
+                <!-- Modal for 1 number -->
+
+                {% for item in lastnumbers  %}
+                    <!-- Modal Structure -->
+                    <div id="numbers{{ item.id }}" class="modal">
+                        <div class="modal-content">
+                            <h3 class="uk-modal-title">Delete this number?</h3>
+                            <p>
+                                Are you sure you want to delete  '<b>{{ item.title }}</b>'?<br/>
+                                This cannot be undone.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <a href="{{ path('number_delete', { id : item.id}) }}" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p class="center"><a href="{{ path('numbers') }}">All numbers</a></p>
+
+            </article>
+        </li>
+
+        <!-- Films Management -->
+        <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Last films</div>
+            <article class="card collapsible-body">
+
+                <table class="responsive-table mini-table striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Released</th>
+                        <th>Last Update</th>
+                        <th>Editor(s)</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for item in lastfilms  %}
+                        <tr>
+                            <td><a href="{{ path('film' , {'filmId' : item.filmId}) }}">{{ item.title }}</a></td>
+                            <td>{{ item.released }}</td>
+                            <td>{{ item.lastUpdate | date() }}</td>
+                            <td>
+                                {% for editor in item.editors  %}
+                                    {{ editor.username }} {% if loop.last %}{% else %} ;{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('film_edit' , {'filmId' : item.filmId}) }}"><i class="material-icons tiny">mode_edit</i></a></td>
+                            <td><a href="#films{{ item.filmId }}" class="modal-trigger"><i class="material-icons tiny red-text text-darken-2">delete_forever</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <!-- Modal for 1 film -->
+
+                {% for item in lastfilms  %}
+
+                    <!-- Modal Structure -->
+                    <div id="films{{ item.filmId }}" class="modal">
+                        <div class="modal-content">
+                            <h3 class="uk-modal-title">Delete this film?</h3>
+                            <p>
+                                Are you sure you want to delete  '<b>{{ item.title }}</b>'?<br/>
+                                This cannot be undone.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <a href="{{ path('film_delete', { id : item.filmId}) }}" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p class="center"><a href="{{ path('films') }}">All films</a></p>
+
+            </article>
+        </li>
+
+        <!-- Persons Management -->
+        <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Last persons</div>
+            <article class="card collapsible-body">
+
+                <table class="responsive-table mini-table striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>Last Update</th>
+                        <th>Editor(s)</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for item in lastpersons  %}
+                        <tr>
+                            <td><a href="{{ path('person' , {'personId' : item.personId}) }}">{{ item.name }}</a></td>
+                            <td>{{ item.lastUpdate | date() }}</td>
+                            <td>
+                                {% for editor in item.editors  %}
+                                    {{ editor.username }} {% if loop.last %}{% else %} ;{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('person_edit' , {'personId' : item.personId}) }}"><i class="material-icons tiny">mode_edit</i></a></td>
+                            <td><a href="#persons{{ item.personId }}" class="modal-trigger"><i class="material-icons tiny red-text text-darken-2">delete_forever</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+
+                <!-- Modal for 1 person -->
+
+                {% for item in lastpersons  %}
+
+                    <!-- Modal Structure -->
+                    <div id="persons{{ item.personId }}" class="modal">
+                        <div class="modal-content">
+                            <h3 class="uk-modal-title">Delete this item?</h3>
+                            <p>
+                                Are you sure you want to delete  '<b>{{ item.name }}</b>'?<br/>
+                                This cannot be undone.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <a href="{{ path('person_delete', { id : item.personId}) }}" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p class="center"><a href="{{ path('thesaurus') }}">Thesaurus home</a></p>
+            </article>
+        </li>
+
+
+        <!-- Thesaurus Management -->
+        <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Last thesaurus</div>
+            <article class="card collapsible-body">
+
+                <table class="responsive-table mini-table striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Last Update</th>
+                        <th>Editor(s)</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for item in lastthesaurus  %}
+                        <tr>
+                            <td><a href="{{ path('thesaurus_element' , {'id' : item.id}) }}">{{ item.title }}</a></td>
+                            <td>{{ item.code.title }}</td>
+                            <td>{{ item.lastUpdate | date() }}</td>
+                            <td>
+                                {% for editor in item.editors  %}
+                                    {{ editor.username }} {% if loop.last %}{% else %} ;{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('updateThesaurus' , {'id' : item.id}) }}"><i class="material-icons tiny">mode_edit</i></a></td>
+                            <td><a href="#thesaurus{{ item.id }}" class="modal-trigger"><i class="material-icons tiny red-text text-darken-2">delete_forever</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+
+                <!-- Modal for 1 thesaurus -->
+
+                {% for item in lastthesaurus  %}
+
+                    <!-- Modal Structure -->
+                    <div id="thesaurus{{ item.id }}" class="modal">
+                        <div class="modal-content">
+                            <h3 class="uk-modal-title">Delete this item?</h3>
+                            <p>
+                                Are you sure you want to delete  '<b>{{ item.title }}</b>'?<br/>
+                                This cannot be undone.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <a href="{{ path('thesaurus_delete', { id : item.id}) }}" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p class="center"><a href="{{ path('thesaurus') }}">Thesaurus home</a></p>
+            </article>
+        </li>
+
+        <!-- Songs Management -->
+        <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Last songs</div>
+            <article class="card collapsible-body">
+                <h2>Songs</h2>
+
+                <table class="responsive-table mini-table striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Last Update</th>
+                        <th>Editor</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for item in lastsongs  %}
+                        <tr>
+                            <td><a href="{{ path('song' , {'songId' : item.songId}) }}">{{ item.title }}</a></td>
+                            <td>{{ item.lastUpdate | date() }}</td>
+                            <td>
+                                {% for editor in item.editors  %}
+                                    {{ editor.username }} {% if loop.last %}{% else %} ;{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('song_edit' , {'songId' : item.songId}) }}"><i class="material-icons tiny">mode_edit</i></a></td>
+                            <td><a href="#songs{{ item.songId }}" class="modal-trigger"><i class="material-icons tiny red-text text-darken-2">delete_forever</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <!-- Modal for 1 song -->
+
+                {% for item in lastsongs  %}
+
+                    <!-- Modal Structure -->
+                    <div id="songs{{ item.songId }}" class="modal">
+                        <div class="modal-content">
+                            <h3 class="uk-modal-title">Delete this song?</h3>
+                            <p>
+                                Are you sure you want to delete  '<b>{{ item.title }}</b>'?<br/>
+                                This cannot be undone.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <a href="{{ path('song_delete', { id : item.songId}) }}" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p class="center"><a href="{{ path('songs') }}">All songs</a></p>
+
+            </article>
+        </li>
+
+        <!-- Stageshows Management -->
+        <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Last stageshows</div>
+            <article class="card collapsible-body">
+                <h2>Stageshows</h2>
+
+                <table class="responsive-table mini-table striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Last Update</th>
+                        <th>Editor</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for item in laststageshows  %}
+                        <tr>
+                            <td><a href="{{ path('stageshow' , {'stageshowId' : item.stageshowId}) }}">{{ item.title }}</a></td>
+                            <td>{{ item.lastUpdate | date() }}</td>
+                            <td>
+                                {% for editor in item.editors  %}
+                                    {{ editor.username }} {% if loop.last %}{% else %} ;{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('stageshow_edit' , {'stageshowId' : item.stageshowId}) }}"><i class="material-icons tiny">mode_edit</i></a></td>
+                            <td><a href="#stageshows{{ item.stageshowId }}" class="modal-trigger"><i class="material-icons tiny red-text text-darken-2">delete_forever</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <!-- Modal for 1 stageshow -->
+
+                {% for item in laststageshows  %}
+
+                    <!-- Modal Structure -->
+                    <div id="stageshows{{ item.stageshowId }}" class="modal">
+                        <div class="modal-content">
+                            <h3 class="uk-modal-title">Delete this stageshow?</h3>
+                            <p>
+                                Are you sure you want to delete  '<b>{{ item.title }}</b>'?<br/>
+                                This cannot be undone.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <a href="{{ path('stageshow_delete', { id : item.stageshowId}) }}" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p class="center"><a href="{{ path('stageshows') }}">All stage shows</a></p>
+
+            </article>
+        </li>
+
+        <!-- Stagenumbers Management -->
+        <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Last stagenumbers</div>
+            <article class="card collapsible-body">
+                <h2>Stagenumbers</h2>
+
+                <table class="responsive-table mini-table striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Last Update</th>
+                        <th>Editor</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for item in laststagenumbers  %}
+                        <tr>
+                            <td><a href="{{ path('stagenumber' , {'stagenumberId' : item.stagenumberId}) }}">{{ item.title }}</a></td>
+                            <td>{{ item.lastUpdate | date() }}</td>
+                            <td>
+                                {% for editor in item.editors  %}
+                                    {{ editor.username }} {% if loop.last %}{% else %} ;{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('stagenumber_edit' , {'stagenumberId' : item.stagenumberId}) }}"><i class="material-icons tiny">mode_edit</i></a></td>
+                            <td><a href="#stagenumbers{{ item.stagenumberId }}" class="modal-trigger"><i class="material-icons tiny red-text text-darken-2">delete_forever</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+
+                <!-- Modal for 1 stagenumber -->
+
+                {% for item in laststagenumbers  %}
+
+                    <!-- Modal Structure -->
+                    <div id="stagenumbers{{ item.stagenumberId }}" class="modal">
+                        <div class="modal-content">
+                            <h3 class="uk-modal-title">Delete this stagenumber?</h3>
+                            <p>
+                                Are you sure you want to delete  '<b>{{ item.title }}</b>'?<br/>
+                                This cannot be undone.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <a href="{{ path('stagenumber_delete', { id : item.stagenumberId}) }}" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p class="center"><a href="{{ path('stagenumbers') }}">All stage numbers</a></p>
+            </article>
+        </li>
+
+
+    </ul>
+
+
+</div>

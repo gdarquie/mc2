@@ -1,0 +1,61 @@
+<div class="col s12 row" id="myfilms">
+
+    {% if myFilms|length > 0  %}
+
+        <article class="col s12" >
+
+
+            <div id="my-numbers-list">
+
+                <div class="row valign-wrapper numbers-menu">
+
+                    <div class="col">
+                        <h2>My numbers <span class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="You can filter the complete, uncomplete or numbers where help is needed when writing 'unfinished', 'incomplete' or 'help' in the search field"><i class="material-icons circle white-text grey lighten-1">help</i></span></h2>
+                    </div>
+
+
+                    <div class="col">
+
+                        <div class="search-wrapper input-field">
+
+                            <input id="searchMyNumbers" class="search" type="text">
+                            <label for="searchMyNumbers">Search</label>
+
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        Sort :
+                        <span class="sort chip pointer" data-sort="title">title</span>
+                        <span class="sort chip pointer" data-sort="film">film</span>
+                        <span class="sort chip pointer" data-sort="timestamp">last edition</span>
+                        {#<span class="sort chip pointer" data-sort="check">status</span>#}
+                    </div>
+
+                    {#<div class="col">#}
+                        {#Filter:#}
+                        {#<span class="sort chip pointer" data-filter="complete">complete</span>#}
+                        {#<span class="sort chip pointer" data-filter="assist">assist</span>#}
+                        {#<span class="sort chip pointer" data-filter="uncomplete">undone</span>#}
+                        {#<span class="sort chip pointer" data-filter="all">all</span>#}
+                    {#</div>#}
+                </div>
+
+
+                <ul class="list collection number-list">
+                    {% for number in myNumbers  %}
+                        {% include 'CmsBundle:Member:Modals/_number.html.twig' %}
+                    {% endfor %}
+                </ul>
+
+                <ul class="pagination"></ul>
+
+            </div>
+
+
+        </article>
+
+    {% endif %}
+
+</div>
+

@@ -1,0 +1,92 @@
+.cartoucheContent{
+margin-top : 1em;
+margin-bottom: 2em;
+}
+
+
+.film-select{
+color :#CC0000;
+padding-left: 3px;
+}
+
+.number-check span{
+    margin-right: 10px;
+
+}
+
+.number-item .title{
+    font-size: 1.2em;
+    text-decoration: underline;
+
+}
+
+.number-item .timestamp{
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.number-item .film{
+    color: #CC0000;
+}
+
+.number-item{
+    width: 100%;
+}
+
+.search-wrapper{
+     /*border : 1px solid black;*/
+ }
+
+.search-wrapper{
+    margin-left:30px;
+    /*line-height:1em;*/
+    /*border : 1px solid black;*/
+}
+
+.number-list li:hover{
+    background:#fceaea;
+}
+
+/* label color */
+.input-field label {
+    color: #CC0000;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: lightgrey;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #CC0000;
+    box-shadow: 0 1px 0 0 #CC0000;
+}
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #CC0000;
+    box-shadow: 0 1px 0 0 #CC0000;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #CC0000;
+    box-shadow: 0 1px 0 0 #CC0000;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #CC0000;
+}
+
+.hide{
+    display:none;
+}
+
+.mystats{
+
+    height : 300px;
+    font-size: 2.4em;
+
+}
+
+.mystats p{
+    color:white;
+    padding-top : 40px;
+}

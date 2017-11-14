@@ -1,0 +1,53 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PersonHasRadio
+ *
+ * @ORM\Table(name="person_has_radio", indexes={@ORM\Index(name="fk_person_has_radio_radio1_idx", columns={"radio_id"}), @ORM\Index(name="fk_person_has_radio_person1_idx", columns={"person_id"}), @ORM\Index(name="fk_person_has_radio_profession1_idx", columns={"profession_id"})})
+ * @ORM\Entity
+ */
+class PersonHasRadio
+{
+    /**
+     * @var \AppBundle\Entity\Radio
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Radio")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="radio_id", referencedColumnName="radio_id")
+     * })
+     */
+    private $radio;
+
+    /**
+     * @var \AppBundle\Entity\Profession
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Profession")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="profession_id", referencedColumnName="profession_id")
+     * })
+     */
+    private $profession;
+
+    /**
+     * @var \AppBundle\Entity\Person
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Person")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="person_id", referencedColumnName="person_id")
+     * })
+     */
+    private $person;
+
+
+}
+

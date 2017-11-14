@@ -1,0 +1,32 @@
+
+<div class="row">
+
+    <div class="col s12">
+
+        {{ form_row(form.title) }}
+
+        {{ form_row(form.code) }}
+
+        {{ form_label(form.definition, "Definition") }}
+        {{ form_widget(form.definition, {
+            'attr': {'class': 'materialize-textarea'}
+        }) }}
+
+        {{ form_label(form.example, "Example") }}
+        {{ form_widget(form.example, {
+            'attr': {'class': 'materialize-textarea'}
+        }) }}
+
+        {{ form_label(form.comment, "Comment") }}
+        {{ form_widget(form.comment, {
+            'attr': {'class': 'materialize-textarea'}
+        }) }}
+
+
+    </div>
+
+
+
+</div>
+{#{{ form_row(filmForm.deleted) }}#} {# à laisser caché #}
+{#{{ form_row(filmForm.isComplete) }}#} {# à laisser caché  pour l'instant #}
