@@ -252,12 +252,9 @@
 
            <p>Musical styles : {{ musicalStyle|length }} - <a href="{{ path('thesaurus', { 'type' : "Musical styles" }) }}">Thesaurus</a> </p>
            <p>Production numbers per musical styles : </p>
-
-            <div class='wordcloud col s12 row' id='wordcloud_style' style="height: 300px"></div>
-
-            {#{% for item in musicalStyle  %}#}
-                {#<a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>#}
-            {#{% endfor %}#}
+            {% for item in musicalStyle  %}
+                <a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
+            {% endfor %}
         </article>
 
         <div id="div_viz" class="col s12" style=" height: 500px;"></div>
@@ -415,20 +412,6 @@
 
     </script>
 
-    <script>
-
-
-        words_style = [{% for item in musicalStyle  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}" } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
-        $('#wordcloud_style').jQCloud(words_style);
-        $('#wordcloud_style').jQCloud('update', words_style, {
-            fontSize: {
-                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
-                from: 0.1,
-                to: 0.05
-            }
-        });
-
-    </script>
 
     <script>
 
