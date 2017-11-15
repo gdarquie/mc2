@@ -3,95 +3,19 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <style>
-
-        nav{
-            display:none;
-        }
-
-        .thesaurus-elements{
-            display: none;
-        }
-
-        .thesaurus-element{
-            color: black;
-            height: 48px;
-            margin-bottom: 2px;
-            overflow: hidden;
-            line-height: 1em;
-            text-transform: capitalize;
-        }
-
-        .thesaurus-element a{
-            color: #382f2f;
-            display: none;
-        }
-
-        .thesaurus-element a:hover{
-            color :#CC0000;
-        }
-
-
-        .hidden{
-            display:none;
-        }
-
-        footer{
-            display:none;
-        }
-
-        .title{
-
-            margin-bottom: 1.8em;
-        }
-
-        .title h2{
-            font-size: 2.7em;
-            text-align: center;
-            text-transform: capitalize;
-        }
-
-        .title i{
-            font-size : 2.6rem;
-            color:#382f2f;
-            cursor: pointer;
-        }
-
-        .modal{
-            padding:15px;
-        }
-
-
-    </style>
 {% endblock %}
 
 {% block body %}
     <div class="container-fluid">
-
         <div class="row">
-
-
-            <!-- Modal Structure -->
-            <div id="searchBox" class="modal">
-
-                <h2>Search a thesaurus element <span class="tooltipped" data-position="bottom" data-delay="30" data-tooltip="Writing 2 letters or more displays some suggestion, you can click on the element to go on its dedicated page"><i class="material-icons circle white-text grey lighten-1">help</i></span></h2>
-                <div class="input-field">
-                    <i class="material-icons prefix">search</i>
-                    <input id="searchItem" type="text" class="autocomplete" placeholder='Examples : "acrobatic, Dallas"'>
-                    <ul class="autocomplete-content dropdown-content"></ul>
-                </div>
-            </div>
-
             <section class="col s12">
-
                 <header class="hidden title">
-                    <h2>Thesaurus types <a class="waves-effect waves-light modal-trigger" href="#searchBox"><i class="material-icons">search</i></a></h2>
+                    <h2>Thesaurus types</h2>
                 </header>
-
                 <div>
                     <ul class="row thesaurus-elements">
                     {% for item in codes  %}
-                        <li class="col s12 m6 l4 thesaurus-element center">
+                        <li class="col s12 m6 l4 ">
                             <a href="{{ path('thesaurus_type', {'content' : item.content}) }}">{{ item.title }}</a>
                             <a href="{{ path('admin_code_edit' , {'codeId' : item.codeId}) }}">{% if is_granted('ROLE_ADMIN') %}
                                 <i class="material-icons tiny lightgrey">edit</i>
@@ -100,20 +24,14 @@
                     {% endfor %}
                     </ul>
                 </div>
-
             </section>
-
         </div>
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
-
     {{ parent() }}
-
-    <script type="text/javascript" src="{{ asset('js/editor/thesaurus/displayApp.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/editor/thesaurus/searchApp.js') }}"></script>
-
 {% endblock %}
 
