@@ -14,36 +14,55 @@
     </header>
 
 
-    <article class="card card_thematique row" style="overflow: hidden">
+    <article class="card card_thematique" style="overflow: hidden">
 
-        <div class=" col s12 row">
-            <p class="col m4 center">Exoticism Types: <span class="number">{{ exoticism|length - 1 }}</span></p>
-            <p class="col m4 center">Used Types : <span class="number">{{ total.nb }}</span></p>
-            <p class="col m4 center">Production Numbers : <span class="number">{{ totalNumber.nb }}</span></p>
-        </div>
-
-
-        <article>
-
-            {#<div class='wordcloud col s12 row' id='wordcloud_exotism' style="height: 300px"></div>#}
-
-            {% for item in popularexoticismCartouche %}
-                <a href="{{ path('getOneExoticism', { 'item' : item.title }) }}" class="chip">{{ item.title }} ({{ item.nb }})</a>
-            {% endfor %}
-
-        </article>
+      <div class=" col s12 row">
+          <p class="col m4 center">Exoticism Types: <span class="number">{{ exoticism|length - 1 }}</span></p>
+          <p class="col m4 center">Used Types : <span class="number">{{ total.nb }}</span></p>
+          <p class="col m4 center">Production Numbers : <span class="number">{{ totalNumber.nb }}</span></p>
+      </div>
 
 
-        <article class="row">
+      <article>
 
-            <div id="chart_div" class="col s6" style=" height: 500px;"></div>
-            <div style="transform: translate(0px,40px);" id="div_donut" class="col s6" style="height: 400px">
-                <p style="font-weight: bold; padding-left: 100px;">Share of exoticism</p>
-                <svg style="height: 450px;"></svg>
-            </div>
-        </article>
+          {#<div class='wordcloud col s12 row' id='wordcloud_exotism' style="height: 300px"></div>#}
+
+          {% for item in popularexoticismCartouche %}
+              <a href="{{ path('getOneExoticism', { 'item' : item.title }) }}" class="chip">{{ item.title }} ({{ item.nb }})</a>
+          {% endfor %}
+
+      </article>
 
 
+      <article class="row">
+
+          <div id="chart_div" class="col s6" style=" height: 500px;"></div>
+          <div style="transform: translate(0px,40px);" id="div_donut" class="col s6" style="height: 400px">
+              <p style="font-weight: bold; padding-left: 100px;">Share of exoticism</p>
+              <svg style="height: 450px;"></svg>
+          </div>
+      </article>
+    </article>
+
+    <article class="card card_thematique">
+      <h2>Cast and ethnic stereotypes</h2>
+      <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/dde11190-bb1d-11e7-a72f-f95628e35b36?embed=true&_g=()&_a=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:mc2,key:cast,negate:!t,type:phrase,value:NA),query:(match:(cast:(query:NA,type:phrase))))),linked:!f,query:(match_all:()),uiState:(vis:(colors:('15+-+20':%23E24D42,'20+-+100':%23BF1B00),defaultColors:('0+-+5':'rgb(255,245,240)','11+-+15':'rgb(251,106,74)','16+-+50':'rgb(203,24,29)','51+-+3,000':'rgb(103,0,13)','6+-+10':'rgb(252,187,161)'),legendOpen:!f)),vis:(aggs:!((enabled:!t,id:'1',params:(),schema:metric,type:count),(enabled:!t,id:'2',params:(field:cast,order:desc,orderBy:'1',size:4),schema:segment,type:terms),(enabled:!t,id:'3',params:(field:stereotype,order:desc,orderBy:'1',size:15),schema:group,type:terms)),listeners:(),params:(addLegend:!t,addTooltip:!t,colorSchema:Reds,colorsNumber:4,colorsRange:!((from:0,to:5),(from:6,to:10),(from:11,to:15),(from:16,to:50),(from:51,to:3000)),enableHover:!f,invertColors:!f,legendPosition:right,percentageMode:!f,setColorRange:!t,times:!(),valueAxes:!((id:ValueAxis-1,labels:(color:%23555,rotate:0,show:!t),scale:(defaultYExtents:!f,type:linear),show:!f,type:value))),title:'%5BExotisme%5D+casts+%26+stereotypes',type:heatmap))" height="600" width="100%">
+      </iframe>
+    </article>
+
+    <article class="card card_thematique">
+      <h2>Dancing and musical styles</h2>
+      <div class="center">
+        <p>Exoticism and dancing</p>
+      </div>
+      <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/e2245930-bb20-11e7-a72f-f95628e35b36?embed=true&_g=()&_a=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:mc2,key:exoticismThesaurus,negate:!t,type:phrase,value:'not+exotic'),query:(match:(exoticismThesaurus:(query:'not+exotic',type:phrase)))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:mc2,key:dancingType,negate:!t,type:phrase,value:NA),query:(match:(dancingType:(query:NA,type:phrase))))),linked:!f,query:(match_all:()),uiState:(vis:(defaultColors:('0+-+5':'rgb(247,251,255)','14+-+18':'rgb(33,113,181)','5+-+9':'rgb(198,219,239)','9+-+14':'rgb(107,174,214)'))),vis:(aggs:!((enabled:!t,id:'1',params:(),schema:metric,type:count),(enabled:!t,id:'2',params:(field:dancingType,order:desc,orderBy:'1',size:11),schema:segment,type:terms),(enabled:!t,id:'3',params:(field:exoticismThesaurus,order:desc,orderBy:'1',size:10),schema:group,type:terms)),listeners:(),params:(addLegend:!t,addTooltip:!t,colorSchema:Blues,colorsNumber:4,colorsRange:!(),enableHover:!f,invertColors:!f,legendPosition:right,percentageMode:!f,setColorRange:!f,times:!(),valueAxes:!((id:ValueAxis-1,labels:(color:%23555,rotate:0,show:!f),scale:(defaultYExtents:!f,type:linear),show:!f,type:value))),title:'%5BExoticism%5D+exoticism+and+dance',type:heatmap))" height="600" width="100%">
+      </iframe>
+
+      <div class="center">
+        <p>Exoticisme and musical styles</p>
+      </div>
+      <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/dde11190-bb1d-11e7-a72f-f95628e35b36?embed=true&_g=()&_a=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:mc2,key:cast,negate:!t,type:phrase,value:NA),query:(match:(cast:(query:NA,type:phrase))))),linked:!f,query:(match_all:()),uiState:(vis:(colors:('15+-+20':%23E24D42,'20+-+100':%23BF1B00),defaultColors:('0+-+5':'rgb(255,245,240)','11+-+15':'rgb(251,106,74)','16+-+50':'rgb(203,24,29)','51+-+3,000':'rgb(103,0,13)','6+-+10':'rgb(252,187,161)'),legendOpen:!f)),vis:(aggs:!((enabled:!t,id:'1',params:(),schema:metric,type:count),(enabled:!t,id:'2',params:(field:cast,order:desc,orderBy:'1',size:4),schema:segment,type:terms),(enabled:!t,id:'3',params:(field:stereotype,order:desc,orderBy:'1',size:15),schema:group,type:terms)),listeners:(),params:(addLegend:!t,addTooltip:!t,colorSchema:Reds,colorsNumber:4,colorsRange:!((from:0,to:5),(from:6,to:10),(from:11,to:15),(from:16,to:50),(from:51,to:3000)),enableHover:!f,invertColors:!f,legendPosition:right,percentageMode:!f,setColorRange:!t,times:!(),valueAxes:!((id:ValueAxis-1,labels:(color:%23555,rotate:0,show:!t),scale:(defaultYExtents:!f,type:linear),show:!f,type:value))),title:'%5BExotisme%5D+casts+%26+stereotypes',type:heatmap))" height="600" width="100%">
+      </iframe>
     </article>
 
     <article>

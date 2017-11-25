@@ -1,0 +1,260 @@
+.section-search,
+.section-stats,
+.section-themes,
+.section-films {
+  display: flex;
+  flex-direction: column;
+  padding: 4em 0;
+  width: 100%;
+}
+
+.section-search__wrapper,
+.section-stats__wrapper,
+.section-themes__wrapper,
+.section-films__wrapper {
+  margin: auto;
+  width: 70%;
+}
+
+.section-search__title,
+.section-stats__title,
+.section-themes__title,
+.section-films__title {
+  margin: 0 0 1.7em 0;
+}
+
+.section-search__buttons {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+}
+
+.section-search__button {
+  align-items: center;
+  border: solid 1px #4D5D5D;
+  border-radius: 0;
+  color: #4D5D5D;
+  display: flex;
+  /*flex: 1;*/
+  font-family: "tisa-sans-bold", sans-serif;
+  height: 30px;
+  justify-content: center;
+  margin: 0 3px;
+  width: 100px;
+}
+
+.section-search__button--selected {
+  background-color: #4D5D5D!important;
+  color: white;
+}
+
+.section-search__search-container {
+  border: 1px solid #4D5D5D;
+  padding: 30px 25px;
+  width: 100%;
+}
+
+.section-search__search-container--number,
+.section-search__search-container--song, .section-search__search-container--person, .section-search__search-container--stageshow {
+  display: none;
+}
+
+.section-search__entitled {
+  color: #db5462;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.section-search__input {
+  border-bottom: 1px solid #ddd!important;
+  font-size: 0.9rem!important;
+  color: #4D5D5D;
+  margin: 0!important;
+}
+
+.section-search__input::placeholder {
+  color: #c0c0c0;
+}
+
+.section-search__input:focus {
+  border-bottom: 1px solid #ddd!important;
+  box-shadow: none!important;
+}
+
+.section-stats,
+.section-films {
+  background-color: #f7f7f7;
+}
+
+.section-stats__wrapper a {
+  color: #4D5D5D;
+}
+
+.section-stats__wrapper a:hover {
+  color: white;
+}
+
+.section-stats__stats {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 3.5em;
+  width: 100%;
+  font-family: "tisa-bold",serif;
+}
+
+.section-stats__stat {
+  text-align: center;
+  color: #4D5D5D;
+}
+
+.section-stats__number {
+  font-size: 2.3em;
+}
+
+.section-stats__type {
+  font-size: 1.2em;
+}
+
+.section-stats__button {
+  border: solid 1px #4D5D5D;
+  border-radius: 0;
+  display: flex;
+  flex: 1;
+  font-family: "tisa-sans-bold", sans-serif;
+  font-size: 1.2em;
+  height: 40px;
+  justify-content: center;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.section-stats__button:hover {
+  background-color: #4D5D5D;
+}
+
+.section-stats__button:hover a {
+  color: white;
+}
+
+.section-stats__button a {
+  color: #4D5D5D;
+}
+
+.section-themes__themes {
+  margin-top: 2em;
+}
+
+.section-themes__theme {
+  align-items: center;
+  background-size: cover;
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  margin: 7px 0;
+  width: 100%;
+  transition: border .5s;
+}
+
+.section-themes__theme:hover {
+  border: 5px solid #4D5D5D;
+  transition: border .5s;
+}
+
+.section-themes__theme--music {
+  background-image: url('../img/MUSIC.jpg');
+}
+.section-themes__theme--dance {
+  background-image: url('../img/DANCE.jpg');
+}
+.section-themes__theme--exoticism {
+  background-image: url('../img/EXOTICISM.jpg');
+}
+.section-themes__theme--topics {
+  background-image: url('../img/TOPICS.jpg');
+}
+.section-themes__theme--censorship {
+  background-image: url('../img/CENSORSHIP.jpg');
+}
+
+.section-themes__theme-name {
+  color: white;
+  font-family: "tisa-bold",serif;
+  font-size: 3.2em;
+  margin: 0;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.section-films__films {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2em;
+}
+
+.section-films__film {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  transition: all 0.3s;
+  width: calc(20% - 10px);
+}
+
+.section-films__film:hover {
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s;
+}
+
+.section-films__film.hidden {
+  display: none;
+}
+
+.section-films__film-name {
+  align-items: center;
+  background: white;
+  color: #4D5D5D;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin: 0;
+  text-align: center;
+}
+
+.section-films__centered-cropped {
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.section-films__film-poster {
+  bottom: -100%;
+  left: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  right: -100%;
+  top: -100%;
+}
+
+#section-films__button {
+  border: solid 1px #4D5D5D;
+  border-radius: 0;
+  color: #4D5D5D;
+  display: flex;
+  flex: 1;
+  font-family: "tisa-sans-bold", sans-serif;
+  font-size: 1.2em;
+  height: 40px;
+  justify-content: center;
+  margin: 10px auto auto auto;
+  transition: all 0.2s;
+  width: calc(100% - 10px);
+}
+
+#section-films__button:hover {
+  background-color: #4D5D5D;
+  color: white;
+}

@@ -54,11 +54,11 @@ div.jqcloud span.w1 { font-size: 100%; }
     color : black!important;
 }
 #sub_nav .active{
-    color : #CC0000!important;
+    color : #db5462!important;
 }
 
 .btn {
-    background-color: #CC0000;
+    background-color: #db5462;
 }
 
 .btn:hover {
@@ -71,7 +71,7 @@ div.jqcloud span.w1 { font-size: 100%; }
 
 
 .pagination .active  {
-    background:#CC0000!important;
+    background:#db5462!important;
 }
 
 
@@ -88,6 +88,3 @@ div.jqcloud span.w1 { font-size: 100%; }
     color: #039be5;
     cursor: pointer; cursor: hand;
 }
-
-
-

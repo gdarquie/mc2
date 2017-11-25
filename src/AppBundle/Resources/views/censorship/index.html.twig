@@ -162,12 +162,17 @@
 
         </article>
 
+        <article class="card card_thematique">
+          <h2>Censorship and adaptation</h2>
+          <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/c4c3f5f0-ca0a-11e7-bfba-5d46dea657a3?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(vis:(defaultColors:('0+-+2':'rgb(247,252,245)','2+-+4':'rgb(199,233,192)','4+-+6':'rgb(116,196,118)','6+-+8':'rgb(35,139,69)'))),vis:(aggs:!((enabled:!t,id:'1',params:(field:film.title),schema:metric,type:cardinality),(enabled:!t,id:'2',params:(customLabel:'PCA+first+overdict+on+the+script',field:film.verdict,order:asc,orderBy:_term,size:7),schema:segment,type:terms),(enabled:!t,id:'3',params:(customLabel:'Film+source',field:film.adaptation,order:desc,orderBy:'1',size:5),schema:group,type:terms)),listeners:(),params:(addLegend:!t,addTooltip:!t,colorSchema:Greens,colorsNumber:4,colorsRange:!(),enableHover:!f,invertColors:!f,legendPosition:right,percentageMode:!f,setColorRange:!f,times:!(),valueAxes:!((id:ValueAxis-1,labels:(color:%23555,rotate:0,show:!f),scale:(defaultYExtents:!f,type:linear),show:!f,type:value))),title:'%5BCensorship%5D+PCA+%26+Sources',type:heatmap))" height="600" width="100%">
+          </iframe>
+        </article>
 
         <article class="card card_thematique">
 
             <h2>Legion of Decency Notations</h2>
 
-            <p style="color : #CC0000;"><i>Avis de la ligue de Décence catholique</i></p>
+            <p style="color : #db5462;"><i>Avis de la ligue de Décence catholique</i></p>
 
             <p>Number of films with information : <span class="number">{{ nbFilmsWithLegion.nb }}</span> films</p>
 
@@ -190,6 +195,14 @@
                 </div>
         </article>
 
+        <article class="card card_thematique">
+          <h2>Local censorship</h2>
+          <div class="center">
+            <p>Number of films that encountered issues with local boards of censorship when released</p>
+          </div>
+          <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/98ce79e0-ca12-11e7-bfba-5d46dea657a3?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(),vis:(aggs:!((enabled:!t,id:'1',params:(field:film.title),schema:metric,type:cardinality),(enabled:!t,id:'2',params:(field:film.state,order:desc,orderBy:'1',size:30),schema:segment,type:terms)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,categoryAxes:!((id:CategoryAxis-1,labels:(filter:!f,rotate:0,show:!t,truncate:200),position:left,scale:(type:linear),show:!t,style:(),title:(text:'film.state:+Descending'),type:category)),grid:(categoryLines:!f,style:(color:%23eee)),legendPosition:right,seriesParams:!((data:(id:'1',label:'Unique+count+of+film.title'),drawLinesBetweenPoints:!t,mode:normal,show:!t,showCircles:!t,type:histogram,valueAxis:ValueAxis-1)),times:!(),valueAxes:!((id:ValueAxis-1,labels:(filter:!t,rotate:75,show:!t,truncate:100),name:LeftAxis-1,position:bottom,scale:(mode:normal,type:linear),show:!t,style:(),title:(text:'Unique+count+of+film.title'),type:value))),title:'%5BCensorship%5D+States',type:histogram))" height="600" width="100%">
+          </iframe>
+        </article>
 
         {#<h2>Harrison</h2>#}
         {#<p>(pb avec l'import, doublons de protestant - à refaire avec la bonne colonne)</p>#}
@@ -341,4 +354,3 @@
 
 
 {% endblock %}
-

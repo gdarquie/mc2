@@ -44,8 +44,8 @@
   .myBtn{
     margin-bottom: 5px;
     background-color:white;
-    color : #CC0000;
-    border:  1px solid #CC0000;
+    color : #db5462;
+    border:  1px solid #db5462;
   }
 
   .filmsHidden{
@@ -108,7 +108,7 @@ a {
 }
 
 .active-mark {
-  background-color: #CC0000;
+  background-color: #db5462;
   width: 20%;
   height: 4px;
   position: absolute;
@@ -180,9 +180,129 @@ width: 100vw;
 
 {% block body %}
 
-  <div class="swiper-container">
+  <section class="section-search">
+    <div class="section-search__wrapper">
+      <div class="section-search__buttons">
+        <button class="section-search__button" data-selector="film">Movie</button>
+        <button class="section-search__button" data-selector="number">Number</button>
+        <button class="section-search__button" data-selector="song">Song</button>
+        <button class="section-search__button" data-selector="person">Person</button>
+        <button class="section-search__button" data-selector="stageshow">Stageshow</button>
+      </div>
+      <div class="section-search__search-container section-search__search-container--film">
+        <h3 class="section-search__entitled">Search a film</h3>
+        <input class="section-search__input" type="text" id="searchMovie" placeholder ="Write the title of a film (3 characters min)">
+        <article id="results" class="row myCard"></article>
+      </div>
+      <div class="section-search__search-container section-search__search-container--number">
+        <h3 class="section-search__entitled">Search a number</h3>
+        <input class="section-search__input" type="text" id="searchNumber" placeholder ="Write the title of a number (3 characters min)">
+        <article id="resultsNumber" class="row myCard"></article>
+      </div>
+      <div class="section-search__search-container section-search__search-container--song">
+        <h3 class="section-search__entitled">Search a song</h3>
+        <input class="section-search__input" type="text" id="searchSong" placeholder ="Write the name of a song (3 characters min)">
+        <article id="resultsSong" class="row myCard"></article>
+      </div>
+      <div class="section-search__search-container section-search__search-container--person">
+        <h3 class="section-search__entitled">Search a person</h3>
+        <input class="section-search__input" type="text" id="searchPerson" placeholder ="Write the name of a person (3 characters min)">
+        <article id="resultsPerson" class="row myCard"></article>
+      </div>
+      <div class="section-search__search-container section-search__search-container--stageshow">
+        <h3 class="section-search__entitled">Search a stageshow</h3>
+        <input class="section-search__input" type="text" id="searchShow" placeholder ="Write the name of a stageshow (3 characters min)">
+        <article id="resultsShow" class="row myCard"></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-stats">
+    <div class="section-stats__wrapper">
+      <h2 class="section-stats__title">Statistiques</h2>
+      <div class="section-stats__stats">
+        <div class="section-stats__stat">
+          <div class="section-stats__number">{{films|length}}</div>
+          <div class="section-stats__type">Movies</div>
+        </div>
+        <div class="section-stats__stat">
+          <div class="section-stats__number">{{ filmsWithNumber|length }}</div>
+          <div class="section-stats__type">Numbers</div>
+        </div>
+        <div class="section-stats__stat">
+          <div class="section-stats__number">{{numbers|length}}</div>
+          <div class="section-stats__type">Performers</div>
+        </div>
+      </div>
+      <a href="{{ path('stats') }}">
+        <button class="section-stats__button">
+        See more stats
+        </button>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-themes">
+    <div class="section-themes__wrapper">
+      <h2 class="section-themes__title">Themes</h2>
+      <div class="section-themes__themes">
+        <a href="{{ path("getMusic") }}">
+          <div class="section-themes__theme section-themes__theme--music">
+            <h3 class="section-themes__theme-name">Music</h3>
+          </div>
+        </a>
+        <a href="{{ path("getDancing") }}">
+          <div class="section-themes__theme section-themes__theme--dance">
+            <h3 class="section-themes__theme-name">Dance</h3>
+          </div>
+        </a>
+        <a href="{{ path("getExoticism") }}">
+          <div class="section-themes__theme section-themes__theme--exoticism">
+            <h3 class="section-themes__theme-name">Exoticism</h3>
+          </div>
+        </a>
+        <a href="{{ path("getMood") }}">
+          <div class="section-themes__theme section-themes__theme--topics">
+            <h3 class="section-themes__theme-name">Topics</h3>
+          </div>
+        </a>
+        <a href="{{ path("censorship") }}">
+          <div class="section-themes__theme section-themes__theme--censorship">
+            <h3 class="section-themes__theme-name">Censorship</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-films">
+    <div class="section-films__wrapper">
+      <h2 class="section-films__title">Films with numbers</h2>
+      <div class="section-films__films">
+        {% for film in filmsWithNumber |slice(0,10) %}
+        <a class="section-films__film" href="/mc2/film/id/{{film.filmId}}">
+          <h4 class="section-films__film-name">{{film.title}}({{film.released}})</h4>
+          <div class="section-films__centered-cropped">
+            <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
+          </div>
+        </a>
+        {% endfor %}
+        {% for film in filmsWithNumber |slice(10) %}
+        <a class="section-films__film hidden" href="/mc2/film/id/{{film.filmId}}">
+          <h4 class="section-films__film-name">{{film.title}}({{film.released}})</h4>
+          <div class="section-films__centered-cropped">
+            <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      <button id="section-films__button">Show all</button>
+    </div>
+  </section>
+
+  <!-- <div class="swiper-container"> -->
     <!-- Add Pagination -->
-    <div class="swiper-pagination">
+    <!-- <div class="swiper-pagination">
     </div>
     <div class="swiper-wrapper">
       <div class="swiper-slide">
@@ -202,7 +322,7 @@ width: 100vw;
         </div>
 
         <!-- Results search -->
-        <section class="container">
+        <!-- <section class="container">
           <article id="results" class="row card myCard"></article>
         </section>
       </div>
@@ -286,24 +406,21 @@ width: 100vw;
       </div>
       <article id="resultsShow" class="row myCard"></article>
     </div>
-  </div>
+  </div> -->
 
   <!-- Stats -->
-  {#<section class="container">#}
-    {#<article>#}
-      {#<h2>Films & numbers per year</h2>#}
-      {#<div id="chart_div"></div>#}
-      {#<p>MC2 database contains <strong>{{films|length}}</strong> films, <strong>{{ filmsWithNumber|length }}</strong> films with numbers and <strong>{{numbers|length}}</strong> <a href="{{ path('numbers') }}">numbers</a>.</p>#}
-      {#<p class="center"><a class="btn myBtn" href="{{ path('stats') }}">See more stats</a></p>#}
-    {#</article>#}
-
-
-
-  </section>
+  <!-- <section class="container">
+    <article>
+      <h2>Films & numbers per year</h2>
+      <div id="chart_div"></div>
+      <p>MC2 database contains <strong>{{films|length}}</strong> films, <strong>{{ filmsWithNumber|length }}</strong> films with numbers and <strong>{{numbers|length}}</strong> <a href="{{ path('numbers') }}">numbers</a>.</p>
+      <p class="center"><a class="btn myBtn" href="{{ path('stats') }}">See more stats</a></p>
+    </article>
+  </section> -->
 
 <!-- Films with numbers -->
 
-  <div id="filmsWithNumbers">
+  <!-- <div id="filmsWithNumbers">
   <section class="container">
     <article>
       <h2>Films with numbers</h2>
@@ -333,21 +450,21 @@ width: 100vw;
       <p class="center"><a class="btn myBtn" id="showNumbers">Show all</a></p>
     </article>
   </section>
-  </div>
+  </div> -->
 
 
 
   <!-- Themes -->
 
-  <section class="container">
+  <!-- <section class="container"> -->
     <!-- censorship, exoticism, dance -->
 
-    <div class="row">
+    <!-- <div class="row">
 
-      <h2 class="uppercase center">Themes</h2>
+      <h2 class="uppercase center">Themes</h2> -->
 
       <!-- censorship -->
-      <div class="card sticky-action col s6">
+      <!-- <div class="card sticky-action col s6">
         <div class="card-image waves-effect waves-block waves-light">
           <img class="activator posterImage" src="{{ asset('img/42nd-street-poster.jpg') }}">
         </div>
@@ -364,10 +481,10 @@ width: 100vw;
           </ul>
         </div>
         <div class="card-action"><a href="{{ path("censorship") }}">Go to censorship pages</a></div>
-      </div>
+      </div> -->
 
       <!-- dance -->
-      <div class="card sticky-action col s6">
+      <!-- <div class="card sticky-action col s6">
         <div class="card-image waves-effect waves-block waves-light">
           <img class="activator posterImage" src="{{ asset('img/gentlemen prefer blondes.jpg') }}">
         </div>
@@ -379,11 +496,11 @@ width: 100vw;
           <p>Here is some more information about this product that is only revealed once clicked on.</p>
         </div>
         <div class="card-action"><a href="{{ path("getDancing") }}">Go to dance pages</a></div>
-      </div>
+      </div> -->
 
 
       <!-- Moods -->
-      <div class="card sticky-action col s6">
+      <!-- <div class="card sticky-action col s6">
         <div class="card-image waves-effect waves-block waves-light">
           <img class="activator posterImage" src="{{ asset('img/affiche.jpg') }}">
         </div>
@@ -395,10 +512,10 @@ width: 100vw;
           <p>Here is some more information about this product that is only revealed once clicked on.</p>
         </div>
         <div class="card-action"><a href="{{ path("getMood") }}">Go to topics pages</a></div>
-      </div>
+      </div> -->
 
       <!-- Exoticisms -->
-      <div class="card sticky-action col s6">
+      <!-- <div class="card sticky-action col s6">
         <div class="card-image waves-effect waves-block waves-light">
           <img class="activator posterImage" src="{{ asset('img/oklahoma.jpg') }}">
         </div>
@@ -424,13 +541,14 @@ width: 100vw;
           <p>Here is some more information about this product that is only revealed once clicked on.</p>
         </div>
         <div class="card-action"><a href="{{ path("getMusic") }}">Go to music pages</a></div>
-      </div>
+      </div> -->
 
 
 
 
-    </div> <!-- end of row -->
-  </section>
+    <!-- </div>  -->
+    <!-- end of row -->
+  <!-- </section> -->
 
 
 
@@ -465,7 +583,7 @@ width: 100vw;
     {#</section>#}
   {#</div>#}
 
-  
+
 
 {% endblock %}
 
@@ -483,13 +601,6 @@ width: 100vw;
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <script>
-
-//
-
-//    $(document).ready(function(){
-//        $('ul.tabs').tabs();
-//        $('#search_tab').tabs({ 'swipeable': true });
-//    });
 
     google.charts.load('current', {packages: ['corechart', 'line']});
     google.charts.setOnLoadCallback(drawBasic);
@@ -758,13 +869,26 @@ width: 100vw;
     searchSong();
     searchShow();
 
-    $("#showNumbers").click(
+    $("#section-films__button").click(
             function(){
               $(this).hide();
-              $(".filmsHidden").fadeIn();
-              $("#shownNumbers").hide();
+              $(".section-films__film.hidden").fadeIn();
+              $("#section-films__button").hide();
             }
     )
+    $(document).ready(function() {
+      $(".section-search__search-container--number, .section-search__search-container--song, .section-search__search-container--person, .section-search__search-container--stageshow").hide();
+      $('.section-search__button[data-selector="film"]').addClass('section-search__button--selected');
+
+      $('.section-search__button').click(function() {
+        var blockName = $(this).data('selector');
+        $('.section-search__button--selected').removeClass('section-search__button--selected');
+        $(this).addClass('section-search__button--selected');
+        $('.section-search__search-container').hide();
+        $('.section-search__search-container--' + blockName).show();
+      });
+    });
+
   </script>
 
 

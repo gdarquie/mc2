@@ -40,6 +40,15 @@ class ThemeMusicController extends Controller
         $query = $em -> createQuery('SELECT m.title as title, m.id as id, count(n.id) as nb FROM AppBundle:Number n JOIN n.musical_thesaurus m GROUP BY title ORDER BY nb desc ')->setMaxResults(15);
         $musicalStyleViz = $query->getResult();
 
+        // $query = $em->createQuery('SELECT c.codeId FROM AppBundle:Code c WHERE c.content = :content');
+        // $query->setParameter('content', $content);
+        // $codeId = $query->getSingleResult();
+        // $codeId = $codeId['codeId'];
+        //
+        // $query = $em->createQuery('SELECT t FROM AppBundle:Thesaurus t INNER JOIN t.code c WHERE c.codeId = :codeId');
+        // $query->setParameter('codeId', $codeId);
+        // $presenceMusicians = $query->getResult();
+
         return $this->render('AppBundle:music:music.html.twig' , array(
             'listComposers' => $listComposers,
             'listNumberComposers' => $listNumberComposers,
