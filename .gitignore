@@ -14,3 +14,7 @@
 /web/config.php
 .idea/
 .DS_Store
+node_modules
+.data/
+/var/sessions
+/web/build
