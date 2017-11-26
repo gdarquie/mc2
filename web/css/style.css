@@ -129,6 +129,11 @@ body{
 	height: 100%;
 }
 
+.navbar__buttons a {
+	height: 50px;
+	line-height: 50px;
+}
+
 .navbar__buttons li:last-child {
 	padding-right: 0;
 }
@@ -333,19 +338,6 @@ div .cut {
 	position:fixed;
 	left:10px;
 }
-
-
-#results  a{
-	display : block;
-	margin-top : 5px;
-	margin-bottom: 5px;
-}
-
-#results h3{
-	text-align: center;
-	margin-bottom: 2em;
-}
-
 
 #exoticism .intro{
 	margin-top:1em;

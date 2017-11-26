@@ -42,10 +42,12 @@
   }
 
   .myBtn{
-    margin-bottom: 5px;
     background-color:white;
-    color : #db5462;
-    border:  1px solid #db5462;
+    border: 1px solid #4D5D5D;
+    color : #4D5D5D;
+    font-family: "tisa-sans-bold", sans-serif;
+    margin-bottom: 5px;
+    text-transform: none;
   }
 
   .filmsHidden{
@@ -192,28 +194,28 @@ width: 100vw;
       <div class="section-search__search-container section-search__search-container--film">
         <h3 class="section-search__entitled">Search a film</h3>
         <input class="section-search__input" type="text" id="searchMovie" placeholder ="Write the title of a film (3 characters min)">
-        <article id="results" class="row myCard"></article>
       </div>
       <div class="section-search__search-container section-search__search-container--number">
         <h3 class="section-search__entitled">Search a number</h3>
         <input class="section-search__input" type="text" id="searchNumber" placeholder ="Write the title of a number (3 characters min)">
-        <article id="resultsNumber" class="row myCard"></article>
       </div>
       <div class="section-search__search-container section-search__search-container--song">
         <h3 class="section-search__entitled">Search a song</h3>
         <input class="section-search__input" type="text" id="searchSong" placeholder ="Write the name of a song (3 characters min)">
-        <article id="resultsSong" class="row myCard"></article>
       </div>
       <div class="section-search__search-container section-search__search-container--person">
         <h3 class="section-search__entitled">Search a person</h3>
         <input class="section-search__input" type="text" id="searchPerson" placeholder ="Write the name of a person (3 characters min)">
-        <article id="resultsPerson" class="row myCard"></article>
       </div>
       <div class="section-search__search-container section-search__search-container--stageshow">
         <h3 class="section-search__entitled">Search a stageshow</h3>
         <input class="section-search__input" type="text" id="searchShow" placeholder ="Write the name of a stageshow (3 characters min)">
-        <article id="resultsShow" class="row myCard"></article>
       </div>
+      <article id="results" class="row myCard"></article>
+      <article id="resultsNumber" class="row myCard"></article>
+      <article id="resultsSong" class="row myCard"></article>
+      <article id="resultsPerson" class="row myCard"></article>
+      <article id="resultsShow" class="row myCard"></article>
     </div>
   </section>
 
@@ -669,14 +671,17 @@ width: 100vw;
 //               console.log(selection);
             }
           }
+        } else {
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
         }
 
 
         if (selection.length > 0){
-
+          $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
+          $("#results").show();
           $("#results").html("<div class='col s12'><h2>Result(s)</h2></div>");
           for(var i = 0; i < selection.length ; i++){
-            txt = "<div class='card col s4 film'><h3>"+selection[i]['title']+" ("+selection[i]['released']+")"+"</h3><a href='/mc2/editor/film/id/"+selection[i]['filmId']+"/number/new' class='btn teal'>Add a number</a><a href='/mc2/film/id/"+selection[i]['filmId']+"' class='teal btn'>See the description</a></div>";
+            txt = "<a href='/mc2/film/id/"+selection[i]['filmId']+"'><span class='btn myBtn' title='"+selection[i]['title']+" ("+selection[i]['released']+")'>"+selection[i]['title']+" ("+selection[i]['released']+")</span></a>";
             $("#results").append(txt);
           }
         }
@@ -721,7 +726,7 @@ width: 100vw;
 
             $("#resultsPerson").html("<div class='col s12'><h2>Result(s)</h2></div>");
             for(var i = 0; i < selection.length ; i++){
-              txt = "<span class='btn myBtn'><a href='/mc2/person/"+selection[i].personId+"'>"+selection[i]['name']+"</a></span>";
+              txt = "<a href='person/"+selection[i].personId+"'><span class='btn myBtn' title='"+selection[i]['name']+"'>"+selection[i]['name']+"</span></a>";
               $("#resultsPerson").append(txt);
             }
           }
@@ -764,7 +769,7 @@ width: 100vw;
 
             $("#resultsNumber").html("<div class='col s12'><h2>Result(s)</h2></div>");
             for(var i = 0; i < selection.length ; i++){
-              txt = "<a href='number/"+selection[i]['id']+"'><span class='btn myBtn'>"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")</span></a>";
+              txt = "<a href='number/"+selection[i]['id']+"'><span class='btn myBtn' title='"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")'>"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")</span></a>";
               $("#resultsNumber").append(txt);
               $("#resultsNumber").css('padding-bottom','20px');
             }
@@ -807,7 +812,7 @@ width: 100vw;
 
                     $("#resultsShow").html("<div class='col s12'><h2>Result(s)</h2></div>");
                     for(var i = 0; i < selection.length ; i++){
-                        txt = "<a href='stageshow/id/"+selection[i]['stageshowId']+"'><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";
+                        txt = "<a href='stageshow/id/"+selection[i]['stageshowId']+"'><span class='btn myBtn' title='"+selection[i]['title']+"'>"+selection[i]['title']+"</span></a>";
                         $("#resultsShow").append(txt);
                     }
                 }
@@ -852,8 +857,7 @@ width: 100vw;
 
             $("#resultsSong").html("<div class='col s12'><h2>Result(s)</h2></div>");
             for(var i = 0; i < selection.length ; i++){
-              txt = "<a href='song/id/"+selection[i]['songId']+"'><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";
-              {#txt = "<a href=\"{{ path('song' , { 'songId'  : selection[i]['songId'] }) }}\"><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";#}
+              txt = "<a href='song/id/"+selection[i]['songId']+"'><span class='btn myBtn' title='"+selection[i]['title']+">"+selection[i]['title']+"</span></a>";
               $("#resultsSong").append(txt);
             }
           }

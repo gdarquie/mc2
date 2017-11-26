@@ -33,7 +33,7 @@
 
       <!-- custom -->
       <link rel="stylesheet" href="{{ asset('css/style.css')}}">
-      <link rel="stylesheet" href="{{ asset('css/home.css')}}">
+      <link rel="stylesheet" href="{{ asset('build/app.css')}}">
 
       {% endblock %}
 
@@ -55,39 +55,35 @@
             <ul class="navbar__buttons">
 
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-              <ul id="dropdown1" class="dropdown-content">
-                <li><a href="{{ path('editor') }}">edition</a></li>
-                <li class="divider"></li>
-                <li><a href="{{ path('editorNewSong') }}">add a song</a></li>
-                <li><a href="{{ path('editorNewPerson') }}">add a person</a></li>
-              </ul>
+                <ul id="dropdown1" class="dropdown-content">
+                  <li><a href="{{ path('editor') }}">edition</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{{ path('editorNewSong') }}">add a song</a></li>
+                  <li><a href="{{ path('editorNewPerson') }}">add a person</a></li>
+                </ul>
 
-              {% if is_granted('ROLE_MEMBER') %}
-              <li>
-                <a class="dropdown-button" href="#!" data-activates="dropdown1">member
-                  <i class="material-icons right">arrow_drop_down</i>
-                </a>
-              </li>
-              {% endif %}
+                {% if is_granted('ROLE_MEMBER') %}
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">member<i class="material-icons right">arrow_drop_down</i></a></li>
+                {% endif %}
 
-              {#{% if is_granted('ROLE_EXPERT') %}#}
-                {#<li><a href="{{ path('validation') }}">validation</a></li>#}
-              {#{% endif %}#}
+                {#{% if is_granted('ROLE_EXPERT') %}#}
+                    {#<li><a href="{{ path('validation') }}">validation</a></li>#}
+                {#{% endif %}#}
                 {% if is_granted('ROLE_ADMIN') %}
-                  <li><a href="{{ path('admin') }}">admin</a></li>
+                    <li><a href="{{ path('admin') }}">admin</a></li>
                 {% endif %}
+
               {% endif %}
 
+              <li><a href="{{ path('thesaurus') }}">thesaurus</a></li>
+              <li><a href="{{ path('about') }}">about</a></li>
 
-                <li><a href="{{ path('thesaurus') }}">thesaurus</a></li>
-                <li><a href="{{ path('about') }}">about</a></li>
-
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <li><a href="{{ path('editor') }}" class="inline">connected as {{ app.user.username }}</a></li>
-                    <li><a href="{{ path('fos_user_security_logout') }}">logout</a></li>
-                {% else %}
-                    <li><a href="{{ path('fos_user_security_login') }}">connexion</a></li>
-                {% endif %}
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li><a href="{{ path('editor') }}" class="inline">connected as {{ app.user.username }}</a></li>
+                <li><a href="{{ path('fos_user_security_logout') }}">logout</a></li>
+              {% else %}
+                <li><a href="{{ path('fos_user_security_login') }}">connexion</a></li>
+              {% endif %}
             </ul>
 
         </div>

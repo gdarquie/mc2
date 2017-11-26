@@ -3369,8 +3369,8 @@ input[type=range] + .thumb {
 }
 
 .container .row {
-  margin-left: -0.75rem;
-  margin-right: -0.75rem;
+  /*margin-left: -0.75rem;
+  margin-right: -0.75rem;*/
 }
 
 .section {
@@ -4962,7 +4962,8 @@ small {
 }
 
 .btn:hover, .btn-large:hover {
-  background-color: #2bbbad;
+  background-color: #4D5D5D;
+  color: white;
 }
 
 .btn-floating {
