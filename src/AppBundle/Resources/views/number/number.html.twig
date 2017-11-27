@@ -6,7 +6,7 @@
 
       <div class="number__titles">
         <h2 class="number__subhead">{{ number.title }}{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<small> - <a href="{{ path('number_edit', {'id' : number.id}) }}">edit</a></small>{% endif %} </h1>
-        <h1 class="number__title">[{{ number.film }}]</i>{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<small> {% endif %} </h1>
+        <a href="/mc2/film/id/{{number.film.filmId}}"><h1 class="number__title">[{{ number.film }}]</i>{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<small> {% endif %} </h1></a>
       </div>
 
       <div class="number__row-wrapper">
@@ -15,12 +15,12 @@
           <div class="number__tables-wrapper">
             <table class="number__table">
               <tr class="number__table-row__head">
-                <th>Begin timecode</th>
-                <th>End timecode</th>
-                <th>Begin</th>
-                <th>Ending</th>
-                <th>Completeness</th>
-                <th>Completeness Options</th>
+                <th>Starting timecode</a></th>
+                <th>Endind timecode</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'begin_thesaurus'}) }}">Beginning</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'ending_thesaurus'}) }}">Ending</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'completeness_thesaurus'}) }}">Completeness</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'complet_options'}) }}">Completeness options</a></th>
               </tr>
               <tr class="number__table-row__content">
                 <td>{{ ((number.beginTc)/(60*60))|round(0, 'floor') }}h{{ ((number.beginTc)/(60)) |round(0, 'floor')-(60*((number.beginTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.beginTc) |round(0, 'floor')-(60*((number.beginTc)/(60)) |round(0, 'floor')) }}s
@@ -39,18 +39,19 @@
                 <td>
                   {% for completoption in number.completoptions %}
                     <a href="{{ path('thesaurus_element', {'id': completoption.id }) }}">{{ completoption.title  }}</a>
+                    {% if loop|last %}{% else %}; {% endif %}
                   {% endfor %}
                 </td>
               </tr>
             </table>
             <table class="number__table">
               <tr class="number__table-row__head">
-                <th>Structure</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'structure'}) }}">Structure</a></th>
                 <th>Shots</th>
                 <th>Average shot length</th>
-                <th>Performance</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'performance_thesaurus'}) }}">Performance</a></th>
                 <th>Performers</th>
-                <th>Cast</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'cast'}) }}">Cast</a></th>
                 <th>Stars who don't participate</th>
               </tr>
               <tr class="number__table-row__content">
@@ -89,9 +90,9 @@
           <div class="number__tables-wrapper">
             <table class="number__table">
               <tr class="number__table-row__head">
-                <th>Spectators</th>
-                <th>Diegetic performance ?</th>
-                <th>Visible musicians</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'spectators_thesaurus'}) }}">Spectators</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'diegetic_thesaurus'}) }}">Diegetic performance?</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'musician_thesaurus'}) }}">Visible musicians</a></th>
               </tr>
               <tr class="number__table-row__content">
                 <td>
@@ -108,12 +109,12 @@
           </div>
         </div>
         <div class="number__block">
-          <h3 class="number__table-title">Tone and topics</h3>
+          <h3 class="number__table-title">General mood and topics</h3>
           <div class="number__tables-wrapper">
             <table class="number__table">
               <tr class="number__table-row__head">
-                <th>Tone</th>
-                <th>Topic</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'general_mood'}) }}">General mood</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'genre'}) }}">Topic</a></th>
               </tr>
               <tr class="number__table-row__content">
                 <td>
@@ -140,12 +141,12 @@
           <div class="number__tables-wrapper">
             <table class="number__table">
               <tr class="number__table-row__head">
-                <th>Costumes</th>
-                <th>Ethinc stereotypes</th>
-                <th>Diegetic place</th>
-                <th>General localisation</th>
-                <th>Imaginary place </th>
-                <th>Exoticism</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'costumes'}) }}">Costumes</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'stereotype'}) }}">Ethnic stereotypes</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'diegetic_place_thesaurus'}) }}">Diegetic place</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'general_localisation'}) }}">General localisation</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'imaginary'}) }}">Imaginary place</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'exoticism_thesaurus'}) }}">Exoticism</a></th>
               </tr>
               <tr class="number__table-row__content">
                 <td>{% for costume in number.costumes %}
@@ -195,10 +196,10 @@
             <table class="number__table">
               <tr class="number__table-row__head">
                 <th>Song</th>
-                <th>Music ensemble</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'musensemble'}) }}">Musical ensemble</a></th>
                 <th>Dubbing</th>
-                <th>Tempo</th>
-                <th>Musical style</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'tempo_thesaurus'}) }}">Tempo</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'musical_thesaurus'}) }}">Musical styles</a></th>
                 <th>Arrangers</th>
               </tr>
               <tr class="number__table-row__content">
@@ -237,11 +238,11 @@
             </table>
             <table class="number__table">
               <tr class="number__table-row__head">
-                <th>Choregraphers</th>
-                <th>Dance Ensemble</th>
-                <th>Dancing type (thesaurus)</th>
-                <th>Dance subgenre</th>
-                <th>Dance content</th>
+                <th>Dance director</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'dancemble'}) }}">Dance ensemble</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'dancing_type'}) }}">Dancing type</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'dance_subgenre'}) }}">Dance subgenre</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'dance_content'}) }}">Dance content</a></th>
               </tr>
               <tr class="number__table-row__content">
                 <td>
@@ -286,11 +287,11 @@
           <div class="number__tables-wrapper">
             <table class="number__table">
               <tr class="number__table-row__head">
-                <th>Source</th>
-                <th>Stagenumber</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'source_thesaurus'}) }}">Source</a></th>
+                <th>Stage number</th>
                 <th>Source details</th>
-                <th>Quotation</th>
-                <th>Quotation text</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'quotation_thesaurus'}) }}">Quotation</a></th>
+                <th>References</th>
               </tr>
               <tr class="number__table-row__content">
                 <td>

@@ -19,6 +19,9 @@
       <!-- font-family -->
       <link rel="stylesheet" href="https://use.typekit.net/bdm0gfe.css">
 
+      <!-- Font Awesome -->
+      <script src="https://use.fontawesome.com/9d1ac71c1d.js"></script>
+
       <!--Import Google Icon Font (imported in local in style.css)-->
       {#<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
 
@@ -63,14 +66,14 @@
                 </ul>
 
                 {% if is_granted('ROLE_MEMBER') %}
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">member<i class="material-icons right">arrow_drop_down</i></a></li>
+                  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">member<i class="material-icons right">arrow_drop_down</i></a></li>
                 {% endif %}
 
                 {#{% if is_granted('ROLE_EXPERT') %}#}
-                    {#<li><a href="{{ path('validation') }}">validation</a></li>#}
+                  {#<li><a href="{{ path('validation') }}">validation</a></li>#}
                 {#{% endif %}#}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="{{ path('admin') }}">admin</a></li>
+                  <li><a href="{{ path('admin') }}">admin</a></li>
                 {% endif %}
 
               {% endif %}
@@ -84,6 +87,24 @@
               {% else %}
                 <li><a href="{{ path('fos_user_security_login') }}">connexion</a></li>
               {% endif %}
+
+              <div class="navbar__actions">
+                <div class="fa fa-user" aria-hidden="true"></div>
+                <div class="navbar__actions-dropdown">
+                  <div class="action-dropdown__items">
+                    <div class="action-dropdown__item">Member</div>
+                    <div class="action-dropdown__sub-item">Edition</div>
+                    <div class="action-dropdown__sub-item">Add a song</div>
+                    <div class="action-dropdown__sub-item">Add a person</div>
+                  </div>
+                </div>
+                <div class="navbar__actions-dropdown">
+                  <div class="action-dropdown__item">Admin</div>
+                </div>
+                <div class="navbar__actions-dropdown">
+                  <div class="action-dropdown__item">Logout</div>
+                </div>
+              </div>
             </ul>
 
         </div>
