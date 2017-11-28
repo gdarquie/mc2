@@ -91,18 +91,14 @@
               <div class="navbar__actions">
                 <div class="fa fa-user" aria-hidden="true"></div>
                 <div class="navbar__actions-dropdown">
-                  <div class="action-dropdown__items">
-                    <div class="action-dropdown__item">Member</div>
-                    <div class="action-dropdown__sub-item">Edition</div>
-                    <div class="action-dropdown__sub-item">Add a song</div>
-                    <div class="action-dropdown__sub-item">Add a person</div>
+                  <div class="action-dropdown__items-container">
+                    <div class="action-dropdown__item action-dropdown__item--with-children">Member</div>
+                    <div class="action-dropdown__sub-item"><a href="{{ path('editor') }}">Edition</a></div>
+                    <div class="action-dropdown__sub-item"><a href="{{ path('editorNewSong') }}">Add a song</a></div>
+                    <div class="action-dropdown__sub-item"><a href="{{ path('editorNewPerson') }}">Add a person</a></div>
                   </div>
-                </div>
-                <div class="navbar__actions-dropdown">
-                  <div class="action-dropdown__item">Admin</div>
-                </div>
-                <div class="navbar__actions-dropdown">
-                  <div class="action-dropdown__item">Logout</div>
+                  <div class="action-dropdown__item"><a href="{{ path('admin') }}">Admin</a></div>
+                  <div class="action-dropdown__item"><a href="{{ path('fos_user_security_logout') }}">Logout</a></div>
                 </div>
               </div>
             </ul>
