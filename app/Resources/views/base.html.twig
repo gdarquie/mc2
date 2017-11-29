@@ -56,51 +56,30 @@
         {#<img id="logo" src="{{ asset('img/labex_web-develop-gris-clair.png') }}" alt="">#}
           <a href="/mc2" class="navbar__brand-logo">MC2</a>
             <ul class="navbar__buttons">
-
+              <li><a href="{{ path('thesaurus') }}">Thesaurus</a></li>
+              <li><a href="{{ path('about') }}">About</a></li>
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <ul id="dropdown1" class="dropdown-content">
-                  <li><a href="{{ path('editor') }}">edition</a></li>
-                  <li class="divider"></li>
-                  <li><a href="{{ path('editorNewSong') }}">add a song</a></li>
-                  <li><a href="{{ path('editorNewPerson') }}">add a person</a></li>
-                </ul>
-
-                {% if is_granted('ROLE_MEMBER') %}
-                  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">member<i class="material-icons right">arrow_drop_down</i></a></li>
-                {% endif %}
-
-                {#{% if is_granted('ROLE_EXPERT') %}#}
-                  {#<li><a href="{{ path('validation') }}">validation</a></li>#}
-                {#{% endif %}#}
-                {% if is_granted('ROLE_ADMIN') %}
-                  <li><a href="{{ path('admin') }}">admin</a></li>
-                {% endif %}
-
-              {% endif %}
-
-              <li><a href="{{ path('thesaurus') }}">thesaurus</a></li>
-              <li><a href="{{ path('about') }}">about</a></li>
-
-              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <li><a href="{{ path('editor') }}" class="inline">connected as {{ app.user.username }}</a></li>
-                <li><a href="{{ path('fos_user_security_logout') }}">logout</a></li>
-              {% else %}
-                <li><a href="{{ path('fos_user_security_login') }}">connexion</a></li>
-              {% endif %}
-
-              <div class="navbar__actions">
-                <div class="fa fa-user" aria-hidden="true"></div>
-                <div class="navbar__actions-dropdown">
-                  <div class="action-dropdown__items-container">
-                    <div class="action-dropdown__item action-dropdown__item--with-children">Member</div>
-                    <div class="action-dropdown__sub-item"><a href="{{ path('editor') }}">Edition</a></div>
-                    <div class="action-dropdown__sub-item"><a href="{{ path('editorNewSong') }}">Add a song</a></div>
-                    <div class="action-dropdown__sub-item"><a href="{{ path('editorNewPerson') }}">Add a person</a></div>
+                <li><a href="{{ path('editor') }}" class="navbar__username">{{ app.user.username }}</a></li>
+                <div class="navbar__actions">
+                  <div class="fa fa-user navbar__user" aria-hidden="true"></div>
+                  <div class="navbar__actions-dropdown">
+                    {% if is_granted('ROLE_MEMBER') %}
+                      <div class="action-dropdown__items-container">
+                        <div class="action-dropdown__item action-dropdown__item--with-children">Member</div>
+                        <div class="action-dropdown__sub-item"><a href="{{ path('editor') }}">Edition</a></div>
+                        <div class="action-dropdown__sub-item"><a href="{{ path('editorNewSong') }}">Add a song</a></div>
+                        <div class="action-dropdown__sub-item"><a href="{{ path('editorNewPerson') }}">Add a person</a></div>
+                      </div>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                      <div class="action-dropdown__item"><a href="{{ path('admin') }}">Admin</a></div>
+                    {% endif %}
+                    <div class="action-dropdown__item"><a href="{{ path('fos_user_security_logout') }}">Logout</a></div>
                   </div>
-                  <div class="action-dropdown__item"><a href="{{ path('admin') }}">Admin</a></div>
-                  <div class="action-dropdown__item"><a href="{{ path('fos_user_security_logout') }}">Logout</a></div>
                 </div>
-              </div>
+              {% else %}
+                <div class="action-dropdown__item"><a href="{{ path('fos_user_security_login') }}">Connexion</a></div>
+              {% endif %}
             </ul>
 
         </div>
