@@ -1,3 +1,3 @@
-// assets/js/app.js
+require('../js/header.js');
 
 require('../sass/main.scss');

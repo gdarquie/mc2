@@ -14,6 +14,8 @@
 
       <title>{% block title %}MC2 - plateforme de visualisation de comédie musicale{% endblock %}</title>
 
+      <link rel="manifest" href="{{ asset('build/manifest.json') }}">
+
       {% block stylesheets %}
 
       <!-- font-family -->
@@ -21,6 +23,7 @@
 
       <!-- Font Awesome -->
       <script src="https://use.fontawesome.com/9d1ac71c1d.js"></script>
+      <script src="{{ asset('build/app.js')}}"></script>
 
       <!--Import Google Icon Font (imported in local in style.css)-->
       {#<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
@@ -60,9 +63,9 @@
               <li><a href="{{ path('about') }}">About</a></li>
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li><a href="{{ path('editor') }}" class="navbar__username">{{ app.user.username }}</a></li>
-                <div class="navbar__actions">
-                  <div class="fa fa-user navbar__user" aria-hidden="true"></div>
-                  <div class="navbar__actions-dropdown">
+                <div class="navbar__actions" id="navbar__actions">
+                  <div class="fa fa-user" id="navbar__user" aria-hidden="true"></div>
+                  <div class="navbar__actions-dropdown" id="navbar__actions-dropdown">
                     {% if is_granted('ROLE_MEMBER') %}
                       <div class="action-dropdown__items-container">
                         <div class="action-dropdown__item action-dropdown__item--with-children">Member</div>
