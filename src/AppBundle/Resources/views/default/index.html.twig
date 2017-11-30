@@ -202,7 +202,7 @@ a {
       <h2 class="section-films__title">Films with numbers</h2>
       <div class="section-films__films">
         {% for film in filmsWithNumber |slice(0,10) %}
-        <a class="section-films__film" href="/mc2/film/id/{{film.filmId}}">
+        <a class="section-films__film" href="/film/id/{{film.filmId}}">
           <h4 class="section-films__film-name">{{film.title}}({{film.released}})</h4>
           <div class="section-films__centered-cropped">
             <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
@@ -210,7 +210,7 @@ a {
         </a>
         {% endfor %}
         {% for film in filmsWithNumber |slice(10) %}
-        <a class="section-films__film hidden" href="/mc2/film/id/{{film.filmId}}">
+        <a class="section-films__film hidden" href="/film/id/{{film.filmId}}">
           <h4 class="section-films__film-name">{{film.title}}({{film.released}})</h4>
           <div class="section-films__centered-cropped">
             <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
@@ -311,7 +311,7 @@ a {
       var selection = [];
 
       jQuery.when(
-              jQuery.getJSON('/mc2/api/films/')
+              jQuery.getJSON('/api/films/')
       ).done(function (json){
 
         if (input.length > 2){
@@ -346,7 +346,7 @@ a {
           $("#results").show();
           $("#results").html("<div class='col s12'><h2>Result(s)</h2></div>");
           for(var i = 0; i < selection.length ; i++){
-            txt = "<a href='/mc2/film/id/"+selection[i]['filmId']+"'><span class='btn myBtn' title='"+selection[i]['title']+" ("+selection[i]['released']+")'>"+selection[i]['title']+" ("+selection[i]['released']+")</span></a>";
+            txt = "<a href='/film/id/"+selection[i]['filmId']+"'><span class='btn myBtn' title='"+selection[i]['title']+" ("+selection[i]['released']+")'>"+selection[i]['title']+" ("+selection[i]['released']+")</span></a>";
             $("#results").append(txt);
           }
         }
@@ -364,7 +364,7 @@ a {
         var selection = [];
 
         jQuery.when(
-                jQuery.getJSON('/mc2/api/persons/')
+                jQuery.getJSON('/api/persons/')
         ).done(function (json){
 
           if (input.length > 2){
@@ -408,7 +408,7 @@ a {
         var selection = [];
 
         jQuery.when(
-                jQuery.getJSON('/mc2/api/numbers/')
+                jQuery.getJSON('/api/numbers/')
         ).done(function (json){
 
           if (input.length > 2){
@@ -452,7 +452,7 @@ a {
             var selection = [];
 
             jQuery.when(
-                jQuery.getJSON('mc2/api/stageshows')
+                jQuery.getJSON('/api/stageshows')
             ).done(function (json){
 
                 if (input.length > 2){
@@ -495,7 +495,7 @@ a {
         var selection = [];
 
         jQuery.when(
-                jQuery.getJSON('/mc2/api/songs/')
+                jQuery.getJSON('/api/songs/')
         ).done(function (json){
 
           if (input.length > 2){
