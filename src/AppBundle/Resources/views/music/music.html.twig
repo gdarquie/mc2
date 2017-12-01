@@ -256,21 +256,22 @@
                 <a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
             {% endfor %}
         </article>
+    </article>
+    <section class="card card_thematique row">
+        <h2>Presence of musicians</h2>
+        <article>
+
+           <p>Musical styles : {{ musicalStyle|length }} - <a href="{{ path('thesaurus', { 'type' : "Musical styles" }) }}">Thesaurus</a> </p>
+           <p>Production numbers per musical styles : </p>
+            {% for item in musicalStyle  %}
+                <a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
+            {% endfor %}
+        </article>
+    </section>
+
 
         <div id="div_viz" class="col s12" style=" height: 500px;"></div>
 
-        <article class="card card_thematique row">
-            <h2>Presence of musicians</h2>
-
-            <article>
-               <p>Musical styles : {{ musicalStyle|length }} - <a href="{{ path('thesaurus', { 'type' : "Musical styles" }) }}">Thesaurus</a> </p>
-               <p>Production numbers per musical styles : </p>
-                {% for item in musicalStyle  %}
-                    <a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
-                {% endfor %}
-            </article>
-        </article>
-    </article>
 
 </section>
 
