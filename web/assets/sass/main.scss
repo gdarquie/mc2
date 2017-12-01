@@ -1,3 +1,9 @@
+@import 'variables';
+@import 'mixins';
+@import 'header';
+@import 'numbers';
+@import 'footer';
+
 .section-search,
 .section-stats,
 .section-themes,
@@ -6,6 +12,16 @@
   flex-direction: column;
   padding: 4em 0;
   width: 100%;
+
+  @include respond-to(phone) {
+    padding: 3em 0;
+  }
+}
+
+.section-search {
+  @include respond-to(phone) {
+    padding-top: 2em;
+  }
 }
 
 .section-search__wrapper,
@@ -14,13 +30,23 @@
 .section-films__wrapper {
   margin: auto;
   width: 70%;
+
+  @include respond-to(phone) {
+		width: 90%;
+	}
 }
 
 .section-search__title,
 .section-stats__title,
 .section-themes__title,
 .section-films__title {
+  font-size: 2em;
   margin: 0 0 1.7em 0;
+
+  @include respond-to(phone) {
+    font-size: 1.8em;
+    margin-bottom: 1em;
+  }
 }
 
 .section-search__buttons {
@@ -28,10 +54,15 @@
   display: flex;
   justify-content: center;
   padding-bottom: 30px;
+
+  @include respond-to(phone) {
+    width: 100%;
+  }
 }
 
 .section-search__button {
   align-items: center;
+  background-color: white;
   border: solid 1px #4D5D5D;
   border-radius: 2px;
   color: #4D5D5D;
@@ -42,6 +73,17 @@
   justify-content: center;
   margin: 0 3px;
   width: 100px;
+
+  &:first-child {
+    margin-left: 0
+  }
+  &:last-child {
+    margin-right: 0
+  }
+
+  @include respond-to(phone) {
+    font-size: 12px;
+  }
 }
 
 .section-search__button--selected {
@@ -54,6 +96,10 @@
   border-radius: 2px;
   padding: 30px 25px;
   width: 100%;
+
+  @include respond-to(phone) {
+    padding: 20px;
+  }
 }
 
 .section-search__search-container--number,
@@ -65,6 +111,10 @@
   color: #db5462;
   margin: 0;
   margin-bottom: 20px;
+
+  @include respond-to(phone) {
+    margin-bottom: 10px;
+  }
 }
 
 .section-search__input {
@@ -120,6 +170,11 @@
   margin-bottom: 3.5em;
   width: 100%;
   font-family: "tisa-bold",serif;
+
+  @include respond-to(phone) {
+    justify-content: space-between;
+    margin-bottom: 2em;
+  }
 }
 
 .section-stats__stat {
@@ -129,6 +184,10 @@
 
 .section-stats__number {
   font-size: 2.3em;
+
+  @include respond-to(phone) {
+    font-size: 2em;
+  }
 }
 
 .section-stats__type {
@@ -174,6 +233,10 @@
   margin: 7px 0;
   width: 100%;
   transition: border .5s;
+
+  @include respond-to(phone) {
+    height: 80px;
+  }
 }
 
 .section-themes__theme:hover {
@@ -201,9 +264,14 @@
   color: white;
   font-family: "tisa-bold",serif;
   font-size: 3.2em;
+  letter-spacing: 1px;
   margin: 0;
   text-transform: uppercase;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+
+  @include respond-to(phone) {
+    font-size: 1.7em;
+  }
 }
 
 .section-films__films {
@@ -218,6 +286,10 @@
   margin: 5px;
   transition: all 0.3s;
   width: calc(20% - 10px);
+
+  @include respond-to(phone) {
+    width: calc(50% - 10px);
+  }
 }
 
 .section-films__film:hover {
@@ -245,6 +317,10 @@
   overflow: hidden;
   position: relative;
   width: 100%;
+
+  @include respond-to(phone) {
+    height: 150px;
+  }
 }
 
 .section-films__film-poster {
@@ -278,8 +354,3 @@
   background-color: #4D5D5D;
   color: white;
 }
-
-@import 'header';
-@import 'mixins';
-@import 'numbers';
-@import 'variables';
