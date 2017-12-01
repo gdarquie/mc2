@@ -23,7 +23,8 @@
                 <div class="col s2 card film">
                     <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                         <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
+
                     </a>
                 </div>
             {% endif %}
@@ -34,7 +35,7 @@
                 <div class="col s2 card film">
                     <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                         <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                     </a>
                 </div>
             {% endif %}
@@ -45,7 +46,7 @@
                 <div class="col s2 card film">
                     <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                         <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                     </a>
                 </div>
             {% endif %}
@@ -56,7 +57,7 @@
                 <div class="col s2 card film">
                     <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                         <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                     </a>
                 </div>
             {% endif %}
@@ -67,7 +68,7 @@
                 <div class="col s2 card film">
                     <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                         <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                     </a>
                 </div>
             {% endif %}
@@ -79,7 +80,7 @@
                 <div class="col s2 card film">
                     <a href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
                         <h4 class="center">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
-                        <img class="poster col s12" src="http://img.omdbapi.com/?i={{ itemNumber.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                     </a>
                 </div>
             {% endif %}
@@ -93,7 +94,7 @@
                     <div class="col s2 card film">
                         <a href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
                             <h4 class="center">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
-                            <img class="poster col s12" src="http://img.omdbapi.com/?i={{ itemNumber.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                         </a>
                     </div>
                 {% endif %}
@@ -115,7 +116,7 @@
                     <div class="col s2 card film">
                         <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                             <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                            <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                         </a>
                     </div>
                     {% endif %}
@@ -137,7 +138,7 @@
                         <div class="col s2 card film">
                             <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                                 <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                                <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                             </a>
                         </div>
                     {% endif %}
@@ -160,7 +161,7 @@
                         <div class="col s2 card film">
                             <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                                 <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                                <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                             </a>
                         </div>
                     {% endif %}
@@ -183,7 +184,7 @@
                         <div class="col s2 card film">
                             <a href="{{ path('film', {'filmId' : item.film.filmId}) }}">
                                 <h4 class="center">{{ item.film }} ({{ item.film.released }})</h4>
-                                <img class="poster col s12" src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                             </a>
                         </div>
                     {% endif %}
@@ -230,7 +231,7 @@
                             <div class="col s2 card film">
                                 <a href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
                                     <h4 class="center">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
-                                    <img class="poster col s12" src="http://img.omdbapi.com/?i={{ itemNumber.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                                 </a>
                             </div>
                         {% endif %}
@@ -254,7 +255,7 @@
                             <div class="col s2 card film">
                                 <a href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
                                     <h4 class="center">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
-                                    <img class="poster col s12" src="http://img.omdbapi.com/?i={{ itemNumber.film.idImdb }}&apikey=1733f6a&h=300" alt="poster" class="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';">
+                        <img class="poster col s12"  src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
                                 </a>
                             </div>
                         {% endif %}
