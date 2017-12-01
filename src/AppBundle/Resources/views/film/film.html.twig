@@ -43,7 +43,7 @@
 
                 <div class="row">
                     <div class="col s3">
-                        <img src="http://img.omdbapi.com/?i={{ film.idImdb }}&apikey=1733f6a&h=300" alt="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';" style="max-width: 225px;">
+                        <img src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} <!-- combiner les deux fonctionnalités admin dans un même champ ? -->
                             <div class="center row films-btn">
 
