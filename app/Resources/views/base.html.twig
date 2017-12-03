@@ -56,7 +56,7 @@
 
     <nav class="main-navbar">
       <div class="navbar__wrapper">
-          <a href="/" class="navbar__brand-logo">MC2 Musical</a>
+          <a href="/" class="navbar__brand-logo">MC&#178; Musical</a>
             <ul class="navbar__buttons">
               <li><a href="{{ path('thesaurus') }}">Thesaurus</a></li>
               <li><a href="{{ path('about') }}">About</a></li>
@@ -115,50 +115,22 @@
           <p class="footer__text">This project is supported by the Labex Arts-H2H and benefits from financial support from the ANR as part of the “Investments for the future” program (ANR-10-LABX-80-01).</p>
         </div>
         <div class="footer__block footer__block--links">
-          <h5 class="footer__title">Links</h5>
+          <!-- <h5 class="footer__title">Links</h5> -->
           <a class="footer__link" href="{{ path('howto')}}">
             <button class="footer__button">How to</button>
           </a>
         </div>
         <div class="footer__block footer__block--logo">
-          <img class="footer__logo" src="{{ asset('img/labex_web-develop-gris-clair.png') }}" alt="">
+          <a href="http://www.labex-arts-h2h.fr/"><img class="footer__logo" src="{{ asset('img/labex_web-develop-gris-clair.png') }}" alt=""></a>
         </div>
       </div>
     </footer>
 
     {% endblock %}
-<!--
-    <footer class="page-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Partnerships</h5>
-
-                    <p class="grey-text text-lighten-4">This project is supported by the Labex Arts-H2H and benefits from financial support from the ANR as part of the “Investments for the future” program (ANR-10-LABX-80-01).</p>
-
-                    {#<p class="grey-text text-lighten-4">Logo and list of partners - in progress</p>#}
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-                    <ul class="browser-default">
-                        {#<li><a class="grey-text text-lighten-3" href="{{ path('howto')}}">how to</a></li>#}
-                        {#<li><a class="grey-text text-lighten-3" href="{{ path('news')}}">news</a></li>#}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                2017 - Version 1.0
-                {#<a class="grey-text text-lighten-4 right" href="{{ path('about')}}">About</a>#}
-            </div>
-        </div>
-    </footer> -->
 
     {% block javascripts %}
 
     <!-- JQuery -->
-
 
     <script src = "{{ asset('assets/vendor/jquery/dist/jquery.js') }}"></script>
     {#<script#}

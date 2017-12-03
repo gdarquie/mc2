@@ -12,7 +12,7 @@
         }
 
         .parallax-container {
-            height: 340px;
+            height: 275px;
             margin-bottom: 2em;
         }
 
@@ -25,37 +25,33 @@
 
 {% block body %}
 
-
     <div class="parallax-container">
-        <br><br>
-        <h1 class="center uppercase">Dance</h1>
-        <h1 class="center uppercase"><i>Danse</i></h1>
-
-        <div class="parallax"><img src="{{ asset('img/gentlemen prefer blondes.jpg') }}"></div>
+      <br><br>
+      <h1 class="center uppercase">Dance</h1>
+      <h1 class="center uppercase" style="margin-bottom: 1em;"><i>Danse</i></h1>
+      <div class="parallax"><img src="{{ asset('img/DANCE.jpg') }}"></div>
     </div>
 
     <section class="container">
 
-        <div class="center">
+      <div class="center">
+        <p>This page provides information on the dance numbers. Numbers are labeled by dancing type, dance sub-genre, and dance content.</p>
+        <p class="center">***</p>
+        <p><i>Cette page propose des informations sur les numéros dansés , caractérisés en fonction de trois catégories : type de danse, sous-genre et contenu spécifique de la danse.</i></p>
+      </div>
 
-            <p>This page provides information on the dance numbers. Numbers are labeled by dancing type, dance sub-genre, and dance content.</p>
-            <p class="center">***</p>
-            <p><i>Cette page propose des informations sur les numéros dansés , caractérisés en fonction de trois catégories : type de danse, sous-genre et contenu spécifique de la danse.</i></p>
-
+      <article class="card card_thematique">
+        <div class=" col s12 row">
+          <p class="col m6 center">Dance Numbers : <span class="number">{{ numberDancedNumber.nb }}</span></p>
+          <p class="col m6 center">Films with at least one dance number : <span class="number">{{ nbfilmsWithDancedNumber.nb }}</span></p>
+          {#<p><span class="number"></span> different tones exist, <span class="number">{{ mostPopularGenre.title }}</span> is the most used, <span class="number"></span> moods have been saved for <span class="number"></span> different numbers.</p>#}
         </div>
+      </article>
 
-        <article class="card card_thematique">
-            <div class=" col s12 row">
-                <p class="col m6 center">Dance Numbers : <span class="number">{{ numberDancedNumber.nb }}</span></p>
-                <p class="col m6 center">Films with at least one dance number : <span class="number">{{ nbfilmsWithDancedNumber.nb }}</span></p>
-                {#<p><span class="number"></span> different tones exist, <span class="number">{{ mostPopularGenre.title }}</span> is the most used, <span class="number"></span> moods have been saved for <span class="number"></span> different numbers.</p>#}
-            </div>
-        </article>
-
-        <article class="card card_thematique">
-            <h2>Dance & performance types</h2>
-            <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/4d69d150-bb14-11e7-9c46-87a11b838198?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(vis:(colors:('All+numbers':%23FCE2DE,'performance_thesaurus:*':%23FCE2DE),legendOpen:!t)),vis:(aggs:!((enabled:!t,id:'1',params:(customLabel:'Amount+of+production+numbers'),schema:metric,type:count),(enabled:!t,id:'2',params:(customInterval:'2h',customLabel:'Release+date',extended_bounds:(),field:film.released,interval:y,min_doc_count:1),schema:segment,type:date_histogram),(enabled:!t,id:'3',params:(filters:!(('$$hashKey':'object:261',input:(query:(query_string:(query:'performance_thesaurus:*'))),label:'All+numbers'),('$$hashKey':'object:262',input:(query:(query_string:(query:'performance_thesaurus:%22song%2Bdance%22+OR+%22instrumental%2Bdance%22'))),label:'Danced+numbers'))),schema:group,type:filters)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,categoryAxes:!((id:CategoryAxis-1,labels:(show:!t,truncate:100),position:bottom,scale:(type:linear),show:!t,style:(),title:(text:'Release+date'),type:category)),grid:(categoryLines:!f,style:(color:%23eee)),legendPosition:right,seriesParams:!((data:(id:'1',label:'Amount+of+production+numbers'),drawLinesBetweenPoints:!t,mode:normal,show:true,showCircles:!t,type:line,valueAxis:ValueAxis-1)),times:!(),valueAxes:!((id:ValueAxis-1,labels:(filter:!f,rotate:0,show:!t,truncate:100),name:LeftAxis-1,position:left,scale:(mode:normal,type:linear),show:!t,style:(),title:(text:'Amount+of+production+numbers'),type:value))),title:'%5BDance%5D+Dance%26PerformanceTypes-def-1',type:line))" height="600" width="100%"></iframe>
-        </article>
+      <article class="card card_thematique">
+        <h2>Dance & performance types</h2>
+        <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/4d69d150-bb14-11e7-9c46-87a11b838198?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(vis:(colors:('All+numbers':%23FCE2DE,'performance_thesaurus:*':%23FCE2DE),legendOpen:!t)),vis:(aggs:!((enabled:!t,id:'1',params:(customLabel:'Amount+of+production+numbers'),schema:metric,type:count),(enabled:!t,id:'2',params:(customInterval:'2h',customLabel:'Release+date',extended_bounds:(),field:film.released,interval:y,min_doc_count:1),schema:segment,type:date_histogram),(enabled:!t,id:'3',params:(filters:!(('$$hashKey':'object:261',input:(query:(query_string:(query:'performance_thesaurus:*'))),label:'All+numbers'),('$$hashKey':'object:262',input:(query:(query_string:(query:'performance_thesaurus:%22song%2Bdance%22+OR+%22instrumental%2Bdance%22'))),label:'Danced+numbers'))),schema:group,type:filters)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,categoryAxes:!((id:CategoryAxis-1,labels:(show:!t,truncate:100),position:bottom,scale:(type:linear),show:!t,style:(),title:(text:'Release+date'),type:category)),grid:(categoryLines:!f,style:(color:%23eee)),legendPosition:right,seriesParams:!((data:(id:'1',label:'Amount+of+production+numbers'),drawLinesBetweenPoints:!t,mode:normal,show:true,showCircles:!t,type:line,valueAxis:ValueAxis-1)),times:!(),valueAxes:!((id:ValueAxis-1,labels:(filter:!f,rotate:0,show:!t,truncate:100),name:LeftAxis-1,position:left,scale:(mode:normal,type:linear),show:!t,style:(),title:(text:'Amount+of+production+numbers'),type:value))),title:'%5BDance%5D+Dance%26PerformanceTypes-def-1',type:line))" height="600" width="100%"></iframe>
+      </article>
 
         {#<article>#}
 
@@ -70,14 +66,11 @@
     </section>
 
 <!-- Dancing type-->
-    <div class="parallax-container">
-        <br><br>
+    <section class="container">
+      <header style="padding: 2em 0;">
         <h1 class="center">Dancing Type, Sub-genre, and Content</h1>
         <h1 class="center"><i>Type de danse, Sous-genres, Contenu spécifique</i></h1>
-        <div class="parallax"><img src="{{ asset('img/my gal sal.jpg') }}"></div>
-    </div>
-
-    <section class="container">
+      </header>
 
         <article class="card card_thematique">
 
@@ -108,7 +101,7 @@
             <h2>Sub-Genre</h2>
 
             <div class="center">
-                <p>Danced figures coming from theatrical or popular traditions and specifying the "dancing types"</p>
+                <p>Dance figures coming from theatrical or popular traditions and specifying the "dancing types"</p>
                 <p class="center">***</p>
                 <p><i>Figures dansées issues de traditions spectaculaires ou populaires, participant à préciser le contenu des "dancing types"</i></p>
             </div>
@@ -170,19 +163,11 @@
      {#</section>#}
 
     <!-- Choreographers-->
-    <div class="parallax-container">
-        <br><br>
+    <section class="container">
+      <header style="padding: 2em 0;">
         <h1 class="center">Dance Directors</h1>
         <h1 class="center"><i>Chorégraphes</i></h1>
-
-        <div class="parallax"><img src="{{ asset('img/gold-diggers-1933.jpg') }}"></div>
-    </div>
-
-    <section class="container">
-
-
-
-
+      </header>
 
         <article class="card card_thematique">
 

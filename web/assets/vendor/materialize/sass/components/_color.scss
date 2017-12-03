@@ -129,7 +129,7 @@ $light-blue: (
   "lighten-3":  #81d4fa,
   "lighten-2":  #4fc3f7,
   "lighten-1":  #29b6f6,
-  "darken-1":   #039be5,
+  "darken-1":   #4C5B5C,
   "darken-2":   #0288d1,
   "darken-3":   #0277bd,
   "darken-4":   #01579b,
@@ -409,4 +409,3 @@ $colors: (
   @warn "Unknown `#{name}` in $colors.";
   @return null;
 }
-

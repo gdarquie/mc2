@@ -5,8 +5,15 @@
     <section class="container" id="number">
 
       <div class="number__titles">
-        <h2 class="number__subhead">{{ number.title }}{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<small> - <a href="{{ path('number_edit', {'id' : number.id}) }}">edit</a></small>{% endif %} </h1>
-        <a href="/film/id/{{number.film.filmId}}"><h1 class="number__title">[{{ number.film }}]</i>{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<small> {% endif %} </h1></a>
+        <h1 class="number__title">{{ number.title }}
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          <small> - <a href="{{ path('number_edit', {'id' : number.id}) }}">edit</a></small>{% endif %}
+        </h1>
+        <a href="/film/id/{{number.film.filmId}}">
+          <h2 class="number__subtitle">[{{ number.film }}]
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} {% endif %}
+          </h2>
+        </a>
       </div>
 
       <div class="number__row-wrapper">

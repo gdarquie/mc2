@@ -106,6 +106,7 @@ h1{
 
 h2{
 	font-size: 2em;
+	margin-top: 0!important;
 }
 
 h3{
@@ -146,7 +147,7 @@ h4{
 }
 
 .parallax-container {
-	height: 350px;
+	height: 275px;
 	margin-bottom: 20px;
 }
 
@@ -332,4 +333,15 @@ div .cut {
 	padding : 20px;
 	background: #fff9f9;
 	margin-bottom: 10px;
+}
+
+.nav-login {
+	height: 50px;
+	line-height: 50px;
+	position: absolute;
+  top: 0;
+}
+
+.login-wrapper {
+	margin-top: 50px;
 }
