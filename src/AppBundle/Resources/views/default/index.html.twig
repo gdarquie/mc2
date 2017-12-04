@@ -310,7 +310,6 @@ a {
 
     $("#searchMovie").keyup(function(){
       input = $("#searchMovie").val();
-      console.log("Search movie activée")
 
       var selection = [];
 
@@ -388,6 +387,8 @@ a {
                 // console.log(selection);
               }
             }
+          } else {
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
           }
 
 
@@ -433,6 +434,8 @@ a {
                 selection.push(res);
               }
             }
+          } else {
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
           }
 
 
@@ -478,6 +481,8 @@ a {
                             selection.push(res);
                         }
                     }
+                } else {
+                  $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
                 }
 
                 if (selection.length > 0){
@@ -523,6 +528,8 @@ a {
                 // console.log(selection);
               }
             }
+          } else {
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
           }
 
 
