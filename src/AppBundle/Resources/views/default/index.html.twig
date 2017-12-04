@@ -206,7 +206,7 @@ a {
       <h2 class="section-films__title">Films with data</h2>
       <div class="section-films__films">
         {% for film in filmsWithNumber |slice(0,10) %}
-        <a class="section-films__film" href="/film/id/{{film.filmId}}">
+        <a class="section-films__film" href="{{ path('film', {'filmId' : film.filmId}) }}">
           <h4 class="section-films__film-name">{{film.title}} ({{film.released}})</h4>
           <div class="section-films__centered-cropped">
             <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
@@ -214,7 +214,7 @@ a {
         </a>
         {% endfor %}
         {% for film in filmsWithNumber |slice(10) %}
-        <a class="section-films__film hidden" href="/film/id/{{film.filmId}}">
+        <a class="section-films__film hidden" href="{{ path('film', {'filmId' : film.filmId}) }}">
           <h4 class="section-films__film-name">{{film.title}} ({{film.released}})</h4>
           <div class="section-films__centered-cropped">
             <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
