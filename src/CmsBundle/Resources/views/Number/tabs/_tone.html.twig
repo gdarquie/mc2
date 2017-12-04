@@ -58,7 +58,7 @@
             {% endif %}
 
 
-
+            {%  if not create %}
                 <div class="row js-mood-validation-wrapper" data-prototype="{{ formMacros.printValidationMoodRow(numberForm.validationMood.vars.prototype)|e('html_attr') }}">
 
                     <div class="col s12">
@@ -72,7 +72,7 @@
                 <div class="hide">
                     {{ form_widget(numberForm.validationMood) }}
                 </div>
-
+            {% endif %}
 
         </div>
     {% endif %}

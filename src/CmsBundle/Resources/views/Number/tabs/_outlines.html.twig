@@ -100,7 +100,7 @@
                     {% endfor %}
                 {% endif %}
 
-
+                {%  if not create %}
                 <div class="row js-outlines-validation-wrapper" data-prototype="{{ formMacros.printValidationOutlinesRow(numberForm.validationTc.vars.prototype)|e('html_attr') }}">
 
                     <div class="col s12">
@@ -114,6 +114,7 @@
                 <div class="hide">
                     {{ form_widget(numberForm.validationTc) }}
                 </div>
+                {% endif %}
 
             </div>
 
