@@ -392,8 +392,10 @@ a {
 
 
           if (selection.length > 0){
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
 
             $("#resultsPerson").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            $("#resultsPerson").show();
             for(var i = 0; i < selection.length ; i++){
               txt = "<a href='person/"+selection[i].personId+"'><span class='btn myBtn' title='"+selection[i]['name']+"'>"+selection[i]['name']+"</span></a>";
               $("#resultsPerson").append(txt);
@@ -435,8 +437,9 @@ a {
 
 
           if (selection.length > 0){
-
+          $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
             $("#resultsNumber").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            $("#resultsNumber").show();
             for(var i = 0; i < selection.length ; i++){
               txt = "<a href='number/"+selection[i]['id']+"'><span class='btn myBtn' title='"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")'>"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")</span></a>";
               $("#resultsNumber").append(txt);
@@ -478,8 +481,9 @@ a {
                 }
 
                 if (selection.length > 0){
-
+                    $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
                     $("#resultsShow").html("<div class='col s12'><h2>Result(s)</h2></div>");
+                    $("#resultsShow").show();
                     for(var i = 0; i < selection.length ; i++){
                         txt = "<a href='stageshow/id/"+selection[i]['stageshowId']+"'><span class='btn myBtn' title='"+selection[i]['title']+"'>"+selection[i]['title']+"</span></a>";
                         $("#resultsShow").append(txt);
@@ -523,8 +527,10 @@ a {
 
 
           if (selection.length > 0){
+          $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
 
             $("#resultsSong").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            $("#resultsSong").show();
             for(var i = 0; i < selection.length ; i++){
               txt = "<a href='song/id/"+selection[i]['songId']+"'><span class='btn myBtn' title='"+selection[i]['title']+">"+selection[i]['title']+"</span></a>";
               $("#resultsSong").append(txt);
