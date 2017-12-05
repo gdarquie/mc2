@@ -50,7 +50,7 @@
 
       <article class="card card_thematique">
         <h2>Dance & performance types</h2>
-        <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/4d69d150-bb14-11e7-9c46-87a11b838198?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(vis:(colors:('All+numbers':%23FCE2DE,'performance_thesaurus:*':%23FCE2DE),legendOpen:!t)),vis:(aggs:!((enabled:!t,id:'1',params:(customLabel:'Amount+of+production+numbers'),schema:metric,type:count),(enabled:!t,id:'2',params:(customInterval:'2h',customLabel:'Release+date',extended_bounds:(),field:film.released,interval:y,min_doc_count:1),schema:segment,type:date_histogram),(enabled:!t,id:'3',params:(filters:!(('$$hashKey':'object:261',input:(query:(query_string:(query:'performance_thesaurus:*'))),label:'All+numbers'),('$$hashKey':'object:262',input:(query:(query_string:(query:'performance_thesaurus:%22song%2Bdance%22+OR+%22instrumental%2Bdance%22'))),label:'Danced+numbers'))),schema:group,type:filters)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,categoryAxes:!((id:CategoryAxis-1,labels:(show:!t,truncate:100),position:bottom,scale:(type:linear),show:!t,style:(),title:(text:'Release+date'),type:category)),grid:(categoryLines:!f,style:(color:%23eee)),legendPosition:right,seriesParams:!((data:(id:'1',label:'Amount+of+production+numbers'),drawLinesBetweenPoints:!t,mode:normal,show:true,showCircles:!t,type:line,valueAxis:ValueAxis-1)),times:!(),valueAxes:!((id:ValueAxis-1,labels:(filter:!f,rotate:0,show:!t,truncate:100),name:LeftAxis-1,position:left,scale:(mode:normal,type:linear),show:!t,style:(),title:(text:'Amount+of+production+numbers'),type:value))),title:'%5BDance%5D+Dance%26PerformanceTypes-def-1',type:line))" height="600" width="100%"></iframe>
+         <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/4d69d150-bb14-11e7-9c46-87a11b838198?embed=true&_g=()" height="600" width="100%"></iframe>
       </article>
 
         {#<article>#}
@@ -84,7 +84,7 @@
 
             </div>
 
-            <p class="stats"><span>{{ dancing|length }}</span> dancing types :</p>
+            <p class="stats"><span>{{ dancing|length-1 }}</span> dancing types :</p>
 
 
             {#<div class='wordcloud col s12 row' id='wordcloud_type' style="height: 300px"></div>#}
@@ -248,12 +248,22 @@
 
             {% for item in popularcontent  %}
 
-               <a href="{{ path('getOneDanceContent', {'dance' : item.id}) }}">
+<!--                <a href="{{ path('getOneDanceContent', {'dance' : item.id}) }}">
                  <p class="chip">{{ item.title }} ({{ item.nb }})</p>
                </a>
-
+ -->
             {% endfor %}
-
+            <a class="chip" href="mood/853">apache</a> 
+            <a class="chip" href="mood/242">community-fiesta and social dancing</a>
+            <a class="chip" href="mood/717">dancing specialty </a>
+            <a class="chip" href="mood/226">female lead / male chorus</a>
+            <a class="chip" href="mood/259">revue of girls</a>
+            <a class="chip" href="mood/269">revue-fashion show etc.</a>
+            <a class="chip" href="mood/267">tableau vivant, still life</a>
+            <a class="chip" href="mood/258">teasing and exhibitionism</a>
+            <a class="chip" href="mood/849">working out and sports</a>
+            <br>
+            <a class="chip" href="thesaurus/id=5">List of narrative ballets </a>
         </article>
 
     </section>

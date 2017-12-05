@@ -76,7 +76,7 @@
             {% endif %}
 
 
-
+            {%  if not create %}
             <div class="row js-theme-validation-wrapper" data-prototype="{{ formMacros.printValidationThemeRow(numberForm.validationTheme.vars.prototype)|e('html_attr') }}">
 
                 <div class="col s12">
@@ -90,6 +90,7 @@
             <div class="hide">
                 {{ form_widget(numberForm.validationTheme) }}
             </div>
+            {% endif %}
 
         </div>
 

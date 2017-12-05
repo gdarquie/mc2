@@ -21,8 +21,7 @@ class NumberController extends Controller
     public function numberNewAction(Request $request, $filmId)
     {
 
-        $form = $this->createForm(NumberType::class); //add $number
-
+        $form = $this->createForm(NumberType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
@@ -50,19 +49,21 @@ class NumberController extends Controller
             $number->setDateCreation($now);
             $number->setLastUpdate($now);
 
-            $this->validate($number, $user);
-
             $em->persist($number);
             $em->flush();
 
             $this->addFlash('success', 'Number created!');
 
-            return $this->redirectToRoute('film', array('filmId' => $filmId));
+            return $this->redirectToRoute('film', array(
+                'create' => true,
+                'filmId' => $filmId
+            ));
         }
 
         return $this->render('CmsBundle:Number:save.html.twig',array(
+            'create' => true,
             'numberForm' => $form->createView(),
-            'filmId' => $filmId,
+            'filmId' => $filmId
         ));
     }
 
@@ -127,6 +128,7 @@ class NumberController extends Controller
 
         return $this->render('CmsBundle:Number:save.html.twig', array(
             'number' => $number,
+            'create' => false,
             'numberForm' => $form->createView(),
             'validationTitle' => $validationTitle,
             'validationDirector' => $validationDirector,

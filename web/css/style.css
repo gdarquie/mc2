@@ -96,6 +96,10 @@ body{
 	padding-top: 50px;
 }
 
+iframe {
+	border:none;
+}
+
 h1, h2, h3, h4, h5{
 	color: #db5462;
 }
@@ -125,6 +129,11 @@ h4{
 
 .cursor{
 	cursor:pointer;
+}
+
+.card.card-light {
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 
 .number {

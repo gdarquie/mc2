@@ -59,7 +59,7 @@
             {% endif %}
 
 
-
+            {%  if not create %}
             <div class="row js-structure-validation-wrapper" data-prototype="{{ formMacros.printValidationStructureRow(numberForm.validationStructure.vars.prototype)|e('html_attr') }}">
 
                 <div class="col s12">
@@ -73,7 +73,7 @@
             <div class="hide">
                 {{ form_widget(numberForm.validationStructure) }}
             </div>
-
+            {% endif %}
 
         </div>
     {% endif %}

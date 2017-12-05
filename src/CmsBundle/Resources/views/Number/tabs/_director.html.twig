@@ -62,7 +62,7 @@
                 {% endif %}
 
 
-
+                {%  if not create %}
                 <div class="row js-director-validation-wrapper" data-prototype="{{ formMacros.printValidationDirectorRow(numberForm.validationDirector.vars.prototype)|e('html_attr') }}">
 
                     <div class="col s12">
@@ -76,6 +76,7 @@
                 <div class="hide">
                     {{ form_widget(numberForm.validationDirector) }}
                 </div>
+                {% endif %}
             </div>
         {% endif %}
 

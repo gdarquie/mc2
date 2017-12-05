@@ -71,7 +71,7 @@
                 {% endif %}
 
 
-
+                {%  if not create %}
                 <div class="row js-dance-validation-wrapper" data-prototype="{{ formMacros.printValidationDanceRow(numberForm.validationDance.vars.prototype)|e('html_attr') }}">
 
                     <div class="col s12">
@@ -85,6 +85,7 @@
                 <div class="hide">
                     {{ form_widget(numberForm.validationDance) }}
                 </div>
+                {% endif %}
             </div>
         {% endif %}
 

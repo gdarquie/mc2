@@ -15,7 +15,7 @@
 
 <div id="title" class="row container main">
 
-    {% if ( validationTitle|length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if (validationTitle is defined and validationTitle |length < 2 or is_granted('ROLE_EDITOR')) %}
         <article class="col s12">
     {% else %}
         <article class="col s12 hide">
@@ -69,8 +69,7 @@
                     {% endfor %}
                 {% endif %}
 
-
-
+                {%  if not create %}
                 <div class="row js-title-validation-wrapper" data-prototype="{{ formMacros.printValidationTitleRow(numberForm.validationTitle.vars.prototype)|e('html_attr') }}">
 
                     <div class="col s12">
@@ -84,6 +83,7 @@
                 <div class="hide">
                     {{ form_widget(numberForm.validationTitle) }}
                 </div>
+                {% endif %}
 
             </div>
 
