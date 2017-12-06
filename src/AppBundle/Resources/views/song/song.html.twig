@@ -81,8 +81,9 @@
             <ul class="collection">
                 {% for item in song.number %}
                     <a href="{{ path('number', {'id' : item.id}) }}"> <li class="collection-item avatar">
-                            <img src="http://img.omdbapi.com/?i={{ item.film.idImdb }}&amp;apikey=1733f6a&amp;h=300" alt="" class="circle">
+                            <img src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}"  class="circle">
                             {{ item.title }}</li></a>
+
                 {% endfor %}
             </ul>
 
@@ -90,7 +91,7 @@
             <ul class="collection">
                 {% for item in films %}
                     <a href="{{ path('film', {'filmId' : item.filmId}) }}"> <li class="collection-item avatar">
-                            <img src="http://img.omdbapi.com/?i={{ item.imdb }}&amp;apikey=1733f6a&amp;h=300" alt="" class="circle">
+                            <img src="{{ asset('img/films/'~ item.imdb ~'.jpg') }}" alt="" class="circle">
                             {{ item.title }}</li></a>
                 {% endfor %}
             </ul>
