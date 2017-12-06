@@ -245,14 +245,14 @@
                             <article class="card blue darken-4 col s12 m6">
                                 <div class="card-content white-text center-align">
                                     <p class="center-align number">{% for number in numberAverageLength %}{{number.average|round}} <span class="film__length--small">sec</span>{% endfor %}</p>
-                                    <p class="center-align number-label">Average number length for {{film.title}}</p>
+                                    <p class="center-align number-label">Average running time for the numbers in {{film.title}}</p>
                                 </div>
                             </article>
 
                             <article class="card pink lighten-2 col s12 m6">
                                 <div class="card-content white-text center-align">
                                     <p class="center-align number">{% for number in numbersAverageLength %}{{number.average|round}} <span class="film__length--small">sec</span>{% endfor %}</p>
-                                    <p class="center-align number-label">Average number length for all the movies</p>
+                                    <p class="center-align number-label">Average running time for the numbers for all the movies</p>
                                 </div>
                             </article>
                         </div>

@@ -297,6 +297,10 @@
   margin-top: 2em;
 }
 
+.section-films__films--margin-bottom {
+  margin-bottom: 2em;
+}
+
 .section-films__film {
   display: flex;
   flex-direction: column;
@@ -306,6 +310,15 @@
 
   @include respond-to(phone) {
     width: calc(50% - 10px);
+  }
+}
+
+.section-films__film--6 {
+  margin: 10px;
+  width: calc(16.66% - 20px);
+
+  @include respond-to(phone) {
+    width: calc(50% - 20px);
   }
 }
 
@@ -323,10 +336,16 @@
   background: white;
   color: #4D5D5D;
   display: flex;
+  display: -webkit-box;
   height: 50px;
   justify-content: center;
+  line-height: 17px;
   margin: 0;
+  overflow: hidden;
   text-align: center;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .section-films__centered-cropped,
@@ -411,4 +430,9 @@
 
 .h2-with-margin-top {
   margin-top: 0.83em!important;
+}
+
+.person__films-container {
+  background-color: #eee;
+  padding-top: 2em!important;
 }

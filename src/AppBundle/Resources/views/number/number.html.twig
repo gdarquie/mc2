@@ -5,7 +5,7 @@
     <section class="container" id="number">
 
       <div class="number__titles">
-        <h1 class="number__title">{{ number.title }}
+        <h1 class="number__title">"{{ number.title }}"
           {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
           <small> - <a href="{{ path('number_edit', {'id' : number.id}) }}">edit</a></small>{% endif %}
         </h1>
