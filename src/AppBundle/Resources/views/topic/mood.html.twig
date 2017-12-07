@@ -4,28 +4,38 @@
 
     <div class="parallax-container">
       <br><br>
-      <h1 class="center">Topics and spectacular archetypes</h1>
-      <h1 class="center"><i>Scènes de genre et thèmes</i></h1>
+      <h1 class="center section-title">Topics and spectacular archetypes</h1>
+      <h1 class="center section-subtitle">Scènes de genre et thèmes</h1>
       <div class="parallax"><img src="{{ asset('img/TOPICS.jpg') }}"></div>
     </div>
 
     <section class="container">
 
         <header>
-            <p>The project aims at identifying spectacular archetypes and recurring topics in the numbers. Each number can have one or several topics and a “general mood” indicating the tone employed.</p>
-            <p class="center">***</p>
-            <p><i>Une partie du projet vise à repérer dans les numéros des archétypes spectaculaires récurrents et des scènes de genre. Chaque numéro peut comporter un ou plusieurs de ces motifs, de même qu’une indication sur la tonalité générale et le traitement.</i></p>
+          <div class="paragraphs-translations">
+            <p class="paragraph-english">The project aims at identifying spectacular archetypes and recurring topics in the numbers. Each number can have one or several topics and a “general mood” indicating the tone employed.</p>
+            <p class="paragraph-separator center">***</p>
+            <p class="paragraph-french">Une partie du projet vise à repérer dans les numéros des archétypes spectaculaires récurrents et des scènes de genre. Chaque numéro peut comporter un ou plusieurs de ces motifs, de même qu’une indication sur la tonalité générale et le traitement.</p>
+          </div>
         </header>
 
         <div>
 
           <article class="card card_thematique row">
             <h2>Topics</h2>
-            <div class=" col s12 row">
-                <p class="col m4 center">Existing topics : <span class="number">{{ moodGenre|length }}</span></p>
-                <p class="col m4 center">Production numbers in the database : <span class="number">{{ totalNumberGenre.nb }}</span></p>
-                <p class="col m4 center">Used topics : <span class="number">{{ totalGenre.nb }}</span></p>
-                {#<p><span class="number"></span> different tones exist, <span class="number">{{ mostPopularGenre.title }}</span> is the most used, <span class="number"></span> moods have been saved for <span class="number"></span> different numbers.</p>#}
+            <div class="section-stats__stats">
+              <div class="section-stats__stat">
+                <div class="section-stats__number">{{ moodGenre|length }}</div>
+                <div class="section-stats__type">Existing topics</div>
+              </div>
+              <div class="section-stats__stat">
+                <div class="section-stats__number">{{ totalNumberGenre.nb }}</div>
+                <div class="section-stats__type">Production numbers in the database</div>
+              </div>
+              <div class="section-stats__stat">
+                <div class="section-stats__number">{{ totalGenre.nb }}</div>
+                <div class="section-stats__type">Used topics</div>
+              </div>
             </div>
 
             {#<div class='wordcloud col s12 row' id='wordcloud_topics' style="height: 500px"></div>#}
@@ -49,10 +59,15 @@
         <div>
             <article class="card card_thematique row">
               <h2>General Mood</h2>
-              <div class=" col s12 row">
-                  <p class="col m6 center">Existing moods : <span class="number">{{ mood|length }}</span></p>
-                  <p class="col m6 center">Used moods : <span class="number">{{ total.nb }}</span></p>
-                  {#<p><span class="number"></span> different moods exist, <span class="number">{{ mostPopular.title }}</span> is the most used, <span class="number">{{ total.nb }}</span> moods have been saved for <span class="number">{{ totalNumber.nb }}</span> different numbers.</p>#}
+              <div class="section-stats__stats">
+                <div class="section-stats__stat">
+                  <div class="section-stats__number">{{ mood|length }}</div>
+                  <div class="section-stats__type">Existing moods</div>
+                </div>
+                <div class="section-stats__stat">
+                  <div class="section-stats__number">{{ total.nb }}</div>
+                  <div class="section-stats__type">Used moods</div>
+                </div>
               </div>
 
               {#<div class='wordcloud col s12 row' id='wordcloud_general' style="height: 250px"></div>#}
