@@ -31,7 +31,8 @@
 .section-search__wrapper,
 .section-stats__wrapper,
 .section-themes__wrapper,
-.section-films__wrapper {
+.section-films__wrapper,
+.section-search-results {
   margin: auto;
   width: 70%;
 
@@ -137,7 +138,7 @@
 .section-search__input {
   border-bottom: 1px solid #ddd!important;
   font-size: 0.9rem!important;
-  color: #4D5D5D;
+  color: #eee;
   margin: 0!important;
   position: relative;
   z-index: 2;
@@ -166,6 +167,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     width: calc(33% - 10px);
+  }
+
+  h2 {
+    margin-top: 1em!important;
   }
 }
 
@@ -395,15 +400,23 @@
 
 .chip {
   align-items: center;
-  background-color: white;
+  background-color: transparent;
   border: solid 1px #4D5D5D;
   border-radius: 2px;
   color: #4D5D5D;
   display: inline-flex;
   font-family: "tisa-sans-bold", sans-serif;
   height: 30px;
-  justify-content: center;
   margin: 5px 3px;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+
+  a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   @include respond-to(phone) {
     font-size: 12px;
@@ -435,4 +448,85 @@
 .person__films-container {
   background-color: #eee;
   padding-top: 2em!important;
+}
+
+.section-title {
+  font-size: 3.5em;
+  font-weight: bold;
+  // text-shadow: 1px 1px 3px rgba(0,0,0,.7);
+}
+.section-subtitle {
+  color: #4D5D5D;
+  font-size: 2.5em;
+  // text-shadow: 1px 1px 3px rgba(0,0,0,.7);
+}
+
+.paragraphs-translations {
+  display: flex;
+
+  @include respond-to(phone) {
+    flex-direction: column;
+  }
+}
+.paragraph-english,
+.paragraph-french {
+  flex: 1;
+  text-align: justify;
+}
+.paragraph-english {
+  padding-right: 15px;
+  border-right: 2px solid #db5462;
+
+  @include respond-to(phone) {
+    border: none;
+    padding: 0;
+  }
+}
+.paragraph-french {
+  padding-left: 15px;
+
+  @include respond-to(phone) {
+    padding: 0;
+  }
+}
+.paragraph-separator {
+  display: none;
+
+  @include respond-to(phone) {
+    display: block;
+  }
+}
+
+svg text {
+  color: #4D5D5D;
+  font-family: "tisa-sans", sans-serif;
+}
+
+.section-person {
+  .tabs {
+    height: auto;
+    flex-wrap: wrap;
+    text-align: start;
+  }
+  .tab {
+    flex: none;
+  }
+  @include respond-to(phone) {
+    header {
+      display: flex;
+      flex-direction: column;
+    }
+    h1 {
+      margin: auto;
+      margin-top: 20px;
+      width: auto!important;
+    }
+    #sub_nav {
+      width: auto!important;
+    }
+  }
+}
+
+.card {
+  background-color: #FAFAFA;
 }
