@@ -365,6 +365,23 @@
   }
 }
 
+.film__centered-cropped {
+  height: 400px;
+
+  @media screen and (max-width: 1300px) {
+    height: 350px;
+  }
+  @media screen and (max-width: 1100px) {
+    height: 300px;
+  }
+  @media screen and (max-width: 900px) {
+    height: 350px;
+  }
+  @include respond-to(phone) {
+    height: 200px;
+  }
+}
+
 .section-films__film-poster,
 .film__poster {
   bottom: -100%;
@@ -531,4 +548,37 @@ svg text {
 
 .card {
   background-color: white;
+}
+
+@include respond-to(phone) {
+  #film {
+    #sub_nav {
+      width: 100%;
+    }
+    .row {
+      display: flex;;
+      flex-direction: column;
+
+      .col.s9,
+      .col.s3 {
+        width: 100%;
+      }
+      h1 {
+        text-align: center;
+      }
+    }
+    #tab1 .row {
+      display: flex;;
+      flex-direction: column;
+
+      .col.s3 {
+        margin: auto;
+        width: 100%;
+      }
+    }
+    .row.card_perso .row {
+      overflow-x: scroll;
+      width: 100%;
+    }
+  }
 }
