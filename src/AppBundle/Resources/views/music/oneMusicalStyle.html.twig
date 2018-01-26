@@ -13,7 +13,7 @@
         }
 
         .list_film, .list_number {
-            color: #039be5;
+            color: #4C5B5C;
             cursor: pointer; cursor: hand;
         }
     </style>
@@ -29,14 +29,18 @@
 
     <article class="card row">
         <h2>Production Numbers per Year</h2>
-        <div id="diagram" style="height: 300px;"></div>
+        <!-- <div id="diagram" style="height: 300px;"></div> -->
+        <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/1c194020-ca2f-11e7-961c-3f62ec64b802?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(vis:(colors:('All+numbers':%23FCE2DE,'Danced+numbers':%2365C5DB,Type:%23BA43A9,'performance_thesaurus:*':%23FCE2DE),legendOpen:!t)),vis:(aggs:!((enabled:!t,id:'1',params:(customLabel:'Amount+of+production+numbers'),schema:metric,type:count),(enabled:!t,id:'2',params:(customInterval:'2h',customLabel:'Release+date',extended_bounds:(),field:film.released,interval:y,min_doc_count:1),schema:segment,type:date_histogram),(enabled:!t,id:'3',params:(filters:!((input:(query:(query_string:(query:'performance_thesaurus:*'))),label:'All+numbers'),(input:(query:(query_string:(query:'musical_thesaurus:%22{{ myMusicalStyle.title }}%22'))),label:''))),schema:group,type:filters)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,categoryAxes:!((id:CategoryAxis-1,labels:(show:!t,truncate:100),position:bottom,scale:(type:linear),show:!t,style:(),title:(text:'Release+date'),type:category)),grid:(categoryLines:!f,style:(color:%23eee)),legendPosition:right,seriesParams:!((data:(id:'1',label:'Amount+of+production+numbers'),drawLinesBetweenPoints:!t,mode:normal,show:true,showCircles:!t,type:line,valueAxis:ValueAxis-1)),times:!(),valueAxes:!((id:ValueAxis-1,labels:(filter:!f,rotate:0,show:!t,truncate:100),name:LeftAxis-1,position:left,scale:(mode:normal,type:linear),show:!t,style:(),title:(text:'Amount+of+production+numbers'),type:value))),title:'%5BMusic%5D+Chronology-dynamique',type:line))" height="600" width="100%"></iframe>
     </article>
 
     <article class="card row">
         <h2>Musical Ensemble</h2>
-        <h2><i>Formation</i></h2>
 
-        <div class='wordcloud col s12 row' id='wordcloud_style' style="height: 300px"></div>
+        <!-- <div class='wordcloud col s12 row' id='wordcloud_style' style="height: 300px"></div> -->
+
+        {% for item in musicalEnsemble  %}
+            <span class="chip">{{ item.title }} ({{ item.nb }})</span>
+        {% endfor %}
 
 
         {#<div class="col s12 donut" id="donut_ensemble"><svg></svg></div>#}
@@ -44,8 +48,17 @@
     </article>
 
     <article class="card row">
+        <h2>Performers</h2>
+
+        <div>
+          <p>The names are those of the performers present in a number involving {{ myMusicalStyle.title }}. It does not necessarily mean that this musical style is typically theirs.</p>
+        </div>
+        <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/2ccc1730-ca1b-11e7-a381-e7dac39b2c2e?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'musical_thesaurus:%22{{ myMusicalStyle.title }}%22')),uiState:(),vis:(aggs:!((enabled:!t,id:'1',params:(),schema:metric,type:count),(enabled:!t,id:'2',params:(field:performers,order:desc,orderBy:'1',size:5),schema:segment,type:terms)),listeners:(),params:(maxFontSize:72,minFontSize:18,orientation:single,scale:linear),title:'%5BMusic%5D+wordcloud+par+musical+style+dynamique',type:tagcloud))" height="600" width="100%"></iframe>
+
+    </article>
+
+    <article class="card row">
         <h2>Song Types</h2>
-        <h2><i>Types de chanson</i></h2>
 
         <div class="col s12 donut" id="donut_type"><svg></svg></div>
 
@@ -167,6 +180,7 @@
 
 
         words_style = [{% for item in musicalEnsemble  %}{ text : "{{ item.title }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
+        console.log('WORLD CLOUD', words_style);
         $('#wordcloud_style').jQCloud(words_style);
         $('#wordcloud_style').jQCloud('update', words_style, {
             fontSize: {

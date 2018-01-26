@@ -1,417 +1,338 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/number.css')}}">
-    <style>
-
-        h1{
-            font-size: 1.5em;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 1.2em;
-            text-align: center;
-        }
-        .row{
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
 
     <section class="container" id="number">
 
-        <div class="row">
-            <h1 class="center">{{ number.title }}{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<small> - <a href="{{ path('number_edit', {'id' : number.id}) }}">edit</a></small>{% endif %} </h1>
-            <h1 class="center">[{{ number.film }}]</i>{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<small> {% endif %} </h1>
+      <div class="number__titles">
+        <h1 class="number__title">"{{ number.title }}"
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          <small> - <a href="{{ path('number_edit', {'id' : number.id}) }}">edit</a></small>{% endif %}
+        </h1>
+        <a href="/film/id/{{number.film.filmId}}">
+          <h2 class="number__subtitle">[{{ number.film }}]
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} {% endif %}
+          </h2>
+        </a>
+      </div>
+
+      <div class="number__row-wrapper">
+        <div class="number__block">
+          <h3 class="number__table-title">Description</h3>
+          <div class="number__tables-wrapper">
+            <table class="number__table">
+              <tr class="number__table-row__head">
+                <th>Starting time code</a></th>
+                <th>Ending time code</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'begin_thesaurus'}) }}">Beginning</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'ending_thesaurus'}) }}">Ending</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'completeness_thesaurus'}) }}">Completeness</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'complet_options'}) }}">Completeness options</a></th>
+              </tr>
+              <tr class="number__table-row__content">
+                <td>{{ ((number.beginTc)/(60*60))|round(0, 'floor') }}h{{ ((number.beginTc)/(60)) |round(0, 'floor')-(60*((number.beginTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.beginTc) |round(0, 'floor')-(60*((number.beginTc)/(60)) |round(0, 'floor')) }}s
+                </td>
+                <td>{{ ((number.EndTc)/(60*60))|round(0, 'floor') }}h{{ ((number.EndTc)/(60)) |round(0, 'floor')-(60*((number.EndTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.EndTc) |round(0, 'floor')-(60*((number.EndTc)/(60)) |round(0, 'floor')) }}s
+                </td>
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.beginThesaurus.id }) }}">{{ number.beginThesaurus  }}</a>
+                </td>
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.endingThesaurus.id }) }}">{{ number.endingThesaurus  }}</a>
+                </td>
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.completenessThesaurus.id }) }}">{{ number.completenessThesaurus }}</a>
+                </td>
+                <td>
+                  {% for completoption in number.completoptions %}
+                    <a href="{{ path('thesaurus_element', {'id': completoption.id }) }}">{{ completoption.title  }}</a>
+                    {% if loop|last %}{% else %}; {% endif %}
+                  {% endfor %}
+                </td>
+              </tr>
+            </table>
+          </div>
+          <br>
+          <div class="number__tables-wrapper">
+            <table class="number__table">
+              <tr class="number__table-row__head">
+                <th><a href="{{ path('thesaurus_type', {'content': 'structure'}) }}">Structure</a></th>
+                <th>Shots</th>
+                <th>Average shot length</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'performance_thesaurus'}) }}">Performance</a></th>
+                <th>Performers</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'cast'}) }}">Cast</a></th>
+                <th>Stars who don't participate</th>
+              </tr>
+              <tr class="number__table-row__content">
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.structure.id }) }}">{{ number.structure  }}</a>
+                </td>
+                <td>{{ number.shots }}</td>
+                {#calculer avg shots length#}
+                <td></td>
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.performanceThesaurus.id }) }}">{{ number.performanceThesaurus  }}</a>
+                </td>
+                <td>
+                  {% for person in number.performers %}
+                      <a href="{{ path('person', {'personId': person.personId }) }}">{{ person.name  }}</a>
+                      {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {#<a href="{{ path('thesaurus_element', {'id': number.cast.id }) }}">{{ number.cast  }}</a>#}
+                </td>
+                <td>
+                  {% for person in number.figurants %}
+                    <a href="{{ path('person', {'personId': person.personId }) }}">{{ person.name  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}{% endfor %}
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
+      </div>
 
-        <div class="row">
+      <div class="number__row-wrapper">
+        <div class="number__block">
+          <h3 class="number__table-title">Backstage</h3>
+          <div class="number__tables-wrapper">
+            <table class="number__table">
+              <tr class="number__table-row__head">
+                <th><a href="{{ path('thesaurus_type', {'content': 'spectators_thesaurus'}) }}">Spectators</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'diegetic_thesaurus'}) }}">Diegetic performance?</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'musician_thesaurus'}) }}">Visible musicians</a></th>
+              </tr>
+              <tr class="number__table-row__content">
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.spectatorsThesaurus.id }) }}">{{ number.spectatorsThesaurus  }}</a>
+                </td>
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.diegeticThesaurus.id }) }}">{{ number.diegeticThesaurus  }}</a>
+                </td>
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.musicianThesaurus.id }) }}">{{ number.musicianThesaurus  }}</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="number__block">
+          <h3 class="number__table-title">General mood and topics</h3>
+          <div class="number__tables-wrapper">
+            <table class="number__table">
+              <tr class="number__table-row__head">
+                <th><a href="{{ path('thesaurus_type', {'content': 'general_mood'}) }}">General mood</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'genre'}) }}">Topic</a></th>
+              </tr>
+              <tr class="number__table-row__content">
+                <td>
+                  {% for mood in number.generalMood %}
+                    <a href="{{ path('thesaurus_element', {'id': mood.id }) }}">{{ mood.title  }}</a>
+                    {% if loop|last %}{% else %}; {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for mood in number.genre %}
+                    <a href="{{ path('thesaurus_element', {'id': mood.id }) }}">{{ mood.title  }}</a>
+                    {% if loop|last %}{% else %}; {% endif %}
+                  {% endfor %}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
 
-            <div class="col s12">
+      <div class="number__row-wrapper">
+        <div class="number__block">
+          <h3 class="number__table-title">Themes</h3>
+          <div class="number__tables-wrapper">
+            <table class="number__table">
+              <tr class="number__table-row__head">
+                <th><a href="{{ path('thesaurus_type', {'content': 'costumes'}) }}">Costumes</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'stereotype'}) }}">Ethnic stereotypes</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'diegetic_place_thesaurus'}) }}">Diegetic place</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'general_localisation'}) }}">General localisation</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'imaginary'}) }}">Imaginary place</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'exoticism_thesaurus'}) }}">Exoticism</a></th>
+              </tr>
+              <tr class="number__table-row__content">
+                <td>{% for costume in number.costumes %}
+                  <a href="{{ path('thesaurus_element', {'id': costume.id }) }}">{{ costume.title  }}</a>
+                  {% if loop|last %}{% else %}, {% endif %}{% endfor %}
+                </td>
+                <td>
+                  {% for stereotype in number.stereotype %}
+                    <a href="{{ path('thesaurus_element', {'id': stereotype.id }) }}">{{ stereotype.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for place in  number.diegeticPlaceThesaurus %}
+                    <a href="{{ path('thesaurus_element', {'id': place.id }) }}">{{ place.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for place in  number.generalLocalisation %}
+                    <a href="{{ path('thesaurus_element', {'id': place.id }) }}">{{ place.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for imagination in number.imaginary %}
+                    <a href="{{ path('thesaurus_element', {'id': imagination.id }) }}">{{ imagination.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for exoticism in number.exoticismThesaurus%}
+                    <a href="{{ path('thesaurus_element', {'id': exoticism.id }) }}">{{ exoticism.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
 
-                <h2>Description</h2>
-
-
-                <table class="striped middle-table">
-                    <tr>
-                        <th>Begin timecode</th>
-                        <th>End timecode</th>
-                        <th>Begin</th>
-                        <th>Ending</th>
-                        {#<th>Comments</th>#}
-                        <th>Completeness</th>
-                        <th>Completeness Options</th>
-                        <th>Structure</th>
-                        <th>Shots</th>
-                        <th>Average shot length</th>
-                    </tr>
-                    <tr>
-
-                        <td>{{ ((number.beginTc)/(60*60))|round(0, 'floor') }}h{{ ((number.beginTc)/(60)) |round(0, 'floor')-(60*((number.beginTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.beginTc) |round(0, 'floor')-(60*((number.beginTc)/(60)) |round(0, 'floor')) }}s</td>
-
-                        <td>{{ ((number.EndTc)/(60*60))|round(0, 'floor') }}h{{ ((number.EndTc)/(60)) |round(0, 'floor')-(60*((number.EndTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.EndTc) |round(0, 'floor')-(60*((number.EndTc)/(60)) |round(0, 'floor')) }}s</td>
-
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.beginThesaurus.id }) }}">{{ number.beginThesaurus  }}</a>
-                        </td>
-
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.endingThesaurus.id }) }}">{{ number.endingThesaurus  }}</a>
-                        </td>
-
-                        {#<td>{{ number.commentTc }}</td>#}
-                        <td><a href="{{ path('thesaurus_element', {'id': number.completenessThesaurus.id }) }}">{{ number.completenessThesaurus }}</a></td>
-
-                        <td>
-                            {% for completoption in number.completoptions %}
-                                <a href="{{ path('thesaurus_element', {'id': completoption.id }) }}">{{ completoption.title  }}</a>
-                            {% endfor %}
-                        </td>
-
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.structure.id }) }}">{{ number.structure  }}</a>
-                        </td>
-                        <td>{{ number.shots }}</td>
-                        {#calculer avg shots length#}
-                        <td></td>
-
-                    </tr>
-                </table>
+      <div class="number__row-wrapper">
+        <div class="number__block">
+          <h3 class="number__table-title">Music & Dance</h3>
+          <div class="number__tables-wrapper">
+            <table class="number__table">
+              <tr class="number__table-row__head">
+                <th>Song</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'musensemble'}) }}">Musical ensemble</a></th>
+                <th>Dubbing</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'tempo_thesaurus'}) }}">Tempo</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'musical_thesaurus'}) }}">Musical styles</a></th>
+                <th>Arrangers</th>
+              </tr>
+              <tr class="number__table-row__content">
+                <td>
+                  {% for song in number.song %}
+                    <a href="{{ path('song', {'songId' : song.songId}) }}">{{ song.title }}</a>
+                    {% if loop|last %}
+                    {% else %}; {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for item in number.musensemble %}
+                    <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {{ number.dubbing }}
+                </td>
+                <td>
+                  <a href="{{ path('thesaurus_element', {'id': number.tempoThesaurus.id }) }}">{{ number.tempoThesaurus }}</a>
+                </td>
+                <td>
+                  {% for item in number.musicalThesaurus %}
+                    <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for person in number.arrangers %}
+                    <a href="{{ path('person', {'personId': person.personId }) }}">{{ person.name  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+              </tr>
+            </table>
             </div>
+            <br>
+            <div class="number__tables-wrapper">
+            <table class="number__table">
+              <tr class="number__table-row__head">
+                <th>Dance director</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'dancemble'}) }}">Dance ensemble</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'dancing_type'}) }}">Dancing type</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'dance_subgenre'}) }}">Dance subgenre</a></th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'dance_content'}) }}">Dance content</a></th>
+              </tr>
+              <tr class="number__table-row__content">
+                <td>
+                  {% for person in number.choregraphers %}
+                    <a href="{{ path('person', {'personId': person.personId }) }}">{{ person.name  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for item in number.dancemble %}
+                    <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for item in number.dancingtype %}
+                    <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for item in number.dancesubgenre %}
+                    <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for item in number.dancecontent %}
+                    <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
+                    {% if loop|last %}{% else %}, {% endif %}
+                  {% endfor %}
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
+      </div>
 
-        {#<div class="row">#}
-            {#<div class="col s6">#}
-                {#<h2>Structure</h2>#}
-                {#<table class="striped middle-table">#}
-                    {#<tr>#}
-                        {#<th>Structure</th>#}
-                    {#</tr>#}
-                    {#<tr>#}
-                        {#<td>{{ number.structure }}</td>#}
-                    {#</tr>#}
-                {#</table>#}
-            {#</div>#}
-
-            {#<div class="col s6">#}
-                {#<h2>Shots</h2>#}
-
-                {#<table class="striped middle-table">#}
-                    {#<tr>#}
-                        {#<th>Shots</th>#}
-                        {#<th>Average shot length</th>#}
-                    {#</tr>#}
-                    {#<tr>#}
-                        {#<td>{{ number.shots }}</td>#}
-                    {#</tr>#}
-                {#</table>#}
-            {#</div>#}
-
+      <div class="number__row-wrapper">
+        <div class="number__block">
+          <h3 class="number__table-title">Intertextuality</h3>
+          <div class="number__tables-wrapper">
+            <table class="number__table">
+              <tr class="number__table-row__head">
+                <th><a href="{{ path('thesaurus_type', {'content': 'source_thesaurus'}) }}">Source</a></th>
+                <th>Stage number</th>
+                <th>Source details</th>
+                <th><a href="{{ path('thesaurus_type', {'content': 'quotation_thesaurus'}) }}">Quotation</a></th>
+                <th>References</th>
+              </tr>
+              <tr class="number__table-row__content">
+                <td>
+                  {% for item in number.sourceThesaurus  %}
+                    <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
+                  {% endfor %}
+                </td>
+                <td>
+                  {% for item in number.stagenumbers  %}
+                    <a href="{{ path('stagenumber', {'stagenumberId': item.stagenumberId }) }}">{{ item.title  }}</a>
+                  {% endfor %}
+                </td>
+                <td>
+                  {{  number.commentReference }}
+                </td>
+                <td>
+                  {%  for item in number.quotationThesaurus %}
+                    <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
+                  {% endfor %}
+                </td>
+                <td>{{ number.quotationText }}</td>
+              </tr>
+            </table>
+          </div>
         </div>
+      </div>
 
-        <div class="row">
-            <div class="col s12">
-                {#<h2>Performers</h2>#}
-                <table class="striped middle-table">
-                    <tr>
-                        <th>Performance</th>
-                        <th>Performers</th>
-                        <th>Cast</th>
-                        <th>Stars who don't participate</th>
-
-                    </tr>
-                    <tr>
-
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.performanceThesaurus.id }) }}">{{ number.performanceThesaurus  }}</a>
-                        </td>
-
-                        <td>
-                            {% for person in number.performers %}
-                                <a href="{{ path('person', {'personId': person.personId }) }}">{{ person.name  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.cast.id }) }}">{{ number.cast  }}</a>
-                        </td>
-
-                        <td>
-                            {% for person in number.figurants %}
-                                <a href="{{ path('person', {'personId': person.personId }) }}">{{ person.name  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}{% endfor %}
-                        </td>
-
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col s6">
-                <h2>Backstage</h2>
-                <table class="striped middle-table">
-                    <tr>
-                        <th>Spectators</th>
-                        <th>Diegetic performance ?</th>
-                        <th>Visible musicians</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.spectatorsThesaurus.id }) }}">{{ number.spectatorsThesaurus  }}</a>
-                        </td>
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.diegeticThesaurus.id }) }}">{{ number.diegeticThesaurus  }}</a>
-                        </td>
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.musicianThesaurus.id }) }}">{{ number.musicianThesaurus  }}</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="col s6">
-                <h2>Tone and topic</h2>
-
-                <table class="striped middle-table">
-                    <tr>
-                        <th>Tone</th>
-                        <th>Topic</th>
-                    </tr>
-                    <tr>
-
-                        <td>
-                            {% for mood in number.generalMood %}
-                                <a href="{{ path('thesaurus_element', {'id': mood.id }) }}">{{ mood.title  }}</a>
-                                {% if loop|last %}{% else %}; {% endif %}
-                            {% endfor %}
-                        </td>
-
-                        <td>
-                            {% for mood in number.genre %}
-                                <a href="{{ path('thesaurus_element', {'id': mood.id }) }}">{{ mood.title  }}</a>
-                                {% if loop|last %}{% else %}; {% endif %}
-                            {% endfor %}
-                        </td>
-
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col s12">
-                <h2>Themes</h2>
-                <table class="striped middle-table">
-                    <tr>
-                        <th>Costumes</th>
-                        <th>Ethinc stereotypes</th>
-                        <th>Diegetic place</th>
-                        <th>General localisation</th>
-                        <th>Imaginary place </th>
-                        <th>Exoticism</th>
-                    </tr>
-                    <tr>
-
-                        <td>{% for costume in number.costumes %}
-                                <a href="{{ path('thesaurus_element', {'id': costume.id }) }}">{{ costume.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}{% endfor %}
-                        </td>
-
-                        <td>
-                            {% for stereotype in number.stereotype %}
-                                <a href="{{ path('thesaurus_element', {'id': stereotype.id }) }}">{{ stereotype.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}{% endfor %}
-                        </td>
-
-                        <td>
-                            {% for place in  number.diegeticPlaceThesaurus %}
-                                <a href="{{ path('thesaurus_element', {'id': place.id }) }}">{{ place.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}{% endfor %}
-                        </td>
-
-                        <td>
-                            {% for place in  number.generalLocalisation %}
-                                <a href="{{ path('thesaurus_element', {'id': place.id }) }}">{{ place.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}{% endfor %}
-                        </td>
-
-                        <td>
-                            {% for imagination in number.imaginary %}
-                                <a href="{{ path('thesaurus_element', {'id': imagination.id }) }}">{{ imagination.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}{% endfor %}
-                        </td>
-
-                        <td>
-                            {% for exoticism in number.exoticismThesaurus%}
-                                <a href="{{ path('thesaurus_element', {'id': exoticism.id }) }}">{{ exoticism.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}{% endfor %}
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col s12">
-                <h2>Dance</h2>
-
-                <table class="striped middle-table">
-                    <tr>
-                        <th>Choregraphers</th>
-                        <th>Dance Ensemble</th>
-                        <th>Dancing type (thesaurus)</th>
-                        <th>Dance subgenre</th>
-                        <th>Dance content</th>
-                    </tr>
-                    <tr>
-                        <td>{% for person in number.choregraphers %}
-                                <a href="{{ path('person', {'personId': person.personId }) }}">{{ person.name  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for item in number.dancemble %}
-                                <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for item in number.dancingtype %}
-                                <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for item in number.dancesubgenre %}
-                                <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for item in number.dancecontent %}
-                                <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col s12">
-                <h2>Music</h2>
-
-                <table class="striped middle-table">
-                    <tr>
-                        <th>Song</th>
-                        <th>Music ensemble</th>
-                        <th>Dubbing</th>
-                        <th>Tempo</th>
-                        <th>Musical style</th>
-                        <th>Arrangers</th>
-                        {#<th>Lyrics</th>#}
-                        {#<th>Music comment</th>#}
-                    </tr>
-                    <tr>
-
-                        <td>
-                            {% for song in number.song %}
-
-                                <a href="{{ path('song', {'songId' : song.songId}) }}">{{ song.title }}</a>
-                                {% if loop|last %}
-                                {% else %}; {% endif %}
-                            {% endfor %}
-                        </td>
-
-                        <td>
-                            {% for item in number.musensemble %}
-                                <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-
-                        <td>
-                            {{ number.dubbing }}
-                        </td>
-
-                        <td>
-                            <a href="{{ path('thesaurus_element', {'id': number.tempoThesaurus.id }) }}">{{ number.tempoThesaurus }}</a>
-
-                        </td>
-
-                        <td>
-                            {% for item in number.musicalThesaurus %}
-                                <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-
-                        <td>
-                            {% for person in number.arrangers %}
-                                <a href="{{ path('person', {'personId': person.personId }) }}">{{ person.name  }}</a>
-                                {% if loop|last %}{% else %}, {% endif %}
-                            {% endfor %}
-                        </td>
-                        {#<td>{{ number.arrangerComment }}</td>#}
-                        {#<td>{{ number.lyrics }}</td>#}
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col s12">
-                <h2>Intertextuality</h2>
-
-                <table class="striped middle-table">
-                    <tr>
-                        <th>Source</th>
-                        <th>Stagenumber</th>
-                        <th>Source details</th>
-                        <th>Quotation</th>
-                        <th>Quotation text</th>
-
-                    </tr>
-                    <tr>
-
-                        <td>
-                            {% for item in number.sourceThesaurus  %}
-                                <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
-                            {% endfor %}
-                        </td>
-
-                        <td>
-                            {% for item in number.stagenumbers  %}
-                                <a href="{{ path('stagenumber', {'stagenumberId': item.stagenumberId }) }}">{{ item.title  }}</a>
-                            {% endfor %}
-                        </td>
-
-                        <td>
-                            {{  number.commentReference }}
-                        </td>
-
-                        <td>
-                            {%  for item in number.quotationThesaurus %}
-                                <a href="{{ path('thesaurus_element', {'id': item.id }) }}">{{ item.title  }}</a>
-                            {% endfor %}
-                        </td>
-
-                        <td>{{ number.quotationText }}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        </section>
+    </section>
 
 
 

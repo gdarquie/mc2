@@ -9,7 +9,7 @@
         }
 
         .list_composer_name, .composer_number, .composer_film, .list_lyricist_name, .lyricist_number, .lyricist_film, .list_arranger_name, .arranger_number, .arranger_film {
-            color: #039be5;
+            color: #4C5B5C;
             cursor: pointer; cursor: hand;
         }
 
@@ -21,18 +21,19 @@
 
 {% block body %}
 
-<section class="container" id="exoticism">
+<div class="parallax-container">
+  <br>
+  <h1 class="center section-title">Music</h1>
+  <h1 class="center section-subtitle">Musique</h1>
+  <div class="parallax"><img src="{{ asset('img/MUSIC.jpg') }}"></div>
+</div>
 
-    <header>
-        <h1 class="center">Music</h1>
-        <h1 class="center"><i>Musique</i></h1>
-    </header>
-
+<section class="container" id="music">
 
     <article class="card card_thematique row" style="overflow: hidden">
 
         <h2>Songs in Musical Numbers</h2>
-        
+
         <h3><a href="{{ path('songs') }}">List of all songs</a></h3>
 
     </article>
@@ -250,18 +251,25 @@
 
         <article>
 
-           <p>Musical styles : {{ musicalStyle|length }} - <a href="{{ path('thesaurus', { 'type' : "Musical styles" }) }}">Thesaurus</a> </p>
-           <p>Production numbers per musical styles : </p>
-
-            <div class='wordcloud col s12 row' id='wordcloud_style' style="height: 300px"></div>
-
-            {#{% for item in musicalStyle  %}#}
-                {#<a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>#}
-            {#{% endfor %}#}
+           <p>{{ musicalStyle|length }} <a href="{{ path('thesaurus', { 'type' : "musical_thesaurus" }) }}">Styles</a> </p>
+           {#<p>Production numbers per musical styles : </p>#}
+            {% for item in musicalStyle  %}
+                <a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
+            {% endfor %}
+            <div id="div_viz" class="col s12" style=" height: 500px;"></div>
         </article>
-
-        <div id="div_viz" class="col s12" style=" height: 500px;"></div>
     </article>
+    <section class="card card_thematique row">
+        <h2>Presence of musicians</h2>
+        <article>
+
+           {#<p>Musical styles : {{ musicalStyle|length }} - <a href="{{ path('thesaurus', { 'type' : "Musical styles" }) }}">Thesaurus</a> </p>#}
+           {#<p>Production numbers per musical styles : </p>#}
+            {% for item in musicalStyle  %}
+                <a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
+            {% endfor %}
+        </article>
+    </section>
 
 </section>
 
@@ -415,20 +423,6 @@
 
     </script>
 
-    <script>
-
-
-        words_style = [{% for item in musicalStyle  %}{ text : "{{ item.title }}", weight : {{ item.nb }}, link : "{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}" } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
-        $('#wordcloud_style').jQCloud(words_style);
-        $('#wordcloud_style').jQCloud('update', words_style, {
-            fontSize: {
-                colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
-                from: 0.1,
-                to: 0.05
-            }
-        });
-
-    </script>
 
     <script>
 

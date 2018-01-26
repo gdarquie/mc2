@@ -14,11 +14,20 @@
 
       <title>{% block title %}MC2 - plateforme de visualisation de comédie musicale{% endblock %}</title>
 
+      <link rel="manifest" href="{{ asset('build/manifest.json') }}">
+
       {% block stylesheets %}
+
+      <!-- font-family -->
+      <link rel="stylesheet" href="https://use.typekit.net/bdm0gfe.css">
+
+      <!-- Font Awesome -->
+      <script src="https://use.fontawesome.com/9d1ac71c1d.js"></script>
+      <script src="{{ asset('build/app.js')}}"></script>
 
       <!--Import Google Icon Font (imported in local in style.css)-->
       {#<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
-      
+
       <!--Import materialize.css-->
       <link rel="stylesheet" href="{{ asset('assets/vendor/materialize/dist/css/materialize.css')}}">
 
@@ -29,10 +38,11 @@
       <link rel="stylesheet" href="{{ asset('assets/vendor/jqcloud2/dist/jqcloud.min.css') }}">
 
       <!-- custom -->
-      <link rel="stylesheet" href="{{ asset('css/style.css')}}"> 
-      
+      <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+      <link rel="stylesheet" href="{{ asset('build/app.css')}}">
+
       {% endblock %}
-    
+
     </head>
 
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -44,52 +54,38 @@
 
     <!-- Nav & Log FOS -->
 
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper container">
-
-                <img id="logo" src="{{ asset('img/labex_web-develop-gris-clair.png') }}" alt="">
-
-                <a href="{{ path('homepage') }}" class="brand-logo left">MC2</a>
-
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
-                        <ul id="dropdown1" class="dropdown-content">
-                            <li><a href="{{ path('editor') }}">edition</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{{ path('editorNewSong') }}">add a song</a></li>
-                            <li><a href="{{ path('editorNewPerson') }}">add a person</a></li>
-                        </ul>
-
-                        {% if is_granted('ROLE_MEMBER') %}
-                            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">member<i class="material-icons right">arrow_drop_down</i></a></li>
-                        {% endif %}
-
-                        {#{% if is_granted('ROLE_EXPERT') %}#}
-                            {#<li><a href="{{ path('validation') }}">validation</a></li>#}
-                        {#{% endif %}#}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="{{ path('admin') }}">admin</a></li>
-                        {% endif %}
+    <nav class="main-navbar">
+      <div class="navbar__wrapper">
+          <a href="{{ path('homepage') }}" class="navbar__brand-logo">Musical MC&#178;</a>
+            <ul class="navbar__buttons">
+              <li><a href="{{ path('thesaurus') }}">Thesaurus</a></li>
+              <li><a href="{{ path('about') }}">About</a></li>
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li><a href="{{ path('editor') }}" class="navbar__username">{{ app.user.username }}</a></li>
+                <div class="navbar__actions" id="navbar__actions">
+                  <div class="fa fa-user" id="navbar__user" aria-hidden="true"></div>
+                  <div class="navbar__actions-dropdown" id="navbar__actions-dropdown">
+                    {% if is_granted('ROLE_MEMBER') %}
+                      <div class="action-dropdown__items-container">
+                        <div class="action-dropdown__item action-dropdown__item--with-children">Member</div>
+                        <div class="action-dropdown__sub-item"><a href="{{ path('editor') }}">Edition</a></div>
+                        <div class="action-dropdown__sub-item"><a href="{{ path('editorNewSong') }}">Add a song</a></div>
+                        <div class="action-dropdown__sub-item"><a href="{{ path('editorNewPerson') }}">Add a person</a></div>
+                      </div>
                     {% endif %}
-
-
-                    <li><a href="{{ path('thesaurus') }}">thesaurus</a></li>
-                    <li><a href="{{ path('about') }}">about</a></li>
-
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <li><a href="{{ path('editor') }}" class="inline">connected as {{ app.user.username }}</a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}">logout</a></li>
-                    {% else %}
-                        <li><a href="{{ path('fos_user_security_login') }}">connexion</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                      <div class="action-dropdown__item"><a href="{{ path('admin') }}">Admin</a></div>
                     {% endif %}
-                </ul>
+                    <div class="action-dropdown__item"><a href="{{ path('fos_user_security_logout') }}">Logout</a></div>
+                  </div>
+                </div>
+              {% else %}
+                <div class="action-dropdown__item"><a href="{{ path('fos_user_security_login') }}">Connexion</a></div>
+              {% endif %}
+            </ul>
 
-            </div>
-        </nav>
-    </div>
+        </div>
+      </nav>
 
     {% endblock %}
 
@@ -111,38 +107,30 @@
     {% block body %}{% endblock %}
 
     {% block footer %}
-        <footer class="page-footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">Partnerships</h5>
 
-                        <p class="grey-text text-lighten-4">This project is supported by the Labex Arts-H2H and benefits from financial support from the ANR as part of the “Investments for the future” program (ANR-10-LABX-80-01).</p>
+    <footer class="main-footer">
+      <div class="footer__wrapper">
+        <div class="footer__block footer__block--partnerships">
+          <h5 class="footer__title">Partnerships</h5>
+          <p class="footer__text">This project is supported by the Labex Arts-H2H and benefits from financial support from the ANR as part of the “Investments for the future” program (ANR-10-LABX-80-01).</p>
+        </div>
+        <div class="footer__block footer__block--links">
+          <!-- <h5 class="footer__title">Links</h5> -->
+          <a class="footer__link" href="{{ path('howto')}}">
+            <button class="footer__button">How to</button>
+          </a>
+        </div>
+        <div class="footer__block footer__block--logo">
+          <a href="http://www.labex-arts-h2h.fr/"><img class="footer__logo" src="{{ asset('img/labex_web-develop-gris-clair.png') }}" alt=""></a>
+        </div>
+      </div>
+    </footer>
 
-                        {#<p class="grey-text text-lighten-4">Logo and list of partners - in progress</p>#}
-                    </div>
-                    <div class="col l4 offset-l2 s12">
-                        <h5 class="white-text">Links</h5>
-                        <ul class="browser-default">
-                            <li><a class="grey-text text-lighten-3" href="{{ path('howto')}}">how to</a></li>
-                            <li><a class="grey-text text-lighten-3" href="{{ path('news')}}">news</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright">
-                <div class="container">
-                    2017 - Version 1.0
-                    <a class="grey-text text-lighten-4 right" href="{{ path('about')}}">About</a>
-                </div>
-            </div>
-        </footer>
     {% endblock %}
 
-    {% block javascripts %} 
+    {% block javascripts %}
 
     <!-- JQuery -->
-
 
     <script src = "{{ asset('assets/vendor/jquery/dist/jquery.js') }}"></script>
     {#<script#}
@@ -196,4 +184,3 @@
     </div>
     </body>
 </html>
-

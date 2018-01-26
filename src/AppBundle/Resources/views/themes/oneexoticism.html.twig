@@ -9,7 +9,7 @@
         }
 
         .list_film, .list_number {
-            color: #039be5;
+            color: #4C5B5C;
             cursor: pointer; cursor: hand;
         }
     </style>
@@ -21,7 +21,17 @@
         <h1>Exoticism: {% for item in exoticism %}{{ item.title }}{% endfor %}</h1>
         <p style="font-size: 18px;"><i>{% for item in exoticism %}{{ item.definition }}{% endfor %}</i></p>
 
-        <article class="card card_thematique row">
+        <article class="card card_thematique">
+            <h2>Chronology</h2>
+            <div class="center">
+              <p>Production numbers per year</p>
+            </div>
+            <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/6e8a5b20-bb23-11e7-a72f-f95628e35b36?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(vis:(colors:('All+numbers':%23FCE2DE,'performance_thesaurus:*':%23FCE2DE),legendOpen:!t)),vis:(aggs:!((enabled:!t,id:'1',params:(),schema:metric,type:count),(enabled:!t,id:'2',params:(customInterval:'2h',customLabel:'',extended_bounds:(),field:film.released,interval:y,min_doc_count:1),schema:segment,type:date_histogram),(enabled:!t,id:'3',params:(filters:!((input:(query:(query_string:(query:'*'))),label:'All+numbers'),(input:(query:(query_string:(query:'exoticismThesaurus:%22{% for item in exoticism %}{{ item.title }}{% endfor %}%22'))),label:''))),schema:group,type:filters)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,categoryAxes:!((id:CategoryAxis-1,labels:(show:!t,truncate:100),position:bottom,scale:(type:linear),show:!t,style:(),title:(text:'film.released+per+year'),type:category)),grid:(categoryLines:!f,style:(color:%23eee)),legendPosition:right,seriesParams:!((data:(id:'1',label:Count),drawLinesBetweenPoints:!t,mode:normal,show:true,showCircles:!t,type:line,valueAxis:ValueAxis-1)),times:!(),valueAxes:!((id:ValueAxis-1,labels:(filter:!f,rotate:0,show:!t,truncate:100),name:LeftAxis-1,position:left,scale:(mode:normal,type:linear),show:!t,style:(),title:(text:Count),type:value))),title:'%5BExotisme%5D+Type+d!'exotisme+-timeline',type:line))" height="600" width="100%">
+            </iframe>
+            <!-- <div id="chart_div" style="height: 400px"></div> -->
+        </article>
+
+        <article class="card card_thematique">
             <h2>Studios</h2>
             <div id="chart_div" style="height: 400px"></div>
         </article>

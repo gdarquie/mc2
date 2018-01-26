@@ -12,7 +12,7 @@
         }
 
         .list_film, .list_number{
-            color: #039be5;
+            color: #4C5B5C;
             cursor: pointer; cursor: hand;
         }
     </style>
@@ -25,25 +25,34 @@
         <p><i>{{ myDance.definition }}</i></p>
 
         <article class="card card_thematique">
-            <h2>Production Numbers per Year</h2>
-            <div id="diagram" style="height: 300px;"></div>
+            <h2>Chronology</h2>
+            <div class="center">
+              <p>Production numbers per year. The background line is the total amount of numbers with data on dancing.</p>
+            </div>
+            <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/faf26bd0-bb18-11e7-a72f-f95628e35b36?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(vis:(colors:('All+numbers':%23FCE2DE,'Danced+numbers':%2365C5DB,Type:%23BA43A9,'performance_thesaurus:*':%23FCE2DE),legendOpen:!t)),vis:(aggs:!((enabled:!t,id:'1',params:(customLabel:'Alout+of+production+numbers'),schema:metric,type:count),(enabled:!t,id:'2',params:(customInterval:'2h',customLabel:'Release+date',extended_bounds:(),field:film.released,interval:y,min_doc_count:1),schema:segment,type:date_histogram),(enabled:!t,id:'3',params:(filters:!(('$$hashKey':'object:261',input:(query:(query_string:(query:'performance_thesaurus:%22song%2Bdance%22+OR+%22instrumental%2Bdance%22'))),label:'Danced+numbers'),('$$hashKey':'object:262',input:(query:(query_string:(query:'dancingType:%22{{ myDance.title }}%22'))),label:''))),schema:group,type:filters)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,categoryAxes:!((id:CategoryAxis-1,labels:(show:!t,truncate:100),position:bottom,scale:(type:linear),show:!t,style:(),title:(text:'Release+date'),type:category)),grid:(categoryLines:!f,style:(color:%23eee)),legendPosition:right,seriesParams:!((data:(id:'1',label:'Alout+of+production+numbers'),drawLinesBetweenPoints:!t,mode:normal,show:true,showCircles:!t,type:line,valueAxis:ValueAxis-1)),times:!(),valueAxes:!((id:ValueAxis-1,labels:(filter:!f,rotate:0,show:!t,truncate:100),name:LeftAxis-1,position:left,scale:(mode:normal,type:linear),show:!t,style:(),title:(text:'Alout+of+production+numbers'),type:value))),title:'%5BDance%5D+Dance+pages+2-dynamique+sur+param%C3%A8tre+dancingType+du+filtre2',type:line))" height="600" width="800"></iframe>
+            <!-- <div id="diagram" style="height: 300px;"></div> -->
         </article>
 
         <article class="card card_thematique row">
             <h2>Dancing ensemble</h2>
-            <h2><i>Formation</i></h2>
 
             {#<div class="col s7 donut" id="donut_ensemble"><svg></svg></div>#}
 
-            <div class='wordcloud col s12 row' id='wordcloud_dancemble' style="height: 150px"></div>
 
-            {#<div class="col s5">#}
-            {#{% for item in dancembles  %}#}
-                {#<span class="chip">{{ item.title }} ({{ item.nb }})</span>#}
-            {#{% endfor %}#}
-            {#</div>#}
+            <div class="col s5">
+            {% for item in dancembles  %}
+              <span class="chip">{{ item.title }} ({{ item.nb }})</span>
+            {% endfor %}
+            </div>
         </article>
 
+        <article class="card card_thematique row">
+            <h2>Performers</h2>
+            <div class="center">
+              <p>The names are those of the performers present in a number involving {{ myDance.title }}. It does not necessarily mean that this type of dancing is typically theirs.</p>
+            </div>
+            <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/54230600-b287-11e7-a889-f18b1780cb89?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'dancingType:%22{{ myDance.title }}%22')),uiState:(),vis:(aggs:!((enabled:!t,id:'1',params:(),schema:metric,type:count),(enabled:!t,id:'2',params:(field:performers,order:desc,orderBy:'1',size:30),schema:segment,type:terms)),listeners:(),params:(maxFontSize:72,minFontSize:18,orientation:single,scale:linear),title:'%5BDance%5D+wordcloud+par+style-dynamique',type:tagcloud))" height="600" width="100%"></iframe>
+        </article>
 
         {#<article class="card row">#}
             {#<h2>Exoticism</h2>#}

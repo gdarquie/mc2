@@ -5,7 +5,7 @@ margin-bottom: 2em;
 
 
 .film-select{
-color :#CC0000;
+color :#db5462;
 padding-left: 3px;
 }
 
@@ -26,7 +26,7 @@ padding-left: 3px;
 }
 
 .number-item .film{
-    color: #CC0000;
+    color: #db5462;
 }
 
 .number-item{
@@ -49,7 +49,7 @@ padding-left: 3px;
 
 /* label color */
 .input-field label {
-    color: #CC0000;
+    color: #db5462;
 }
 /* label focus color */
 .input-field input[type=text]:focus + label {
@@ -57,22 +57,22 @@ padding-left: 3px;
 }
 /* label underline focus color */
 .input-field input[type=text]:focus {
-    border-bottom: 1px solid #CC0000;
-    box-shadow: 0 1px 0 0 #CC0000;
+    border-bottom: 1px solid #db5462;
+    box-shadow: 0 1px 0 0 #db5462;
 }
 /* valid color */
 .input-field input[type=text].valid {
-    border-bottom: 1px solid #CC0000;
-    box-shadow: 0 1px 0 0 #CC0000;
+    border-bottom: 1px solid #db5462;
+    box-shadow: 0 1px 0 0 #db5462;
 }
 /* invalid color */
 .input-field input[type=text].invalid {
-    border-bottom: 1px solid #CC0000;
-    box-shadow: 0 1px 0 0 #CC0000;
+    border-bottom: 1px solid #db5462;
+    box-shadow: 0 1px 0 0 #db5462;
 }
 /* icon prefix focus color */
 .input-field .prefix.active {
-    color: #CC0000;
+    color: #db5462;
 }
 
 .hide{

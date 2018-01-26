@@ -2,54 +2,68 @@
 
 {% block body %}
 
+<div class="parallax-container">
+  <br><br>
+  <h1 class="center section-title">Exoticism</h1>
+  <h1 class="center section-subtitle">Exotisme</h1>
+  <div class="parallax"><img src="{{ asset('img/EXOTICISM.jpg') }}"></div>
+</div>
+
 <section class="container" id="exoticism">
 
-    <header>
-        <h1 class="center">Exoticism</h1>
-        <h1 class="center"><i>Exotisme</i></h1>
 
-        <p>This page aims at establishing a classification of the exotic stereotypes in musical numbers. A single number may combine several types of exoticism (through the use of specific musical or dancing styles, costumes, lyrics, settings...). </p>
-        <p class="center">***</p>
-        <p><i>cette page propose un repérage des stéréotypes exotiques des numéros musicaux. Un numéro peut renvoyer à plusieurs formes d'exotisme (styles de danse ou de musique spécifiques, paroles de chanson, costumes, décors...).</i></p>
-    </header>
+      <div class="paragraphs-translations">
+        <p class="paragraph-english">This page aims at establishing a classification of the exotic stereotypes in musical numbers. A single number may combine several types of exoticism (through the use of specific musical or dancing styles, costumes, lyrics, settings...). </p>
+        <p class="paragraph-separator center">***</p>
+        <p class="paragraph-french">cette page propose un repérage des stéréotypes exotiques des numéros musicaux. Un numéro peut renvoyer à plusieurs formes d'exotisme (styles de danse ou de musique spécifiques, paroles de chanson, costumes, décors...).</p>
+      </div>
 
 
-    <article class="card card_thematique row" style="overflow: hidden">
 
-        <div class=" col s12 row">
-            <p class="col m4 center">Exoticism Types: <span class="number">{{ exoticism|length - 1 }}</span></p>
-            <p class="col m4 center">Used Types : <span class="number">{{ total.nb }}</span></p>
-            <p class="col m4 center">Production Numbers : <span class="number">{{ totalNumber.nb }}</span></p>
-        </div>
-
-
-        <article>
-
-            {#<div class='wordcloud col s12 row' id='wordcloud_exotism' style="height: 300px"></div>#}
-
-            {% for item in popularexoticismCartouche %}
-                <a href="{{ path('getOneExoticism', { 'item' : item.title }) }}" class="chip">{{ item.title }} ({{ item.nb }})</a>
-            {% endfor %}
-
-        </article>
+    <article class="card card_thematique" style="overflow: hidden">
+      <h2>Types of exoticism</h2>
+      <div class=" col s12 row">
+          <p class="col m4 center">Exoticism Types: <span class="number">{{ exoticism|length - 1 }}</span></p>
+          <p class="col m4 center">Used Types : <span class="number">{{ total.nb }}</span></p>
+          <p class="col m4 center">Production Numbers : <span class="number">{{ totalNumber.nb }}</span></p>
+      </div>
 
 
-        <article class="row">
+      <article>
 
-            <div id="chart_div" class="col s6" style=" height: 500px;"></div>
-            <div style="transform: translate(0px,40px);" id="div_donut" class="col s6" style="height: 400px">
-                <p style="font-weight: bold; padding-left: 100px;">Share of exoticism</p>
-                <svg style="height: 450px;"></svg>
-            </div>
-        </article>
+          {#<div class='wordcloud col s12 row' id='wordcloud_exotism' style="height: 300px"></div>#}
+
+          {% for item in popularexoticismCartouche %}
+              <a href="{{ path('getOneExoticism', { 'item' : item.title }) }}" class="chip">{{ item.title }} ({{ item.nb }})</a>
+          {% endfor %}
+
+      </article>
 
 
+      <article class="row">
+
+          <div id="chart_div" class="col s6" style=" height: 500px; width: 100%"></div>
+          <div style="transform: translate(0px,40px); width: 100%" id="div_donut" class="col s6">
+              <p style="font-weight: bold; padding-left: 100px;">Share of exoticism</p>
+              <svg style="height: 450px;"></svg>
+          </div>
+      </article>
     </article>
 
-    <article>
-        <p>Note : Most useful categories in the database for a specific research on the exoticism in musical numbers : <a href="{{ path('thesaurus_type', { 'content' : "cast" }) }}">Cast</a>, <a href="{{ path('thesaurus_type', { 'content' : "stereotype" }) }}">Ethnic Stereotype</a>, <a href="{{ path('thesaurus_type', { 'content' : "diegetic_place_thesaurus" }) }}">Diegetic Place</a>, <a href="{{ path('thesaurus_type', { 'content' : "imaginary" }) }}">Imaginary Place</a>, <a href="{{ path('thesaurus_type', { 'content' : "costumes" }) }}">Costumes</a>, <a href="{{ path('thesaurus_type', { 'content' : "dancing_type" }) }}">Dancing Type</a>, <a href="{{ path('thesaurus_type', { 'content' : "dance_subgenre" }) }}">Dance Subgenre</a>, <a href="{{ path('thesaurus_type', { 'content' : "dance_content" }) }}">Dance Content</a>, <a href="{{ path('thesaurus_type', { 'content' : "musical_thesaurus" }) }}">Musical Style</a>.</p>
+    <article class="card card_thematique">
+      <h2>Dancing types and musical styles</h2>
+      <p class="intro-description">Exoticism and dancing</p>
+ <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/e2245930-bb20-11e7-a72f-f95628e35b36?embed=true&_g=()" height="600" width="100%"></iframe>
+
+      <p class="intro-description">Exoticism and musical styles</p>
+      <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/9d7a4e50-bb22-11e7-a72f-f95628e35b36?embed=true&_g=()" height="600" width="100%"></iframe>
+      </iframe>
     </article>
 
+    <article class="card card_thematique">
+      <h2>Cast and ethnic stereotypes combinations</h2>
+      <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/dde11190-bb1d-11e7-a72f-f95628e35b36?embed=true&_g=()" height="600" width="100%"></iframe>
+    </article>
 
 </section>
 
@@ -67,16 +81,17 @@
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Name', 'Occurences'],
-                    {% for item in popularexoticism %}
+                    {% for item in popularexoticism |slice(0, 15) %}
                         ['{{ item.title }}' , {{ item.nb }}],
                     {% endfor %}
                 ]);
 
             var options = {
-                title: 'Production Numbers per Exoticism',
+                title: 'Most frequent exoticisms',
                 legend: { position: 'none' }
             };
             var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            console.log('DATA', data, options);
             chart.draw(data, options);
 
 

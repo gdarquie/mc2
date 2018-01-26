@@ -804,11 +804,11 @@
 }
 
 .light-blue.darken-1 {
-  background-color: #039be5 !important;
+  background-color: #4C5B5C !important;
 }
 
 .light-blue-text.text-darken-1 {
-  color: #039be5 !important;
+  color: #4C5B5C !important;
 }
 
 .light-blue.darken-2 {
@@ -2552,7 +2552,7 @@ ul:not(.browser-default) li {
 }
 
 a {
-  color: #039be5;
+  color: #4C5B5C;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -3369,8 +3369,8 @@ input[type=range] + .thumb {
 }
 
 .container .row {
-  margin-left: -0.75rem;
-  margin-right: -0.75rem;
+  /*margin-left: -0.75rem;
+  margin-right: -0.75rem;*/
 }
 
 .section {
@@ -4962,7 +4962,8 @@ small {
 }
 
 .btn:hover, .btn-large:hover {
-  background-color: #2bbbad;
+  background-color: #4D5D5D;
+  color: white;
 }
 
 .btn-floating {
@@ -5667,7 +5668,7 @@ select:focus {
 
 button:focus {
   outline: none;
-  background-color: #2ab7a9;
+  /*background-color: #2ab7a9;*/
 }
 
 label {

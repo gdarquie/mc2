@@ -15,12 +15,8 @@
             height:auto;
         }
 
-        body{
-            background: #f7f7f7;
-        }
-
         .parallax-container {
-            height: 340px;
+            height: 275px;
         }
 
 
@@ -33,8 +29,8 @@
 
     <div class="parallax-container">
         <br><br>
-        <h1 class="center">Censorship</h1>
-        <h1 class="center"><i>Censure</i></h1>
+        <h1 class="center section-title">Censorship</h1>
+        <h1 class="center section-subtitle">Censure</h1>
         {#<p class="center white-text">Informations about censorship : verdicts, legion, harrison, etc.</p>#}
         <div class="parallax"><img src="{{ asset('img/42nd-street-poster.jpg') }}"></div>
     </div>
@@ -43,12 +39,13 @@
 
         <article class="card card_thematique">
             <h2>PCA verdict</h2>
-
-                    <p>Production Code Administration verdict on the first version of the script submitted by the producer.
+                <div class="paragraphs-translations">
+                    <p class="paragraph-english">Production Code Administration verdict on the first version of the script submitted by the producer.
                         These data come out of the PCA collection at the Margaret Herrick Library (physical and <a href="http://digitalcollections.oscars.org/cdm/landingpage/collection/p15759coll30"> digital</a>).</p>
-                    <p class="center">***</p>
-                    <p><i>Avis de l'administration du Code de production (PCA) sur la première soumission du scénario par le producteur.
-                          Ces données ont été reportées après consultation des dossiers de censure des films conservés à la Margaret Herrick Library (archives physiques et <a href="http://digitalcollections.oscars.org/cdm/landingpage/collection/p15759coll30">numériques</a>).</i></p>
+                    <p class="paragraph-separator center">***</p>
+                    <p class="paragraph-french">Avis de l'administration du Code de production (PCA) sur la première soumission du scénario par le producteur.
+                          Ces données ont été reportées après consultation des dossiers de censure des films conservés à la Margaret Herrick Library (archives physiques et <a href="http://digitalcollections.oscars.org/cdm/landingpage/collection/p15759coll30">numériques</a>).</p>
+                </div>
 
             <p>Number of films with information : <span class="number">{{ nbFilmsWithVerdict.nb }}</span> films</p>
 
@@ -73,10 +70,11 @@
 
         <article class="card card_thematique">
             <h2>Censored contents</h2>
-
-            <p>Film contents identified as problematic by the PCA (Several contents sometimes for one film and same films as above).</p>
-            <p class="center">***</p>
-            <p><i>Contenus du film désignés comme problématiques par la PCA. (Plusieurs contenus parfois pour un même film et mêmes films que précédemment).</i></p>
+            <div class="paragraphs-translations">
+              <p class="paragraph-english">Film contents identified as problematic by the PCA. (Several contents sometimes for one film and same films as above).</p>
+              <p class="paragraph-separator center">***</p>
+              <p class="paragraph-french">Contenus du film désignés comme problématiques par la PCA. (Plusieurs contenus parfois pour un même film et mêmes films que précédemment).</p>
+            </div>
 
             <p>Censored items : <span class="number">{{ nbFilmsWithCensorship.nb }}</span></p>
 
@@ -108,8 +106,8 @@
                                 <td class="list_def_censorship">Usual remarks on the cautious treatment of alcohol drinking, gambling, toilets, representation of marriage. This implies minor cuts in the script</td>
                             </tr>
                             <tr>
-                                <td class="list_name_censorship">Sex perversion</td>
-                                <td class="list_def_censorship">What the PCA refers to as «sex perversion», which means suggested or implied homosexuality</td>
+                                <td class="list_name_censorship">"Sex perversion"</td>
+                                <td class="list_def_censorship">What the PCA refers to as "sex perversion", which means suggested or implied homosexuality</td>
                             </tr>
                             <tr>
                                 <td class="list_name_censorship">Ethnic representation</td>
@@ -162,12 +160,17 @@
 
         </article>
 
+        <article class="card card_thematique">
+          <h2>Censorship and adaptation</h2>
+            <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/c4c3f5f0-ca0a-11e7-bfba-5d46dea657a3?embed=true&_g=()" height="600" width="100%"></iframe>
+          </iframe>
+        </article>
 
         <article class="card card_thematique">
 
             <h2>Legion of Decency Notations</h2>
 
-            <p style="color : #CC0000;"><i>Avis de la ligue de Décence catholique</i></p>
+            <p style="color : #db5462;"><i>Avis de la ligue de Décence catholique</i></p>
 
             <p>Number of films with information : <span class="number">{{ nbFilmsWithLegion.nb }}</span> films</p>
 
@@ -190,6 +193,14 @@
                 </div>
         </article>
 
+        <article class="card card_thematique">
+          <h2>Local censorship</h2>
+          <div class="center">
+            <p>Number of films that encountered issues with local boards of censorship when released</p>
+          </div>
+            <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/f4989b10-bb27-11e7-a72f-f95628e35b36?embed=true&_g=()" height="600" width="100%"></iframe>
+          </iframe>
+        </article>
 
         {#<h2>Harrison</h2>#}
         {#<p>(pb avec l'import, doublons de protestant - à refaire avec la bonne colonne)</p>#}
@@ -234,7 +245,7 @@
 
 
             var options = {
-                title: 'PCA verdict',
+                // title: 'PCA verdict',
                 pieHole: 0.4,
             };
 
@@ -252,7 +263,7 @@
 
 
             var options = {
-                title: 'Censored content',
+                // title: 'Censored content',
                 pieHole: 0.4
             };
 
@@ -341,4 +352,3 @@
 
 
 {% endblock %}
-

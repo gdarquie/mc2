@@ -43,16 +43,18 @@
 
                 <div class="row">
                     <div class="col s3">
-                        <img src="http://img.omdbapi.com/?i={{ film.idImdb }}&apikey=1733f6a&h=300" alt="poster" onError="this.onerror=null;this.src='{{ asset('img/default_poster.jpg') }}';" style="max-width: 225px;">
+                        <div class="film__centered-cropped">
+                            <img class="film__poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
+                        </div>
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} <!-- combiner les deux fonctionnalités admin dans un même champ ? -->
                             <div class="center row films-btn">
 
                                 {% if is_granted("ROLE_USER") %}
-                                    <a href="{{path('number_new', {filmId : film.filmId }) }}"><button class="btn white red-text">Add a number</button></a>
+                                    <a class="film__button" href="{{path('number_new', {filmId : film.filmId }) }}"><button class="btn white red-text">Add a number</button></a>
                                 {% endif %}
 
                                 {% if is_granted("ROLE_EDITOR") %}
-                                    <a href="{{path('film_edit', { filmId : film.filmId })}}"><button class="btn white red-text">edit</button></a>
+                                    <a class="film__button" href="{{path('film_edit', { filmId : film.filmId })}}"><button class="btn white red-text">edit</button></a>
                                 {% endif %}
 
                                 {#<a href="#"><button class="btn red">Complete</button></a> <!-- définir une fonction pour bloquer les numbers -->#}
@@ -93,18 +95,19 @@
                                 </div>
                             </div>
 
-
                             <div class="row">
 
-                                <article class='col s12 m12'>
+                                <article class='col s12 m12' style="margin-top: 20px;">
+
+                                    <h2>Numbers</h2>
 
                                     <table class="table striped middle-table tablesorter">
                                         <thead>
                                         <tr>
                                             <th>Order</th>
                                             <th>Title</th>
-                                            <th>Begin Timecode</th>
-                                            <th>Ending Timecode</th>
+                                            <th>Starting time code</th>
+                                            <th>Ending time code</th>
                                             <th>Length</th>
                                             <th>Performers</th>
                                             {% if is_granted("ROLE_MEMBER") %}
@@ -164,7 +167,7 @@
 
 
                     <article class="col s12 m6">
-                        <h3>Number's distribution</h3>
+                        <h2 class="h2-with-margin-top">Numbers' distribution</h2>
 
                         <div id="donut">
                             <svg style="height:500px;"></svg>
@@ -173,55 +176,55 @@
 
                     <article class='col s12 m6 class_length'>
 
-                        <h2>Lengths</h2>
+                        <h2 class="h2-with-margin-top">Lengths</h2>
 
-                        <div class="row">
+                        <div class="row film__flex-grid">
                             <article class="card col cyan s12 m6">
                                 <div class="card-content white-text center-align">
                                     <p class="center-align number">   {% for number in numberSumLength %}
                                         {% if number.total > 0 %}
-                                        {{(number.total/60)|round}} min
+                                        {{(number.total/60)|round}} <span class="film__length--small">min</span>
                                         {% else %}
                                     <p>N/A</p>
                                     {% endif %}
 
                                     {% endfor %}</p>
-                                    <p class="center-align number-label">Sum of all numbers</p>
+                                    <p class="center-align number-label">Running time for all numbers</p>
                                 </div>
                             </article>
 
                             <article class="card pink darken-4 col s12 m6">
                                 <div class="card-content white-text center-align">
-                                    <p class="center-align number">{{((film.length)/60)|round}} min</p>
-                                    <p class="center-align number-label">Movie Length</p>
+                                    <p class="center-align number">{{((film.length)/60)|round}} <span class="film__length--small">min</span></p>
+                                    <p class="center-align number-label">Movie running time</p>
                                 </div>
                             </article>
                         </div>
 
-                        <div class="row">
+                        <div class="row film__flex-grid">
                             <article class="card cyan col s12 m6 deep-orange">
                                 <div class="card-content white-text center-align">
                                     <p class="center-align number">   {% for number in numberSumLength %}
                                         {% if number.total > 0 %}
-                                        {{(number.total)|round}} s
+                                        {{(number.total)|round}} <span class="film__length--small">sec</span>
                                         {% else %}
                                     <p>N/A</p>
                                     {% endif %}
 
                                     {% endfor %}</p>
-                                    <p class="center-align number-label">Sum of all numbers</p>
+                                    <p class="center-align number-label">Running time for all numbers</p>
                                 </div>
                             </article>
 
                             <article class="card green darken-3 col s12 m6">
                                 <div class="card-content white-text center-align">
-                                    <p class="center-align number">{{film.length}} sec</p>
-                                    <p class="center-align number-label">Movie Length</p>
+                                    <p class="center-align number">{{film.length}} <span class="film__length--small">sec</span></p>
+                                    <p class="center-align number-label">Movie running time</p>
                                 </div>
                             </article>
                         </div>
 
-                        <div class="row">
+                        <div class="row film__flex-grid">
                             <article class="card amber col s12 m12">
                                 <div class="card-content white-text center-align">
                                     <p class="center-align number">{% for number in numberSumLength %}
@@ -238,18 +241,18 @@
                             </article>
                         </div>
 
-                        <div class="row">
+                        <div class="row film__flex-grid">
                             <article class="card blue darken-4 col s12 m6">
                                 <div class="card-content white-text center-align">
-                                    <p class="center-align number">{% for number in numberAverageLength %}{{number.average|round}} sec{% endfor %}</p>
-                                    <p class="center-align number-label">Average number length for {{film.title}}</p>
+                                    <p class="center-align number">{% for number in numberAverageLength %}{{number.average|round}} <span class="film__length--small">sec</span>{% endfor %}</p>
+                                    <p class="center-align number-label">Average running time for the numbers in {{film.title}}</p>
                                 </div>
                             </article>
 
                             <article class="card pink lighten-2 col s12 m6">
                                 <div class="card-content white-text center-align">
-                                    <p class="center-align number">{% for number in numbersAverageLength %}{{number.average|round}} sec{% endfor %}</p>
-                                    <p class="center-align number-label">Average number length for all the movies</p>
+                                    <p class="center-align number">{% for number in numbersAverageLength %}{{number.average|round}} <span class="film__length--small">sec</span>{% endfor %}</p>
+                                    <p class="center-align number-label">Average running time for the numbers for all the movies</p>
                                 </div>
                             </article>
                         </div>
@@ -498,4 +501,3 @@
     </script>
 
 {% endblock %}
-

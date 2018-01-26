@@ -35,7 +35,7 @@
     font-size: 15px;
 }
 #tag span{
-    color: #CC0000;
+    color: #db5462;
 }
 #film h1 {
     font-size:2em;
@@ -100,11 +100,7 @@
     color : black!important;
 }
 #sub_nav .active{
-    color : #CC0000!important;
-}
-
-#general_info{
-    transform: translate(0px, -20px);
+    color : #db5462!important;
 }
 
 .card_perso {
@@ -127,6 +123,3 @@
     text-align: center;
     margin-top: 15px;
 }
-
-
-

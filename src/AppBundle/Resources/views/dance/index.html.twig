@@ -12,7 +12,7 @@
         }
 
         .parallax-container {
-            height: 340px;
+            height: 275px;
             margin-bottom: 2em;
         }
 
@@ -25,32 +25,34 @@
 
 {% block body %}
 
-
     <div class="parallax-container">
-        <br><br>
-        <h1 class="center uppercase">Dance</h1>
-        <h1 class="center uppercase"><i>Danse</i></h1>
-
-        <div class="parallax"><img src="{{ asset('img/gentlemen prefer blondes.jpg') }}"></div>
+      <br><br>
+      <h1 class="center section-title">Dance</h1>
+      <h1 class="center section-subtitle" style="margin-bottom: 1em;">Danse</h1>
+      <div class="parallax"><img src="{{ asset('img/DANCE.jpg') }}"></div>
     </div>
 
     <section class="container">
-
-        <div class="center">
-
-            <p>This page provides information on the dance numbers. Numbers are labeled by dancing type, dance sub-genre, and dance content.</p>
-            <p class="center">***</p>
-            <p><i>Cette page propose des informations sur les numéros dansés , caractérisés en fonction de trois catégories : type de danse, sous-genre et contenu spécifique de la danse.</i></p>
-
+      <article class="card card_thematique">
+        <div class="paragraphs-translations">
+          <p class="paragraph-english">This page provides information on the dance numbers. Numbers are labeled by dancing type, dance sub-genre, and dance content.</p>
+          <p class="paragraph-separator center">***</p>
+          <p class="paragraph-french">Cette page propose des informations sur les numéros dansés , caractérisés en fonction de trois catégories : type de danse, sous-genre et contenu spécifique de la danse.</p>
         </div>
+      </article>
 
-        <article class="card card_thematique">
-            <div class=" col s12 row">
-                <p class="col m6 center">Dance Numbers : <span class="number">{{ numberDancedNumber.nb }}</span></p>
-                <p class="col m6 center">Films with at least one dance number : <span class="number">{{ nbfilmsWithDancedNumber.nb }}</span></p>
-                {#<p><span class="number"></span> different tones exist, <span class="number">{{ mostPopularGenre.title }}</span> is the most used, <span class="number"></span> moods have been saved for <span class="number"></span> different numbers.</p>#}
-            </div>
-        </article>
+      <article class="card card_thematique">
+        <div class=" col s12 row">
+          <p class="col m6 center">Dance Numbers : <span class="number">{{ numberDancedNumber.nb }}</span></p>
+          <p class="col m6 center">Films with at least one dance number : <span class="number">{{ nbfilmsWithDancedNumber.nb }}</span></p>
+          {#<p><span class="number"></span> different tones exist, <span class="number">{{ mostPopularGenre.title }}</span> is the most used, <span class="number"></span> moods have been saved for <span class="number"></span> different numbers.</p>#}
+        </div>
+      </article>
+
+      <article class="card card_thematique">
+        <h2>Dance & performance types</h2>
+         <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/4d69d150-bb14-11e7-9c46-87a11b838198?embed=true&_g=()" height="600" width="100%"></iframe>
+      </article>
 
         {#<article>#}
 
@@ -65,28 +67,25 @@
     </section>
 
 <!-- Dancing type-->
-    <div class="parallax-container">
-        <br><br>
+    <section class="container">
+      <header style="padding: 2em 0;">
         <h1 class="center">Dancing Type, Sub-genre, and Content</h1>
         <h1 class="center"><i>Type de danse, Sous-genres, Contenu spécifique</i></h1>
-        <div class="parallax"><img src="{{ asset('img/my gal sal.jpg') }}"></div>
-    </div>
-
-    <section class="container">
+      </header>
 
         <article class="card card_thematique">
 
             <h2>Dancing type</h2>
 
-            <div class="center">
+            <div class="paragraphs-translations">
 
-                <p>Choreographic branchs including defined figures, coming from theatrical or popular traditions</p>
-                <p class="center">***</p>
-                <p><i>Tendances chorégraphiques contenant des figures-type, issues de traditions spectaculaires ou populaires</i></p>
+                <p class="paragraph-english">Choreographic branchs including defined figures, coming from theatrical or popular traditions</p>
+                <p class="paragraph-separator center">***</p>
+                <p class="paragraph-french">Tendances chorégraphiques contenant des figures-type, issues de traditions spectaculaires ou populaires</p>
 
             </div>
 
-            <p class="stats"><span>{{ dancing|length }}</span> dancing types :</p>
+            <p class="stats"><span>{{ dancing|length-1 }}</span> dancing types :</p>
 
 
             {#<div class='wordcloud col s12 row' id='wordcloud_type' style="height: 300px"></div>#}
@@ -102,10 +101,10 @@
 
             <h2>Sub-Genre</h2>
 
-            <div class="center">
-                <p>Danced figures coming from theatrical or popular traditions and specifying the "dancing types"</p>
-                <p class="center">***</p>
-                <p><i>Figures dansées issues de traditions spectaculaires ou populaires, participant à préciser le contenu des "dancing types"</i></p>
+            <div class="paragraphs-translations">
+                <p class="paragraph-english">Dance figures coming from theatrical or popular traditions and specifying the "dancing types"</p>
+                <p class="paragraph-separator center">***</p>
+                <p class="paragraph-french">Figures dansées issues de traditions spectaculaires ou populaires, participant à préciser le contenu des "dancing types"</p>
             </div>
 
             <p class="stats"><span>{{ subgenre|length }}</span> dance sub-genres : </p>
@@ -125,10 +124,10 @@
 
             <h2>Dance Content</h2>
 
-            <div class="center">
-                <p>Gestural patterns or style nuances regularly used</p>
-                <p class="center">***</p>
-                <p><i>Motifs gestuels ou nuances de style récurrents</i></p>
+            <div class="paragraphs-translations">
+                <p class="paragraph-english">Gestural patterns or style nuances regularly used</p>
+                <p class="paragraph-separator center">***</p>
+                <p class="paragraph-french">Motifs gestuels ou nuances de style récurrents</p>
             </div>
 
             <p class="stats"><span>{{ content|length }}</span> dance contents : </p>
@@ -165,19 +164,11 @@
      {#</section>#}
 
     <!-- Choreographers-->
-    <div class="parallax-container">
-        <br><br>
-        <h1 class="center">Choreographers</h1>
-        <h1 class="center"><i>Chorégraphes</i></h1>
-
-        <div class="parallax"><img src="{{ asset('img/gold-diggers-1933.jpg') }}"></div>
-    </div>
-
     <section class="container">
-
-
-
-
+      <header style="padding: 2em 0;">
+        <h1 class="center">Dance Directors</h1>
+        <h1 class="center"><i>Chorégraphes</i></h1>
+      </header>
 
         <article class="card card_thematique">
 
@@ -242,6 +233,40 @@
                 </div>
             </div>
         </article>
+
+        <article class="card card_thematique">
+            <h2>Topics</h2>
+
+            <div class="paragraphs-translations">
+                <p class="paragraph-english">Topics defined primarily by the dance content</p>
+                <p class="paragraph-separator center">***</p>
+                <p class="paragraph-french">Numéros type définis principalement par leur contenu chorégraphique</p>
+            </div>
+
+
+            {#<div class='wordcloud col s12 row' id='wordcloud_content' style="height: 300px"></div>#}
+
+            {% for item in popularcontent  %}
+
+<!--                <a href="{{ path('getOneDanceContent', {'dance' : item.id}) }}">
+                 <p class="chip">{{ item.title }} ({{ item.nb }})</p>
+               </a>
+ -->
+            {% endfor %}
+            <a class="chip" href="mood/853">apache</a>
+            <a class="chip" href="mood/242">community-fiesta and social dancing</a>
+            <a class="chip" href="mood/717">dancing specialty </a>
+            <a class="chip" href="mood/226">female lead / male chorus</a>
+            <a class="chip" href="mood/259">revue of girls</a>
+            <a class="chip" href="mood/269">revue-fashion show etc.</a>
+            <a class="chip" href="mood/267">tableau vivant, still life</a>
+            <a class="chip" href="mood/258">teasing and exhibitionism</a>
+            <a class="chip" href="mood/849">working out and sports</a>
+            <br>
+            <br>
+            <a class="chip" href="thesaurus/id=5">List of narrative ballets </a>
+        </article>
+
     </section>
 {% endblock %}
 

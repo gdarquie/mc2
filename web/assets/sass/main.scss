@@ -1,0 +1,584 @@
+@import 'variables';
+@import 'mixins';
+@import 'header';
+@import 'numbers';
+@import 'footer';
+
+.section-search,
+.section-stats,
+.section-themes,
+.section-films {
+  display: flex;
+  flex-direction: column;
+  padding: 4em 0;
+  width: 100%;
+
+  @include respond-to(phone) {
+    padding: 3em 0;
+  }
+}
+
+.section-search {
+  background-image: url('../img/singin-in-the-rain.jpg');
+  background-size: cover;
+  background-position: center;
+
+  @include respond-to(phone) {
+    padding-top: 2em;
+  }
+}
+
+.section-search__wrapper,
+.section-stats__wrapper,
+.section-themes__wrapper,
+.section-films__wrapper,
+.section-search-results {
+  margin: auto;
+  width: 70%;
+
+  @include respond-to(phone) {
+		width: 90%;
+	}
+}
+
+.section-search__title,
+.section-stats__title,
+.section-themes__title,
+.section-films__title {
+  font-size: 2em;
+  margin: 0 0 1.7em 0;
+
+  @include respond-to(phone) {
+    font-size: 1.8em;
+    margin-bottom: 1em;
+  }
+}
+
+.section-search__buttons {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+
+  @include respond-to(phone) {
+    width: 100%;
+  }
+}
+
+.section-search__button {
+  align-items: center;
+  background-color: rgba(255,255,255,.5);
+  border: solid 1px #4D5D5D;
+  border-radius: 2px;
+  color: #4D5D5D;
+  display: flex;
+  /*flex: 1;*/
+  font-family: "tisa-sans-bold", sans-serif;
+  height: 30px;
+  justify-content: center;
+  margin: 0 3px;
+  width: 100px;
+
+  &:first-child {
+    margin-left: 0
+  }
+  &:last-child {
+    margin-right: 0
+  }
+
+  @include respond-to(phone) {
+    font-size: 12px;
+  }
+}
+
+.section-search__button--selected {
+  background-color: #4D5D5D!important;
+  color: white;
+}
+
+.section-search__search-container {
+  padding: 40px 35px;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(phone) {
+    padding: 20px;
+  }
+}
+
+.section-search__search-container--number,
+.section-search__search-container--song, .section-search__search-container--person, .section-search__search-container--stageshow {
+  display: none;
+}
+
+.section-search__filter {
+  background-color: rgba(0,0,0,.5);
+  border-radius: 2px;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.section-search__entitled {
+  color: #db5462;
+  margin: 0;
+  margin-bottom: 20px;
+  position: relative;
+  text-shadow: 1px 1px 4px black;
+  z-index: 2;
+
+  @include respond-to(phone) {
+    margin-bottom: 10px;
+  }
+}
+
+.section-search__input {
+  border-bottom: 1px solid #ddd!important;
+  font-size: 0.9rem!important;
+  color: #eee;
+  margin: 0!important;
+  position: relative;
+  z-index: 2;
+}
+
+.section-search__input::placeholder {
+  color: #c0c0c0;
+}
+
+.section-search__input:focus {
+  border-bottom: 1px solid #ddd!important;
+  box-shadow: none!important;
+}
+
+#results,
+#resultsNumber,
+#resultsSong,
+#resultsPerson,
+#resultsShow {
+  display: none;
+
+  .btn {
+    margin: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(33% - 10px);
+  }
+
+  h2 {
+    margin-top: 1em!important;
+  }
+}
+
+.section-stats,
+.section-films {
+  background-color: #f7f7f7;
+}
+
+.section-stats__wrapper a {
+  color: #4D5D5D;
+}
+
+.section-stats__wrapper a:hover {
+  color: white;
+}
+
+.section-stats__stats {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 3.5em;
+  width: 100%;
+  font-family: "tisa-bold",serif;
+
+  @include respond-to(phone) {
+    justify-content: space-between;
+    margin-bottom: 2em;
+  }
+}
+
+.section-stats__stat {
+  text-align: center;
+  color: #4D5D5D;
+}
+
+.section-stats__number {
+  font-size: 4.3em;
+
+  @include respond-to(phone) {
+    font-size: 1.8em;
+  }
+}
+
+.section-stats__type {
+  font-size: 1.2em;
+
+  @include respond-to(phone) {
+    font-size: 1em;
+    height: 42px;
+  }
+}
+
+.section-stats__button {
+  background: transparent;
+  border: solid 1px #4D5D5D;
+  border-radius: 2px;
+  display: flex;
+  flex: 1;
+  font-family: "tisa-sans-bold", sans-serif;
+  font-size: 1.2em;
+  height: 40px;
+  justify-content: center;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.section-stats__button:hover {
+  background-color: #4D5D5D;
+}
+
+.section-stats__button:hover a {
+  color: white;
+}
+
+.section-stats__button a {
+  color: #4D5D5D;
+}
+
+.section-themes__themes {
+  margin-top: 2em;
+}
+
+.section-themes__theme {
+  align-items: center;
+  background-size: cover;
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  margin: 7px 0;
+  width: 100%;
+
+  @include respond-to(phone) {
+    height: 80px;
+  }
+}
+
+.section-themes__theme--music {
+  background-image: url('../img/MUSIC.jpg');
+}
+.section-themes__theme--dance {
+  background-image: url('../img/DANCE.jpg');
+}
+.section-themes__theme--exoticism {
+  background-image: url('../img/EXOTICISM.jpg');
+}
+.section-themes__theme--topics {
+  background-image: url('../img/TOPICS.jpg');
+}
+.section-themes__theme--censorship {
+  background-image: url('../img/CENSORSHIP.jpg');
+}
+
+.section-themes__theme-name {
+  color: white;
+  font-family: "tisa-bold",serif;
+  font-size: 3.7em;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+
+  @include respond-to(phone) {
+    font-size: 1.7em;
+  }
+}
+
+.section-films__films {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2em;
+}
+
+.section-films__films--margin-bottom {
+  margin-bottom: 2em;
+}
+
+.section-films__film {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  transition: all 0.3s;
+  width: calc(20% - 10px);
+
+  @include respond-to(phone) {
+    width: calc(50% - 10px);
+  }
+}
+
+.section-films__film--6 {
+  margin: 10px;
+  width: calc(16.66% - 20px);
+
+  @include respond-to(phone) {
+    width: calc(50% - 20px);
+  }
+}
+
+.section-films__film:hover {
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s;
+}
+
+.section-films__film.hidden {
+  display: none;
+}
+
+.section-films__film-name {
+  align-items: center;
+  background: white;
+  color: #4D5D5D;
+  display: flex;
+  display: -webkit-box;
+  height: 50px;
+  justify-content: center;
+  line-height: 17px;
+  margin: 0;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.section-films__centered-cropped,
+.film__centered-cropped {
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(phone) {
+    height: 150px;
+  }
+}
+
+.film__centered-cropped {
+  height: 400px;
+
+  @media screen and (max-width: 1300px) {
+    height: 350px;
+  }
+  @media screen and (max-width: 1100px) {
+    height: 300px;
+  }
+  @media screen and (max-width: 900px) {
+    height: 350px;
+  }
+  @include respond-to(phone) {
+    height: 200px;
+  }
+}
+
+.section-films__film-poster,
+.film__poster {
+  bottom: -100%;
+  left: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  right: -100%;
+  top: -100%;
+}
+
+#section-films__button {
+  background: transparent;
+  border: solid 1px #4D5D5D;
+  border-radius: 2px;
+  color: #4D5D5D;
+  display: flex;
+  flex: 1;
+  font-family: "tisa-sans-bold", sans-serif;
+  font-size: 1.2em;
+  height: 40px;
+  justify-content: center;
+  margin: 10px auto auto auto;
+  transition: all 0.2s;
+  width: calc(100% - 10px);
+}
+
+#section-films__button:hover {
+  background-color: #4D5D5D;
+  color: white;
+}
+
+.chip {
+  align-items: center;
+  background-color: transparent;
+  border: solid 1px #4D5D5D;
+  border-radius: 2px;
+  color: #4D5D5D;
+  display: inline-flex;
+  font-family: "tisa-sans-bold", sans-serif;
+  height: 30px;
+  margin: 5px 3px;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+
+  a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include respond-to(phone) {
+    font-size: 12px;
+  }
+}
+
+.intro-description {
+  font-size: 18px;
+}
+
+.film__button {
+  display: block;
+  margin-bottom: 10px;
+}
+.film__centered-cropped {
+  margin-bottom: 10px;
+}
+.film__flex-grid {
+  display: flex;
+}
+.film__length--small {
+  font-size: 70%;
+}
+
+.h2-with-margin-top {
+  margin-top: 0.83em!important;
+}
+
+.person__films-container {
+  background-color: #eee;
+  padding-top: 2em!important;
+}
+
+.section-title {
+  font-size: 3.8em;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,.7);
+  margin-bottom:0px;
+}
+.section-subtitle {
+  color: #4D5D5D;
+  font-size: 2.9em;
+  text-shadow: 1px 1px 3px rgba(0,0,0,.7);
+  margin-top:0.4em;
+}
+
+.paragraphs-translations {
+  display: flex;
+
+  @include respond-to(phone) {
+    flex-direction: column;
+  }
+}
+.paragraph-english,
+.paragraph-french {
+  flex: 1;
+  text-align: justify;
+}
+.paragraph-english {
+  padding-right: 15px;
+  border-right: 2px solid #db5462;
+
+  @include respond-to(phone) {
+    border: none;
+    padding: 0;
+  }
+}
+.paragraph-french {
+  padding-left: 15px;
+
+  @include respond-to(phone) {
+    padding: 0;
+  }
+}
+.paragraph-separator {
+  display: none;
+
+  @include respond-to(phone) {
+    display: block;
+  }
+}
+
+svg text {
+  color: #4D5D5D;
+  font-family: "tisa-sans", sans-serif;
+}
+
+.section-person {
+  .tabs {
+    height: auto;
+    flex-wrap: wrap;
+    text-align: start;
+  }
+  .tab {
+    flex: none;
+  }
+  @include respond-to(phone) {
+    header {
+      display: flex;
+      flex-direction: column;
+    }
+    h1 {
+      margin: auto;
+      margin-top: 20px;
+      width: auto!important;
+    }
+    #sub_nav {
+      width: auto!important;
+    }
+  }
+}
+
+.card {
+  background-color: white;
+}
+
+@include respond-to(phone) {
+  #film {
+    #sub_nav {
+      width: 100%;
+    }
+    .row {
+      display: flex;;
+      flex-direction: column;
+
+      .col.s9,
+      .col.s3 {
+        width: 100%;
+      }
+      h1 {
+        text-align: center;
+      }
+    }
+    #tab1 .row {
+      display: flex;;
+      flex-direction: column;
+
+      .col.s3 {
+        margin: auto;
+        width: 100%;
+      }
+    }
+    .row.card_perso .row {
+      overflow-x: scroll;
+      width: 100%;
+    }
+  }
+}

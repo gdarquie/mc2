@@ -42,10 +42,12 @@
   }
 
   .myBtn{
-    margin-bottom: 5px;
     background-color:white;
-    color : #CC0000;
-    border:  1px solid #CC0000;
+    border: 1px solid #4D5D5D;
+    color : #4D5D5D;
+    font-family: "tisa-sans-bold", sans-serif;
+    margin-bottom: 5px;
+    text-transform: none;
   }
 
   .filmsHidden{
@@ -64,11 +66,6 @@
   }
 
   #songs{
-    /*border :20px solid black;*/
-    /*border-right :50px solid black;*/
-    /*border-left :50px solid black;*/
-    /*box-shadow: 10px 10px 5px #888888;*/
-    /*background:#f7f7f7;*/
     background: #00ff00 url("{{ asset('img/intro.gif') }}");
     background-size:100%;
     color: black;
@@ -83,32 +80,12 @@
     margin-top : 35px;
   }
 
-
-
-
 a {
   text-decoration: none;
 }
 
-
-.swiper-container {
-  width: 100%;
-  height: 100%;
-  /*margin: 50px auto 0;*/
-}
-
-
-
-.swiper-container-horizontal > .swiper-pagination {
-  top: 0;
-  bottom: auto;
-}
-.swiper-container-horizontal > .swiper-pagination .swiper-pagination-bullet {
-  margin: 0;
-}
-
 .active-mark {
-  background-color: #CC0000;
+  background-color: #db5462;
   width: 20%;
   height: 4px;
   position: absolute;
@@ -118,61 +95,6 @@ a {
   transition: left 0.2s ease-out;
 }
 
-.swiper-pagination-bullet {
-  border-radius: 0;
-  box-sizing: border-box;
-  color: white;
-  cursor: pointer;
-  font-size: 1.6rem;
-  font-weight: normal;
-  opacity: 0.5;
-  height: 56px;
-  min-width: 20vw;
-  padding-top: 10px;
-  text-align: center;
-  -webkit-transition: font-weight 0.22s ease;
-  transition: font-weight 0.22s ease;
-}
-
-.swiper-pagination-bullet:nth-of-type(1).swiper-pagination-bullet-active ~ .active-mark {
-  left: 0%;
-}
-.swiper-pagination-bullet:nth-of-type(2).swiper-pagination-bullet-active ~ .active-mark {
-  left: 20%;
-}
-.swiper-pagination-bullet:nth-of-type(3).swiper-pagination-bullet-active ~ .active-mark {
-  left: 40%;
-}
-.swiper-pagination-bullet:nth-of-type(4).swiper-pagination-bullet-active ~ .active-mark {
-  left: 60%;
-}
-.swiper-pagination-bullet:nth-of-type(5).swiper-pagination-bullet-active ~ .active-mark {
-  left: 80%;
-}
-.swiper-pagination-bullet:first-of-type.swiper-pagination-bullet-active ~ .active-mark {
-  left: 0;
-}
-
-.swiper-pagination-bullet-active {
-  font-weight: bold;
-  background-color: black;
-  opacity: 0.5;
-  max-width: 20vw;
-
-
-}
-
-.swiper-pagination {
-display: inline;
-width: 100vw;
-}
-
-.swiper-wrapper {
-  transform: translate(0px, 25px);
-}
-
-
-
 </style>
 
 {% endblock %}
@@ -180,260 +102,137 @@ width: 100vw;
 
 {% block body %}
 
-  <div class="swiper-container">
-    <!-- Add Pagination -->
-    <div class="swiper-pagination">
+  <section class="section-search">
+    <div class="section-search__wrapper">
+      <div class="section-search__buttons">
+        <button class="section-search__button" data-selector="film">Movie</button>
+        <button class="section-search__button" data-selector="number">Number</button>
+        <button class="section-search__button" data-selector="song">Song</button>
+        <button class="section-search__button" data-selector="person">Person</button>
+        <button class="section-search__button" data-selector="stageshow">Stageshow</button>
+      </div>
+      <div class="section-search__search-container section-search__search-container--film">
+        <div class="section-search__filter"></div>
+        <h3 class="section-search__entitled">Search a film</h3>
+        <input class="section-search__input" type="text" id="searchMovie" placeholder ="Write the title of a film (3 characters min)">
+      </div>
+      <div class="section-search__search-container section-search__search-container--number">
+        <div class="section-search__filter"></div>
+        <h3 class="section-search__entitled">Search a number</h3>
+        <input class="section-search__input" type="text" id="searchNumber" placeholder ="Write the title of a number (3 characters min)">
+      </div>
+      <div class="section-search__search-container section-search__search-container--song">
+        <div class="section-search__filter"></div>
+        <h3 class="section-search__entitled">Search a song</h3>
+        <input class="section-search__input" type="text" id="searchSong" placeholder ="Write the name of a song (3 characters min)">
+      </div>
+      <div class="section-search__search-container section-search__search-container--person">
+        <div class="section-search__filter"></div>
+        <h3 class="section-search__entitled">Search a person</h3>
+        <input class="section-search__input" type="text" id="searchPerson" placeholder ="Write the name of a person (3 characters min)">
+      </div>
+      <div class="section-search__search-container section-search__search-container--stageshow">
+        <div class="section-search__filter"></div>
+        <h3 class="section-search__entitled">Search a stageshow</h3>
+        <input class="section-search__input" type="text" id="searchShow" placeholder ="Write the name of a stageshow (3 characters min)">
+      </div>
     </div>
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="parallax-container" id="film">
-          <div class="parallax"><img class="img_search" src="{{ asset('img/star.png') }}"></div>
-          <section class="container box">
-            <div class="col s12">
-             <div class="row">
-              <h2 class="col">Search a film</h2>
-                {% if is_granted('ROLE_ADMIN') %}
-                  <span class="col valign"><a href="{{ path('films') }}">all films</a></span>
-                {% endif %}
-             </div>
-              <input type="text" id="searchMovie" placeholder ="Write the title of a film (3 characters min)">
-            </div>
-          </section>
-        </div>
-
-        <!-- Results search -->
-        <section class="container">
-          <article id="results" class="row card myCard"></article>
-        </section>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="parallax-container" id="numbers">
-          <div class="parallax"><img class="img_search" src="{{ asset('img/couple.jpeg') }}"></div>
-          <section class="container box">
-            <div class="col s12">
-              <div class="row">
-                <h2 class="col">Search a number</h2>
-                {% if is_granted('ROLE_ADMIN') %}
-                  <span class="col valign"><a href="{{ path('numbers') }}">all numbers</a></span>
-                {% endif %}
-              </div>
-              <input type="text" id="searchNumber" placeholder ="Write the title of a number (3 characters min)">
-            </div>
-          </section>
-        </div>
-                <section class="container">
-        <article id="resultsNumber" class="row card myCard"></article>
-        </section>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="parallax-container" id="songs">
-            {#<div class="parallax"><img src="{{ asset('img/gold-diggers-1933.jpg') }}"></div>#}
-          <section class="container box">
-            <div class="col s12">
-              <div class="row">
-                <h2 class="col">Search a song</h2>
-                {% if is_granted('ROLE_ADMIN') %}
-                  <span class="col valign"><a href="{{ path('songs') }}">all songs</a></span>
-                {% endif %}
-              </div>
-              <input type="text" id="searchSong" class="black-text" placeholder ="Write the name of a song (3 characters min)">
-            </div>
-          </section>
-        </div>
-        <article id="resultsSong" class="row myCard"></article>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="parallax-container" id="persons">
-          <div class="parallax"><img class="img_search" src="{{ asset('img/oz.jpg') }}"></div>
-          <section class="container box">
-            <div class="col s12">
-              <div class="row">
-                <h2 class="col">Search a person</h2>
-                {% if is_granted('ROLE_ADMIN') %}
-                  <span class="col valign"><a href="{{ path('persons') }}">all persons</a></span>
-                {% endif %}
-              </div>
-              <input type="text" id="searchPerson" placeholder ="Write the name of a person (3 characters min)">
-            </div>
-          </section>
-        </div>
-        <article id="resultsPerson" class="row myCard"></article>
-      </div>
-
-      <div class="swiper-slide">
-        <div class="parallax-container" id="shows">
-        <div class="parallax"><img src="{{ asset('img/19586.jpg') }}"></div>
-        <section class="container box">
-          <div class="col s12">
-            <div class="row">
-              <h2 class="col">Search a Stage Show</h2>
-                {% if is_granted('ROLE_ADMIN') %}
-                  <span class="col valign"><a href="{{ path('stageshows') }}">all stage shows</a></span>
-                {% endif %}
-            </div>
-            <input type="text" id="searchShow" placeholder ="Write the name of a Stage Show (3 characters min)">
-          </div>
-        </section>
-      </div>
-      <article id="resultsShow" class="row myCard"></article>
-    </div>
-  </div>
-
-  <!-- Stats -->
-  {#<section class="container">#}
-    {#<article>#}
-      {#<h2>Films & numbers per year</h2>#}
-      {#<div id="chart_div"></div>#}
-      {#<p>MC2 database contains <strong>{{films|length}}</strong> films, <strong>{{ filmsWithNumber|length }}</strong> films with numbers and <strong>{{numbers|length}}</strong> <a href="{{ path('numbers') }}">numbers</a>.</p>#}
-      {#<p class="center"><a class="btn myBtn" href="{{ path('stats') }}">See more stats</a></p>#}
-    {#</article>#}
-
-
-
   </section>
 
-<!-- Films with numbers -->
+  <section class="section-search-results">
+    <article id="results" class="row myCard"></article>
+    <article id="resultsNumber" class="row myCard"></article>
+    <article id="resultsSong" class="row myCard"></article>
+    <article id="resultsPerson" class="row myCard"></article>
+    <article id="resultsShow" class="row myCard"></article>
+  </section>
 
-  <div id="filmsWithNumbers">
-  <section class="container">
-    <article>
-      <h2>Films with numbers</h2>
+  <section class="section-stats">
+    <div class="section-stats__wrapper">
+      <h2 class="section-stats__title">Corpus Description</h2>
+      <div class="section-stats__stats">
+        <div class="section-stats__stat">
+          <div class="section-stats__number">{{films|length}}</div>
+          <div class="section-stats__type">Films</div>
+        </div>
+        <div class="section-stats__stat">
+          <div class="section-stats__number">{{ filmsWithNumber|length }}</div>
+          <div class="section-stats__type">Films with numbers</div>
+        </div>
+        <div class="section-stats__stat">
+          <div class="section-stats__number">{{numbers|length}}</div>
+          <div class="section-stats__type">Production numbers</div>
+        </div>
+<!--         <div class="section-stats__stat">
+          <div class="section-stats__number">123</div>
+          <div class="section-stats__type">Songs(fake data)</div>
+        </div> -->
+      </div>
+<!--       <a href="{{ path('stats') }}">
+        <button class="section-stats__button">
+        See more stats
+        </button>
+      </a> -->
+    </div>
+  </section>
 
-      <div class="items row">
-        {% for film in filmsWithNumber |slice(0,8) %}
-          <div class="col s3 film card">
-            <a href="{{ path('film', {'filmId' : film.filmId}) }}">
-            <h4 class="center">{{film.title}}({{film.released}})</h4>
-            <img class="poster col s12" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
-            </a>
+  <section class="section-themes">
+    <div class="section-themes__wrapper">
+      <h2 class="section-themes__title">Themes</h2>
+      <div class="section-themes__themes">
+        <a href="{{ path("getMusic") }}">
+          <div class="section-themes__theme section-themes__theme--music">
+            <h3 class="section-themes__theme-name">Music</h3>
           </div>
-          {#<a href="/mc2/film/id/{{film.filmId}}"><li class="btn" >{{film.title}}({{film.released}})</li></a>#}
-          {# [{% for nb in nbNumbers %}{{ nb }}{% endfor %}]#}
+        </a>
+        <a href="{{ path("getDancing") }}">
+          <div class="section-themes__theme section-themes__theme--dance">
+            <h3 class="section-themes__theme-name">Dance</h3>
+          </div>
+        </a>
+        <a href="{{ path("getExoticism") }}">
+          <div class="section-themes__theme section-themes__theme--exoticism">
+            <h3 class="section-themes__theme-name">Exoticism</h3>
+          </div>
+        </a>
+        <a href="{{ path("getMood") }}">
+          <div class="section-themes__theme section-themes__theme--topics">
+            <h3 class="section-themes__theme-name">Topics</h3>
+          </div>
+        </a>
+        <a href="{{ path("censorship") }}">
+          <div class="section-themes__theme section-themes__theme--censorship">
+            <h3 class="section-themes__theme-name">Censorship</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-films">
+    <div class="section-films__wrapper">
+      <h2 class="section-films__title">Films with data</h2>
+      <div class="section-films__films">
+        {% for film in filmsWithNumber |slice(0,10) %}
+        <a class="section-films__film" href="{{ path('film', {'filmId' : film.filmId}) }}">
+          <h4 class="section-films__film-name">{{film.title}} ({{film.released}})</h4>
+          <div class="section-films__centered-cropped">
+            <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
+          </div>
+        </a>
         {% endfor %}
-        {% for film in filmsWithNumber |slice(8) %}
-          <div class="col s3 film card filmsHidden">
-            <a href="/mc2/film/id/{{film.filmId}}">
-              <h4 class="center">{{film.title}}({{film.released}})</h4>
-              <img class="poster col s12" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
-            </a>
+        {% for film in filmsWithNumber |slice(10) %}
+        <a class="section-films__film hidden" href="{{ path('film', {'filmId' : film.filmId}) }}">
+          <h4 class="section-films__film-name">{{film.title}} ({{film.released}})</h4>
+          <div class="section-films__centered-cropped">
+            <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
           </div>
-          {#<a href="/mc2/film/id/{{film.filmId}}"><li class="btn" >{{film.title}}({{film.released}})</li></a>#}
-          {# [{% for nb in nbNumbers %}{{ nb }}{% endfor %}]#}
+        </a>
         {% endfor %}
       </div>
-      <p class="center"><a class="btn myBtn" id="showNumbers">Show all</a></p>
-    </article>
+      <button id="section-films__button">Show all</button>
+    </div>
   </section>
-  </div>
-
-
-
-  <!-- Themes -->
-
-  <section class="container">
-    <!-- censorship, exoticism, dance -->
-
-    <div class="row">
-
-      <h2 class="uppercase center">Themes</h2>
-
-      <!-- censorship -->
-      <div class="card sticky-action col s6">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator posterImage" src="{{ asset('img/42nd-street-poster.jpg') }}">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Censorship<i class="material-icons right">more_vert</i></span>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">Censorship<i class="material-icons right">close</i></span>
-          <p>Informations about</p>
-          <ul class="browser-default">
-            <li>Censorship from PCA verdict</li>
-            <li>Censored contents</li>
-            <li>Legion of decency</li>
-          </ul>
-        </div>
-        <div class="card-action"><a href="{{ path("censorship") }}">Go to censorship pages</a></div>
-      </div>
-
-      <!-- dance -->
-      <div class="card sticky-action col s6">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator posterImage" src="{{ asset('img/gentlemen prefer blondes.jpg') }}">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Dance<i class="material-icons right">more_vert</i></span>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">Dances<i class="material-icons right">close</i></span>
-          <p>Here is some more information about this product that is only revealed once clicked on.</p>
-        </div>
-        <div class="card-action"><a href="{{ path("getDancing") }}">Go to dance pages</a></div>
-      </div>
-
-
-      <!-- Moods -->
-      <div class="card sticky-action col s6">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator posterImage" src="{{ asset('img/affiche.jpg') }}">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Topics<i class="material-icons right">more_vert</i></span>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-          <p>Here is some more information about this product that is only revealed once clicked on.</p>
-        </div>
-        <div class="card-action"><a href="{{ path("getMood") }}">Go to topics pages</a></div>
-      </div>
-
-      <!-- Exoticisms -->
-      <div class="card sticky-action col s6">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator posterImage" src="{{ asset('img/oklahoma.jpg') }}">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Exoticism<i class="material-icons right">more_vert</i></span>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">Exoticism<i class="material-icons right">close</i></span>
-          <p>Here is some more information about this product that is only revealed once clicked on.</p>
-        </div>
-        <div class="card-action"><a href="{{ path("getExoticism") }}">Go to exoticism pages</a></div>
-      </div>
-
-      <div class="card sticky-action col s6 offset-s3">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator posterImage" src="{{ asset('img/81pYjCir5iL._SL1500_.jpg') }}">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Music<i class="material-icons right">more_vert</i></span>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">Music<i class="material-icons right">close</i></span>
-          <p>Here is some more information about this product that is only revealed once clicked on.</p>
-        </div>
-        <div class="card-action"><a href="{{ path("getMusic") }}">Go to music pages</a></div>
-      </div>
-
-
-
-
-    </div> <!-- end of row -->
-  </section>
-
-
-
 
   {#<div class="parallax-container">#}
     {#<br><br>#}
@@ -465,8 +264,6 @@ width: 100vw;
     {#</section>#}
   {#</div>#}
 
-  
-
 {% endblock %}
 
 {% block javascripts %}
@@ -483,13 +280,6 @@ width: 100vw;
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <script>
-
-//
-
-//    $(document).ready(function(){
-//        $('ul.tabs').tabs();
-//        $('#search_tab').tabs({ 'swipeable': true });
-//    });
 
     google.charts.load('current', {packages: ['corechart', 'line']});
     google.charts.setOnLoadCallback(drawBasic);
@@ -528,12 +318,11 @@ width: 100vw;
 
     $("#searchMovie").keyup(function(){
       input = $("#searchMovie").val();
-      console.log("Search movie activée")
 
       var selection = [];
 
       jQuery.when(
-              jQuery.getJSON('/mc2/api/films/')
+              jQuery.getJSON('/api/films/')
       ).done(function (json){
 
         if (input.length > 2){
@@ -558,14 +347,17 @@ width: 100vw;
 //               console.log(selection);
             }
           }
+        } else {
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
         }
 
 
         if (selection.length > 0){
-
+          $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
+          $("#results").show();
           $("#results").html("<div class='col s12'><h2>Result(s)</h2></div>");
           for(var i = 0; i < selection.length ; i++){
-            txt = "<div class='card col s4 film'><h3>"+selection[i]['title']+" ("+selection[i]['released']+")"+"</h3><a href='/mc2/editor/film/id/"+selection[i]['filmId']+"/number/new' class='btn teal'>Add a number</a><a href='/mc2/film/id/"+selection[i]['filmId']+"' class='teal btn'>See the description</a></div>";
+            txt = "<a href='/film/id/"+selection[i]['filmId']+"'><span class='btn myBtn' title='"+selection[i]['title']+" ("+selection[i]['released']+")'>"+selection[i]['title']+" ("+selection[i]['released']+")</span></a>";
             $("#results").append(txt);
           }
         }
@@ -583,7 +375,7 @@ width: 100vw;
         var selection = [];
 
         jQuery.when(
-                jQuery.getJSON('/mc2/api/persons/')
+                jQuery.getJSON('/api/persons/')
         ).done(function (json){
 
           if (input.length > 2){
@@ -603,14 +395,18 @@ width: 100vw;
                 // console.log(selection);
               }
             }
+          } else {
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
           }
 
 
           if (selection.length > 0){
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
 
             $("#resultsPerson").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            $("#resultsPerson").show();
             for(var i = 0; i < selection.length ; i++){
-              txt = "<span class='btn myBtn'><a href='/mc2/person/"+selection[i].personId+"'>"+selection[i]['name']+"</a></span>";
+              txt = "<a href='person/"+selection[i].personId+"'><span class='btn myBtn' title='"+selection[i]['name']+"'>"+selection[i]['name']+"</span></a>";
               $("#resultsPerson").append(txt);
             }
           }
@@ -627,7 +423,7 @@ width: 100vw;
         var selection = [];
 
         jQuery.when(
-                jQuery.getJSON('/mc2/api/numbers/')
+                jQuery.getJSON('/api/numbers/')
         ).done(function (json){
 
           if (input.length > 2){
@@ -646,14 +442,17 @@ width: 100vw;
                 selection.push(res);
               }
             }
+          } else {
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
           }
 
 
           if (selection.length > 0){
-
+          $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
             $("#resultsNumber").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            $("#resultsNumber").show();
             for(var i = 0; i < selection.length ; i++){
-              txt = "<a href='number/"+selection[i]['id']+"'><span class='btn myBtn'>"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")</span></a>";
+              txt = "<a href='number/"+selection[i]['id']+"'><span class='btn myBtn' title='"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")'>"+selection[i]['title']+" - "+selection[i]['film']+" ("+selection[i]['released']+")</span></a>";
               $("#resultsNumber").append(txt);
               $("#resultsNumber").css('padding-bottom','20px');
             }
@@ -671,7 +470,7 @@ width: 100vw;
             var selection = [];
 
             jQuery.when(
-                jQuery.getJSON('mc2/api/stageshows')
+                jQuery.getJSON('/api/stageshows')
             ).done(function (json){
 
                 if (input.length > 2){
@@ -690,13 +489,16 @@ width: 100vw;
                             selection.push(res);
                         }
                     }
+                } else {
+                  $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
                 }
 
                 if (selection.length > 0){
-
+                    $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
                     $("#resultsShow").html("<div class='col s12'><h2>Result(s)</h2></div>");
+                    $("#resultsShow").show();
                     for(var i = 0; i < selection.length ; i++){
-                        txt = "<a href='stageshow/id/"+selection[i]['stageshowId']+"'><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";
+                        txt = "<a href='stageshow/id/"+selection[i]['stageshowId']+"'><span class='btn myBtn' title='"+selection[i]['title']+"'>"+selection[i]['title']+"</span></a>";
                         $("#resultsShow").append(txt);
                     }
                 }
@@ -714,7 +516,7 @@ width: 100vw;
         var selection = [];
 
         jQuery.when(
-                jQuery.getJSON('/mc2/api/songs/')
+                jQuery.getJSON('/api/songs/')
         ).done(function (json){
 
           if (input.length > 2){
@@ -734,15 +536,18 @@ width: 100vw;
                 // console.log(selection);
               }
             }
+          } else {
+            $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
           }
 
 
           if (selection.length > 0){
+          $("#results, #resultsNumber, #resultsSong, #resultsPerson, #resultsShow").hide()
 
             $("#resultsSong").html("<div class='col s12'><h2>Result(s)</h2></div>");
+            $("#resultsSong").show();
             for(var i = 0; i < selection.length ; i++){
-              txt = "<a href='song/id/"+selection[i]['songId']+"'><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";
-              {#txt = "<a href=\"{{ path('song' , { 'songId'  : selection[i]['songId'] }) }}\"><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";#}
+              txt = "<a href='song/id/"+selection[i]['songId']+"'><span class='btn myBtn' title='"+selection[i]['title']+">"+selection[i]['title']+"</span></a>";
               $("#resultsSong").append(txt);
             }
           }
@@ -758,13 +563,26 @@ width: 100vw;
     searchSong();
     searchShow();
 
-    $("#showNumbers").click(
+    $("#section-films__button").click(
             function(){
               $(this).hide();
-              $(".filmsHidden").fadeIn();
-              $("#shownNumbers").hide();
+              $(".section-films__film.hidden").fadeIn();
+              $("#section-films__button").hide();
             }
     )
+    $(document).ready(function() {
+      $(".section-search__search-container--number, .section-search__search-container--song, .section-search__search-container--person, .section-search__search-container--stageshow").hide();
+      $('.section-search__button[data-selector="film"]').addClass('section-search__button--selected');
+
+      $('.section-search__button').click(function() {
+        var blockName = $(this).data('selector');
+        $('.section-search__button--selected').removeClass('section-search__button--selected');
+        $(this).addClass('section-search__button--selected');
+        $('.section-search__search-container').hide();
+        $('.section-search__search-container--' + blockName).show();
+      });
+    });
+
   </script>
 
 
