@@ -10,7 +10,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    
+
 framework:
     #esi:             ~
     translator:      ~
@@ -236,13 +236,3 @@ fos_elastica:
                         model: AppBundle\Entity\Number
                         provider: ~
                         finder: ~
-                thesaurus:
-                    mappings:
-                        title: { type: keyword }
-                    persistence:
-                        # the driver can be orm, mongodb, phpcr or propel
-                        # listener and finder are not supported by
-                        # propel and should be removed
-                        driver: orm
-                        model: AppBundle\Entity\Thesaurus
-                        provider: ~
