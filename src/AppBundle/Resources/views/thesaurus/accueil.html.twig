@@ -15,7 +15,7 @@
                 <div>
                     <ul class="row thesaurus-elements">
                     {% for item in codes  %}
-                        <li class="col s12 m6 l4 ">
+                        <li class="col s12">
                             <a href="{{ path('thesaurus_type', {'content' : item.content}) }}">{{ item.title }}</a>
                             <a href="{{ path('admin_code_edit' , {'codeId' : item.codeId}) }}">{% if is_granted('ROLE_ADMIN') %}
                                 <i class="material-icons tiny lightgrey">edit</i>
@@ -34,4 +34,3 @@
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/editor/thesaurus/searchApp.js') }}"></script>
 {% endblock %}
-
