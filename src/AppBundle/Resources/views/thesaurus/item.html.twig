@@ -45,7 +45,7 @@
                 <h2>List of the {{ numbers|length }} number(s) with {{ thesaurus.code.title }} <i>{{ thesaurus.title }}</i></h2>
                 <ul class="row">
                 {% for item in numbers  %}
-                    <li class="col s3"><a href="{{ path('number' , {'id' : item.id}) }}">{{ item.title }}</a></li>
+                    <li class="col s12"><a href="{{ path('number' , {'id' : item.id}) }}">{{ item.title }}</a></li>
                 {% endfor %}
                 </ul>
             </div>
@@ -59,7 +59,7 @@
                 <h2>List of the {{ films|length }} film(s) with {{ thesaurus.code.title }} <i>{{ thesaurus.title }}</i></h2>
                 <ul class="row">
                     {% for item in films  %}
-                        <li class="col s3"><a href="{{ path('film' , {'filmId' : item.filmId}) }}">{{ item.title }}</a></li>
+                        <li class="col s12"><a href="{{ path('film' , {'filmId' : item.filmId}) }}">{{ item.title }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -73,7 +73,7 @@
                     <h2>List of the {{ songs|length }} song(s) with {{ thesaurus.code.title }} <i>{{ thesaurus.title }}</i></h2>
                     <ul class="row">
                         {% for item in songs  %}
-                            <li class="col s3"><a href="{{ path('song' , {'songId' : item.songId}) }}">{{ item.title }}</a></li>
+                            <li class="col s12"><a href="{{ path('song' , {'songId' : item.songId}) }}">{{ item.title }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -87,7 +87,7 @@
                     <h2>List of the {{ stagenumbers|length }} stage number(s) with {{ thesaurus.code.title }} <i>{{ thesaurus.title }}</i></h2>
                     <ul class="row">
                         {% for item in stagenumbers  %}
-                            <li class="col s3"><a href="{{ path('stagenumber' , {'stagenumberId' : item.stagenumberId}) }}">{{ item.title }}</a></li>
+                            <li class="col s12"><a href="{{ path('stagenumber' , {'stagenumberId' : item.stagenumberId}) }}">{{ item.title }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
