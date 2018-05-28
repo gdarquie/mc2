@@ -24,14 +24,13 @@
 
                 <div class="col s12">
                     <h3>Elements</h3>
-
                     <ul class="row my-list">
                         {% for item in thesaurus  %}
-                            <li class="col s4 title"><a href="{{ path('thesaurus_element', {'id' : item.id }) }}">{{ item.title }}</a>
+                            <li class="col  title"><a href="{{ path('thesaurus_element', {'id' : item.id }) }}">{{ item.title }}</a>
                             {% if is_granted('ROLE_EDITOR') %}
                                 <a href="{{ path('updateThesaurus' , {'id' : item.id}) }}"><i class="material-icons tiny black-text">edit</i></a>
                             {% endif %}
-                            </li>
+                            </li><br/>
                         {% endfor %}
                     </ul>
 
