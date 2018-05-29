@@ -27,7 +27,10 @@
             {% if type == 'number' %}
                 <th class="sort" data-sort="film" >Film</th>
             {% endif %}
+
+            {% if type == 'film' %}
             <th class="sort" data-sort="released" >Released date <i class="material-icons tiny">arrow_drop_down</i></th>
+            {% endif %}
 
             <th>Last update</th>
 
@@ -77,7 +80,11 @@
                             <td class="film">{{ item.film.title }}</td>
                         {% endif %}
 
-                        <td class="released">{{ item.released }}</td>
+                        {% if type =='film' %}
+                          <td class="released">{{ item.released }}</td>
+                        {% endif %}
+
+
                         <td class="update">{{ item.lastUpdate|date("Y-m-d") }}</td>
 
                         <!-- pas d'éditeur pour stagenumber -->
