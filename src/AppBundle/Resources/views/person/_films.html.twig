@@ -17,6 +17,7 @@
         {% set tabAll = tabAll|merge([item.film.filmId]) %}
         <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : item.film.filmId}) }}">
           <h4 class="section-films__film-name">{{ item.film }}</h4>
+
           <div class="section-films__centered-cropped">
             <img class="section-films__film-poster" src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
           </div>

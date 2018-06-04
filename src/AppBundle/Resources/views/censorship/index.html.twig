@@ -82,9 +82,9 @@
 
             <div class="row ">
 
-                <div id="chart_div2" class="donut s6 col"></div>
+                <div id="chart_div2" class="donut s12 col"></div>
 
-                <div id="table_def_censored" class="s6 col">
+                <div id="table_def_censored" class="s12 col">
                     <table class="striped mini-table">
                         <thead>
                         <tr>
@@ -93,53 +93,56 @@
                         </tr>
                         </thead>
                         <tbody class="list">
+                        <tr>
+                            <td class="list_name_censorship">Costumes–specific</td>
+                            <td class="list_def_censorship">The PCA forbids a specific costume, usually based on its photography sent by the studio</td>
+                        </tr>
+                            <tr>
+                                <td class="list_name_censorship">Costumes–standard</td>
+                                <td class="list_def_censorship">Usual warning given to any producer about revealing costumes and reaffirmation of the necessity of being cautious</td>
+                            </tr>
+
+                            <tr>
+                                <td class="list_name_censorship">Dance</td>
+                                <td class="list_def_censorship">Choreographic contents are censored, because of suggestive moves. This concerns a lot of numbers based on burlesque dancing (fan dances in particular)</td>
+                            </tr>
                             <tr>
                                 <td class="list_name_censorship">Dialogue</td>
                                 <td class="list_def_censorship">Some lines have to be rewritten, usually because of profanity or double meaning</td>
-                            </tr>
-                            <tr>
-                                <td class="list_name_censorship">Narrative-major</td>
-                                <td class="list_def_censorship">The script has to be modified and rewritten because of a major narrative issue (prostitution, religion, adultery, crime, the image given of institutions, alcoholism...)</td>
-                            </tr>
-                            <tr>
-                                <td class="list_name_censorship">Narrative-minor</td>
-                                <td class="list_def_censorship">Usual remarks on the cautious treatment of alcohol drinking, gambling, toilets, representation of marriage. This implies minor cuts in the script</td>
-                            </tr>
-                            <tr>
-                                <td class="list_name_censorship">"Sex perversion"</td>
-                                <td class="list_def_censorship">What the PCA refers to as "sex perversion", which means suggested or implied homosexuality</td>
                             </tr>
                             <tr>
                                 <td class="list_name_censorship">Ethnic representation</td>
                                 <td class="list_def_censorship">The PCA warns the studio about the accents, or the image given of ethnic communities or foreign populations</td>
                             </tr>
                             <tr>
-                                <td class="list_name_censorship">Costumes–standard</td>
-                                <td class="list_def_censorship">Usual warning given to any producer about revealing costumes and reaffirmation of the necessity of being cautious</td>
-                            </tr>
-                            <tr>
-                                <td class="list_name_censorship">Costumes–specific</td>
-                                <td class="list_def_censorship">The PCA forbids a specific costume, usually based on its photography sent by the studio</td>
-                            </tr>
-                            <tr>
-                                <td class="list_name_censorship">Dance</td>
-                                <td class="list_def_censorship">Choreographic contents are censored, because of suggestive moves. This concerns a lot of numbers based on burlesque dancing (fan dances in particular)</td>
-                            </tr>
-                            <tr>
-                                <td class="list_name_censorship">Lyrics–unsignificant</td>
-                                <td class="list_def_censorship">Usual criticism on the lyrics : sexual innuendo or possible double entendre, coarse language</td>
+                                <td class="list_name_censorship">Forbidden song</td>
+                                <td class="list_def_censorship">A song is fully forbidden, or has to be entirely rewritten</td>
                             </tr>
                             <tr>
                                 <td class="list_name_censorship">Lyrics</td>
                                 <td class="list_def_censorship">Specific rewriting of some lines of a song</td>
                             </tr>
                             <tr>
-                                <td class="list_name_censorship">Forbidden song</td>
-                                <td class="list_def_censorship">A song is fully forbidden, or has to be entirely rewritten</td>
+                                <td class="list_name_censorship">Lyrics–unsignificant</td>
+                                <td class="list_def_censorship">Usual criticism on the lyrics : sexual innuendo or possible double entendre, coarse language</td>
+                            </tr>
+
+
+                            <tr>
+                            <td class="list_name_censorship">Narrative-major</td>
+                            <td class="list_def_censorship">The script has to be modified and rewritten because of a major narrative issue (prostitution, religion, adultery, crime, the image given of institutions, alcoholism...)</td>
+                            </tr>
+                            <tr>
+                              <td class="list_name_censorship">Narrative-minor</td>
+                              <td class="list_def_censorship">Usual remarks on the cautious treatment of alcohol drinking, gambling, toilets, representation of marriage. This implies minor cuts in the script</td>
                             </tr>
                             <tr>
                                 <td class="list_name_censorship">Other</td>
                                 <td class="list_def_censorship">Includes inappropriate gestures (pat on the botton, "razzberry sound"), the treatment of animals, playing with fire (smoking in bed...), advertising...</td>
+                            </tr>
+                            <tr>
+                                <td class="list_name_censorship">"Sex perversion"</td>
+                                <td class="list_def_censorship">What the PCA refers to as "sex perversion", which means suggested or implied homosexuality</td>
                             </tr>
 
                         </tbody>
@@ -156,6 +159,7 @@
                 {% for item in censorship  %}
                     <p class="chip"><a href="{{ path('censorship_content', {'content' : item.title}) }}">{{ item.title }} ({{ item.nb }})</a></p>
                 {% endfor %}
+
             </div>
 
         </article>

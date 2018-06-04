@@ -23,7 +23,7 @@ class ThesaurusController extends Controller
             'AppBundle:thesaurus:accueil.html.twig', array(
                 'codes' => $codes
             ));
-        
+
     }
 
     /**

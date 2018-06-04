@@ -216,9 +216,7 @@
         {% if person.numbersChoregrapher|length > 15 %}
 
         var options = {
-            valueNames: ['number_choreo_title', 'number_choreo_film', 'number_choreo_released' ],
-            page: 15,
-            pagination: true
+            valueNames: ['number_choreo_title', 'number_choreo_film', 'number_choreo_released' ]
         };
 
         {% endif %}
@@ -240,9 +238,7 @@
         {% if person.numbersArranger|length > 15 %}
 
         var options2 = {
-            valueNames: ['number_arranger_title', 'number_arranger_film', 'number_arranger_released' ],
-            page: 15,
-            pagination: true
+            valueNames: ['number_arranger_title', 'number_arranger_film', 'number_arranger_released' ]
         };
 
         {% endif %}
@@ -260,9 +256,7 @@
         {% if person.numbersDirector|length > 15 %}
 
         var options3 = {
-            valueNames: ['number_director_title', 'number_director_film', 'number_director_released' ],
-            page: 15,
-            pagination: true
+            valueNames: ['number_director_title', 'number_director_film', 'number_director_released' ]
         };
         {% endif %}
         var numberDirectorList = new List('number_director_list', options3);
@@ -277,9 +271,7 @@
 
         {% if person.numbersPerformer|length > 15 %}
         var options4 = {
-            valueNames: ['number_performer_title', 'number_performer_film', 'number_performer_released' ],
-            page: 15,
-            pagination: true
+            valueNames: ['number_performer_title', 'number_performer_film', 'number_performer_released' ]
         };
         {% endif %}
         var numberPerformerList = new List('number_performer_list', options4);
@@ -294,9 +286,7 @@
 
         {% if person.numbersFigurant|length > 15 %}
         var options5 = {
-            valueNames: ['number_not_title', 'number_not_film', 'number_not_released' ],
-            page: 15,
-            pagination: true
+            valueNames: ['number_not_title', 'number_not_film', 'number_not_released' ]
         };
         {% endif %}
 
