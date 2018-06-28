@@ -157,34 +157,7 @@
                 }})});
     </script>
 
-    <script>
-        google.charts.load('current', {packages: ['corechart', 'line']});
-        google.charts.setOnLoadCallback(drawBasic);
 
-        function drawBasic() {
-
-
-            var data = google.visualization.arrayToDataTable([
-                ['Date', 'Number'],
-                {% for item in numberByMonth %}
-                ['{{ item.day }}-{{ item.month }}-{{ item.year }}', {{ item.nb }}],
-                {% endfor %}
-            ]);
-
-
-            var options = {
-                title: 'New numbers by day',
-                legend: { position: 'bottom' },
-                width : 1000,
-                height : 550
-            };
-
-
-            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
-            chart.draw(data, options);
-        }
-    </script>
 
 
 {% endblock %}

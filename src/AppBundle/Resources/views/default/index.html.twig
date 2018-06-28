@@ -45,7 +45,7 @@
     background-color:white;
     border: 1px solid #4D5D5D;
     color : #4D5D5D;
-    font-family: "tisa-sans-bold", sans-serif;
+    font-family: "ff-tisa-sans-web-pro", sans-serif;
     margin-bottom: 5px;
     text-transform: none;
   }
@@ -281,37 +281,6 @@ a {
 
   <script>
 
-    google.charts.load('current', {packages: ['corechart', 'line']});
-    google.charts.setOnLoadCallback(drawBasic);
-
-    function drawBasic() {
-
-      var data = new google.visualization.DataTable();
-      data.addColumn('date', 'Year');
-      data.addColumn('number', 'Numbers');
-      data.addColumn('number', 'Films');
-
-
-
-      data.addRows([
-        {% for item in nbNumbersByYear %}
-        [new Date({{ item.released }}, 0, 1), {{ item.nb }}, {{ item.nbFilms }}],
-        {% endfor %}
-
-      ]);
-
-      var formatter = new google.visualization.DateFormat({pattern: 'yyyy'});
-            formatter.format(data, 0);
-
-      var options = {
-
-      };
-
-
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
-      chart.draw(data, options);
-    }
 
 
     function searchMovie(){
