@@ -107,6 +107,15 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/content", name="content")
+     */
+    public function contentTo(){
+
+        return $this->render('AppBundle:other:content.html.twig');
+    }
+
+
+    /**
      * @Route("/news", name="news")
      */
     public function newTo(){
