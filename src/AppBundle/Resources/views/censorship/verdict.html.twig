@@ -16,9 +16,6 @@
             height:300px;
         }
 
-        tr{
-            line-height: 0.2em;
-        }
         .donut{
             height:450px;
         }
@@ -86,7 +83,7 @@
                     <tbody class="list">
                     {% for film in filmsByVerdict  %}
                         <tr>
-                            <td onclick="window.location.href='{{ path('film', {'filmId' : film.filmId}) }}';" class="list_film">{{ film.title }}</td>
+                            <td class="list_film"><a href="{{ path('film', {'filmId' : film.filmId}) }}">{{ film.title }}</a></td>
                             <td class="list_release_date">{{ film.released }}</td>
                             <td class="list_studio">
                                 {% for studio in film.studios %}
