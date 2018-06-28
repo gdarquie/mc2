@@ -263,14 +263,31 @@
         <h2>Presence of musicians</h2>
         <article>
 
-           {#<p>Musical styles : {{ musicalStyle|length }} - <a href="{{ path('thesaurus', { 'type' : "Musical styles" }) }}">Thesaurus</a> </p>#}
-           {#<p>Production numbers per musical styles : </p>#}
-            {% for item in musicalStyle  %}
-                <a href="{{ path('getOneMusicalStyle', {'musicalStyle' : item.id}) }}"><p class="chip">{{ item.title }} ({{ item.nb }})</p></a>
-            {% endfor %}
+        <a class="chip" href="/thesaurus/id=205">mediatized music</a>
+        <a class="chip" href="/thesaurus/id=207">no</a>
+        <a class="chip" href="/thesaurus/id=208">other</a>
+        <a class="chip" href="/thesaurus/id=209">some are present but more instruments are heard</a>
+        <a class="chip" href="/thesaurus/id=210">yes, the diegetic musicians seem responsible for the whole accompaniment</a>
+        <a class="chip" href="/thesaurus/id=566">NA</a>
         </article>
     </section>
+    <article class="card card_thematique">
+        <h2>Topics</h2>
 
+        <div class="paragraphs-translations">
+            <p class="paragraph-english">Topics defined primarily by the musical content.</p>
+            <p class="paragraph-separator center">***</p>
+            <p class="paragraph-french">Numéros type définis principalement par leur contenu musical</p>
+        </div>
+
+        <a class="chip" href="mood/241">community-communion and folk</a>
+        <a class="chip" href="mood/857">community-gospel</a>
+        <a class="chip" href="mood/262">I sing about Love</a>
+        <a class="chip" href="mood/514">instruments</a>
+        <a class="chip" href="mood/598">lamento</a>
+        <a class="chip" href="mood/837">lullaby</a>
+        <a class="chip" href="mood/156">only music</a>
+    </article>
 </section>
 
 {% endblock %}
