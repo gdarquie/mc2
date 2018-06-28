@@ -209,16 +209,13 @@
 
         var options = {
             valueNames: [ { data: ['id'] }, 'choreo_name', 'choreo_number', 'choreo_film' ],
-            page: 10,
-            pagination: true
         };
 
         var choreoList = new List('choreo_list', options);
 
         var options2 = {
             valueNames: [ 'composer_name', 'composer_song', 'composer_number', 'composer_film' ],
-            page: 10,
-            pagination: true
+
         };
 
         var composersList = new List('composers_list', options2);
@@ -268,7 +265,7 @@
                 }
             });
         }
-        
+
     </script>
 
     <script>
