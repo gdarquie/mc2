@@ -32,6 +32,8 @@
               <p>Production numbers per year. The background line is the total amount of numbers with data on dancing.</p>
             </div>
             <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/f05702a0-d998-11e7-87d0-457032cab616?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(match_all:()),uiState:(vis:(colors:('All+numbers':%23FCE2DE,'Dance+numbers':%23DEDAF7,'Danced+numbers':%2365C5DB,Type:%23BA43A9,'danceSubgenre:%22can+can%22':%23E24D42,'performance_thesaurus:*':%23FCE2DE),legendOpen:!f)),vis:(aggs:!((enabled:!t,id:'1',params:(customLabel:'Amount+of+production+numbers'),schema:metric,type:count),(enabled:!t,id:'2',params:(customInterval:'2h',customLabel:'Release+date',extended_bounds:(),field:film.released,interval:y,min_doc_count:1),schema:segment,type:date_histogram),(enabled:!t,id:'3',params:(filters:!((input:(query:(query_string:(query:'performance_thesaurus:%22song%2Bdance%22+OR+%22instrumental%2Bdance%22'))),label:'Dance+numbers'),(input:(query:(query_string:(query:'danceSubgenre:%22{{ myDance.title }}%22'))),label:''))),schema:group,type:filters)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,categoryAxes:!((id:CategoryAxis-1,labels:(show:!t,truncate:100),position:bottom,scale:(type:linear),show:!t,style:(),title:(text:'Release+date'),type:category)),grid:(categoryLines:!f,style:(color:%23eee)),legendPosition:right,seriesParams:!((data:(id:'1',label:'Amount+of+production+numbers'),drawLinesBetweenPoints:!t,mode:normal,show:true,showCircles:!t,type:line,valueAxis:ValueAxis-1)),times:!(),valueAxes:!((id:ValueAxis-1,labels:(filter:!f,rotate:0,show:!t,truncate:100),name:LeftAxis-1,position:left,scale:(mode:normal,type:linear),show:!t,style:(),title:(text:'Amount+of+production+numbers'),type:value))),title:'%5BDance%5D+Dance+pages+2-subgenre',type:line))" height="600" width="100%"></iframe>
+
+
             {#<p>There are <span class="number">{{ numbers|length }}</span> numbers in <span class="number">{{ filmsByDance|length }}</span> films with {{ myDance.title }} dance sub-genre.</p>#}
 
             {#<p>[visualisation générale???  http://nvd3.org/examples/scatter.html or  http://bl.ocks.org/mbostock/4063570]</p>#}
@@ -96,8 +98,8 @@
             <div class="center">
               <p>The names are those of the performers present in a number involving {{ myDance.title }}. It does not necessarily mean that this type of dancing is typically theirs.</p>
             </div>
-            <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/54230600-b287-11e7-a889-f18b1780cb89?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'dancingType:%22{{ myDance.title }}%22')),uiState:(),vis:(aggs:!((enabled:!t,id:'1',params:(),schema:metric,type:count),(enabled:!t,id:'2',params:(field:performers,order:desc,orderBy:'1',size:30),schema:segment,type:terms)),listeners:(),params:(maxFontSize:72,minFontSize:18,orientation:single,scale:linear),title:'%5BDance%5D+wordcloud+par+style-dynamique',type:tagcloud))" height="600" width="100%">
-            </iframe>
+            <iframe src="http://labex-arts-h2h.univ-paris8.fr/app/kibana#/visualize/edit/5d0e4930-6b16-11e8-ab20-b7c47f186721?embed=true&_g=()&_a=(filters:!(),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'danceSubgenre:{{ myDance.title }}')),uiState:(),vis:(aggs:!((enabled:!t,id:'1',params:(),schema:metric,type:count),(enabled:!t,id:'2',params:(field:performers,order:desc,orderBy:'1',size:15),schema:segment,type:terms)),listeners:(),params:(maxFontSize:72,minFontSize:18,orientation:single,scale:linear),title:'%5BDance%5D+wordcloud+interp%C3%A8tes-dancesubgenre',type:tagcloud))" height="600" width="800"></iframe>
+
         </article>
 
         {#<article class="card row">#}
