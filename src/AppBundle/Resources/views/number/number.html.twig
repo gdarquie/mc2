@@ -70,7 +70,7 @@
                 </td>
                 <td>{{ number.shots }}</td>
                 {#calculer avg shots length#}
-                <td>{{ ((number.EndTc-number.beginTc)/number.shots) }} seconds</td>
+                <td>{{ ((number.EndTc-number.beginTc)/number.shots)|round(2, 'floor') }} seconds</td>
                 <td>
                   <a href="{{ path('thesaurus_element', {'id': number.performanceThesaurus.id }) }}">{{ number.performanceThesaurus  }}</a>
                 </td>
