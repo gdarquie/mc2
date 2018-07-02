@@ -59,6 +59,7 @@
           <a href="{{ path('homepage') }}" class="navbar__brand-logo">Musical MC&#178;</a>
             <ul class="navbar__buttons">
               <li><a href="{{ path('thesaurus') }}">Thesaurus</a></li>
+              <li><a href="{{ path('content') }}">Keys</a></li>
               <li><a href="{{ path('about') }}">About</a></li>
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li><a href="{{ path('editor') }}" class="navbar__username">{{ app.user.username }}</a></li>
@@ -116,9 +117,9 @@
         </div>
         <div class="footer__block footer__block--links">
           <!-- <h5 class="footer__title">Links</h5> -->
-          <a class="footer__link" href="{{ path('howto')}}">
+          <!-- <a class="footer__link" href="{{ path('howto')}}">
             <button class="footer__button">How to</button>
-          </a>
+          </a> -->
         </div>
         <div class="footer__block footer__block--logo">
           <a href="http://www.labex-arts-h2h.fr/"><img class="footer__logo" src="{{ asset('img/labex_web-develop-gris-clair.png') }}" alt=""></a>
