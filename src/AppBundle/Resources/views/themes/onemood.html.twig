@@ -66,8 +66,8 @@
                     <tbody class="list">
                     {% for number in numbers  %}
                         <tr>
-                            <td onclick="window.location.href='{{ path('number', {'id' : number.id}) }}';" class="list_number">{{ number.title }}</td>
-                            <td onclick="window.location.href='{{ path('film', {'filmId' : number.film.filmId}) }}';" class="list_film">{{ number.film.title }}</td>
+                            <td class="list_number"><a href="{{ path('number', {'id' : number.id}) }}">{{ number.title }}</a></td>
+                            <td class="list_film"><a href="{{ path('film', {'filmId' : number.film.filmId}) }}">{{ number.film.title }}</a></td>
                             <td class="list_release_date">{{ number.film.released }}</td>
                             <td class="list_studio">
                                 {% for studio in number.film.studios %}
