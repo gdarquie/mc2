@@ -310,7 +310,6 @@ a {
 
             if (str.indexOf(input)> -1)
             {
-               console.log(input+"ca marche"+json.films[i].title);
               res = json.films[i];
               selection.push(res);
 //               console.log(selection);
@@ -326,6 +325,7 @@ a {
           $("#results").show();
           $("#results").html("<div class='col s12'><h2>Result(s)</h2></div>");
           for(var i = 0; i < selection.length ; i++){
+
             txt = "<a href='/film/id/"+selection[i]['filmId']+"'><span class='btn myBtn' title='"+selection[i]['title']+" ("+selection[i]['released']+")'>"+selection[i]['title']+" ("+selection[i]['released']+")</span></a>";
             $("#results").append(txt);
           }
@@ -499,7 +499,7 @@ a {
 
               if (str.indexOf(input)> -1)
               {
-                // console.log(input+"ca marche"+json.films[i].title);
+
                 res = json.song[i];
                 selection.push(res);
                 // console.log(selection);
@@ -516,7 +516,8 @@ a {
             $("#resultsSong").html("<div class='col s12'><h2>Result(s)</h2></div>");
             $("#resultsSong").show();
             for(var i = 0; i < selection.length ; i++){
-              txt = "<a href='song/id/"+selection[i]['songId']+"'><span class='btn myBtn' title='"+selection[i]['title']+">"+selection[i]['title']+"</span></a>";
+
+              txt = "<a href='song/id/"+selection[i]['songId']+"'><span class='btn myBtn'>"+selection[i]['title']+"</span></a>";
               $("#resultsSong").append(txt);
             }
           }
