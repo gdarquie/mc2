@@ -121,7 +121,7 @@
                                             <tr>
                                                 <td>{{loop.index}}</td>
                                                 <td><a class="img_hover" href="{{ path('number', {'id' : number.id}) }}">{{ number.title  }} <span><img
-                                                                    src="img/photograms/{{number.id}}.jpg" alt="image du number" style="width:150px;"></span></a></td>
+                                                                    src="/img/photograms/{{number.id}}.jpg" alt="image du number" style="width:150px;"></span></a></td>
                                                 <td>{{ ((number.beginTc)/(60*60))|round(0, 'floor') }}h{{ ((number.beginTc)/(60)) |round(0, 'floor')-(60*((number.beginTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.beginTc) |round(0, 'floor')-(60*((number.beginTc)/(60)) |round(0, 'floor')) }}s</td>
                                                 <td>{{ ((number.endTc)/(60*60))|round(0, 'floor') }}h{{ ((number.endTc)/(60)) |round(0, 'floor')-(60*((number.endTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.endTc) |round(0, 'floor')-(60*((number.endTc)/(60)) |round(0, 'floor')) }}s</td>
                                                 <td>{{ ((number.length)/(60)) |round(0, 'floor')-(60*((number.length)/(60*60)) |round(0, 'floor'))  }}m{{ (number.length) |round(0, 'floor')-(60*((number.length)/(60)) |round(0, 'floor')) }}s</td>
