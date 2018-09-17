@@ -10,6 +10,8 @@
             color:black;
         }
 
+
+
         .card{
             padding:2em;
             height:auto;
@@ -17,6 +19,10 @@
 
         .parallax-container {
             height: 275px;
+        }
+
+        .table_def_censored a{
+            font-style: italic;
         }
 
 
@@ -84,7 +90,7 @@
 
                 <div id="chart_div2" class="donut s12 col"></div>
 
-                <div id="table_def_censored" class="s12 col">
+                <div class="table_def_censored" class="s12 col">
                     <table class="striped mini-table">
                         <thead>
                         <tr>
@@ -195,6 +201,43 @@
                     <p class="chip"><a href="{{ path('censorship_legion' , {'legion' : item.legion}) }}">{{ item.legion }}({{ item.nb }})</a></p>
                 {% endfor %}
                 </div>
+
+                <div class="table_def_censored" class="s8 col">
+                    <table class="striped mini-table">
+                        <thead>
+                        <tr>
+                            <th>Grade</th>
+                            <th>Definition</th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        <tr>
+                            <td class="list_name_censorship">A1</td>
+                            <td class="list_def_censorship">Suitable for all audiences</td>
+                        </tr>
+                        <tr>
+                            <td class="list_name_censorship">A2</td>
+                            <td class="list_def_censorship">Suitable for adults (after the introduction of A3: suitable for adults and adolescents)</td>
+                        </tr>
+
+                        <tr>
+                            <td class="list_name_censorship">A3</td>
+                            <td class="list_def_censorship">Suitable for adults only</td>
+                        </tr>
+                        <tr>
+                            <td class="list_name_censorship">B</td>
+                            <td class="list_def_censorship">Morally objectionable in part</td>
+                        </tr>
+                        <tr>
+                            <td class="list_name_censorship">C</td>
+                            <td class="list_def_censorship">Condemned by the Legion</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Cf. <a href="https://archive.org/details/motionpicturescl00nati"> Motion Pictures Classified by National Legion of Decency, Feb 1936-Oct. 1959 </a> (New York: National Legion of Decency, 1959).</p>
+                </div>
+
         </article>
 
         <article class="card card_thematique">
