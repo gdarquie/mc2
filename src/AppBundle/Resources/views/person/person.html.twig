@@ -179,27 +179,6 @@
             });
             $('#exoticism').jQCloud('update', words_exoticism);
 
-            //sources
-            words_sources = [{% for item in sources  %}{ text : "{{ item.title|raw }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
-            $('#sources').jQCloud(words_sources);
-            $('#sources').jQCloud('update', words_sources, {
-                fontSize: {
-                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
-                    from: 0.1,
-                    to: 0.05
-                }
-            });
-
-            words_source = [{% for item in source %}{ text : "{{ item.title|raw }}", weight : {{ item.nb }} } {% if loop.last %}{% else %},{% endif %}{% endfor %}];
-            $('#source').jQCloud(words_source);
-            $('#source').jQCloud('update', words_source, {
-                fontSize: {
-                    colors: ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"],
-                    from: 0.1,
-                    to: 0.05
-                }
-            });
-
         }
 
         $(".tabs").click(function(){
@@ -213,8 +192,14 @@
             $("#exoticism_container").html("<div class='wordcloud' id='exoticism'></div>");
             $("#exoticisms_container").html("<div class='wordcloud' id='exoticisms'></div>");
 
-            $("#source_container").html("<div class='wordcloud' id='source'></div>");
-            $("#sources_container").html("<div class='wordcloud' id='sources'></div>");
+
+
+            //Melviz sources
+            var url = '{{ path("api_person_melviz_sources", {'personId': person.personId}) }}';
+            d3.json(url , function(error, data) {
+                viz_mediane("melviz_sources", data, 6);
+            });
+
 
             //Melviz diegetic
             var url = '{{ path("api_person_melviz_diegetic", {'personId': person.personId}) }}';
@@ -234,11 +219,11 @@
                 viz_mediane("melviz_structure", data, 7);
             });
 
-            //Melviz structure
+            //Melviz completeness
             var url = '{{ path("api_person_melviz_completeness", {'personId': person.personId}) }}';
             d3.json(url , function(error, data) {
                 viz_mediane("melviz_completeness", data, 4);
-//                versionBarres("melviz_completeness", data, 2);
+                // versionBarres("melviz_completeness", data, 2);
             });
 
             drawCloud();
