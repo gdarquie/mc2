@@ -2,52 +2,41 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Component\DefaultHander;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 
 class DefaultController extends Controller
 {
-
 //Home Page
-
     /**
      * @Route("/", name="homepage")
      */
     public function indexAction()
     {
-
         $em = $this->getDoctrine()->getManager();
-        // dump($em->getRepository('AppBundle:Number'));
 
         //all films
         $films = $em->getRepository('AppBundle:Film')->findAll();
-        // $films = $em->getRepository('AppBundle:Film')
-        //     ->findAllOrderdByTitle();
 
         //get user
         $user = $this->getUser();
 
-        //Films with number
-        $query = $em->createQuery('SELECT f.filmId as filmId, f.title as title, f.idImdb as idImdb, f.released as released  FROM AppBundle:Film f WHERE f.filmId IN (SELECT IDENTITY(n.film) FROM AppBundle:Number n WHERE n.film != 0) ORDER BY f.released ASC');
-        $filmsWithNumber = $query->getResult();
+        //Films with numbers
+        $filmsWithNumber = $em->getRepository('AppBundle:Film')->findFilmWithNumber()->getQuery()->getResult();
 
-        $numbers = $em->getRepository('AppBundle:Number')->findAll();
-
-
+        //numbers
         $numbers = $em->getRepository('AppBundle:Number')->findAll();
 
         //All Persons
         $persons = $em->getRepository('AppBundle:Person')->findAll();
 
         //My numbers
-
         $myNumbers = "";
         $myFilms = "";
 
-        if($this->getUser()){
+        if($this->getUser()) {
             $user = $this->getUser()->getId();
             $query = $em->createQuery('SELECT n FROM AppBundle:Number n JOIN n.editors e WHERE e.id = :user ORDER BY n.last_update DESC');
             $query->setParameter('user', $user );
@@ -123,5 +112,9 @@ class DefaultController extends Controller
         return $this->render('AppBundle:other:news.html.twig');
     }
 
+    public function getHandler()
+    {
+        return new DefaultHander($this->getDoctrine()->getManager());
+    }
 
 }
