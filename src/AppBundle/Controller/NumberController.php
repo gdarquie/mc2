@@ -10,7 +10,6 @@ use AppBundle\Form\NumberType;
 
 class NumberController extends Controller
 {
-
     /**
      * @Route("/number/{id}", name = "number")
      */
