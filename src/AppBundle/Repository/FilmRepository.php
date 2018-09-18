@@ -27,6 +27,12 @@ class FilmRepository extends EntityRepository
             ->setParameters(array( 'filmId' => $filmId));
     }
 
+    public function findFilmWithNumber()
+    {
+        return $this->createQueryBuilder('film')
+            ->innerJoin('film.numbers', 'n', 'WITH', 'n.film = film.filmId');
+    }
+
 }
 
 
