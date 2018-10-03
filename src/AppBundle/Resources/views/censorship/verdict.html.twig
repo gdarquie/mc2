@@ -53,17 +53,8 @@
         <article class="card card_thematique">
             <h2>Studios</h2>
 
-            <div class="col s6">
-                <h3>"{% for item in verdict  %}{{ item.title }}{% endfor %}"</h3>
-                {#<div id="donut_verdict" class="donut"><svg></svg></div>#}
-                <div id="chart_div1" class="donut"></div>
-            </div>
+            <div id="melviz_studios" class="melviz"></div>
 
-            <div class="col s6">
-                <h2>"all verdicts"</h2>
-                <div id="chart_div2" class="donut"></div>
-                {#<div id="donut_all_verdicts" class="donut"><svg></svg></div>#}
-            </div>
 
         </article>
 
@@ -119,74 +110,17 @@
     {{ parent() }}
     <script src="{{ asset('assets/vendor/list.js/docs/assets/javascripts/list.min.js') }}"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="{{ asset('js/melviz_studios.js') }}"></script>
+
 
     <script type="text/javascript">
 
-        google.charts.load("current", {packages:["corechart"]});
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
+        //Melviz studios
+        var url = '{{ path("api_censorship_melviz_studios_verdict", {'verdict': verdict2}) }}';
+        d3.json(url , function(error, data) {
+            viz_mediane("melviz_studios", data, 8);
+        });
 
-            var data = google.visualization.arrayToDataTable([
-                ['Name', 'Occurences'],
-                {% for studio in studiosByVerdict %}
-                ['{{ studio.title }}', {{ studio.nb }}],
-                {% endfor %}
-            ]);
-
-
-            var options = {
-                pieHole: 0.4
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
-            chart.draw(data, options);
-
-
-            var data = google.visualization.arrayToDataTable([
-                ['Name', 'Occurences'],
-                {% for studio in nbFilmsWithVerdictByStudio %}
-                ['{{ studio.title }}', {{ studio.nb }}],
-                {% endfor %}
-            ]);
-
-
-            var options = {
-                pieHole: 0.4
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
-            chart.draw(data, options);
-        }
-
-        {#google.charts.load('current', {packages: ['corechart', 'line']});#}
-        {#google.charts.setOnLoadCallback(drawBasic);#}
-        {#function drawBasic() {#}
-            {#//diagram#}
-            {#var data = new google.visualization.DataTable();#}
-            {#data.addColumn('number', 'Year');#}
-            {#data.addColumn('number', 'Occurence');#}
-
-            {#data.addRows([#}
-                {#{% for studio in nbFilmsWithVerdictByStudio %}#}
-                {#[ {{ studio.title }} , {{ studio.nb }} ],#}
-                {#{% endfor %}#}
-            {#]);#}
-
-            {#var options = {#}
-                {#hAxis: {#}
-                    {#title: 'Years'#}
-                {#},#}
-                {#vAxis: {#}
-                    {#title: 'Occurences'#}
-                {#},#}
-            {#};#}
-
-
-            {#var chart = new google.visualization.LineChart(document.getElementById('diagram'));#}
-
-            {#chart.draw(data, options);#}
-
-        {#}#}
     </script>
 
 

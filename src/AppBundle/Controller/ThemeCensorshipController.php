@@ -116,6 +116,8 @@ class ThemeCensorshipController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $verdict2 = $verdict;
+
         $query = $em -> createQuery('SELECT DISTINCT(f.verdict) as title FROM AppBundle:Film f WHERE f.verdict = :verdict');
         $query->setParameter('verdict', $verdict);
         $verdict = $query->getResult();
@@ -144,6 +146,7 @@ class ThemeCensorshipController extends Controller
             'filmsByVerdict' => $filmsByVerdict,
             'studiosByVerdict' => $studiosByVerdict,
             'verdict' => $verdict,
+            'verdict2' => $verdict2,
             'nbFilmsWithVerdict' => $nbFilmsWithVerdict,
             'nbFilmsWithVerdictByStudio' => $nbFilmsWithVerdictByStudio
         ));
