@@ -31,7 +31,7 @@
 
                     <h1>{{ song.title }}</h1>
 
-                    {% if is_granted("ROLE_EDITOR") %}
+                    {% if is_granted("ROLE_MEMBER") %}
                         <span class="left-align valign adjust"> - <a href="{{ path('song_edit' , {'songId' : song.songId}) }}">Edit</a></span>
                     {% endif %}
                 </div>
