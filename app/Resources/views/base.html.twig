@@ -71,12 +71,12 @@
                         <div class="action-dropdown__item action-dropdown__item--with-children">Member</div>
                         <div class="action-dropdown__sub-item"><a href="{{ path('editor') }}">Edition</a></div>
                         <div class="action-dropdown__sub-item"><a href="{{ path('editorNewSong') }}">Add a song</a></div>
-                        <div class="action-dropdown__sub-item"><a href="{{ path('editorNewPerson') }}">Add a person</a></div>
                       </div>
                     {% endif %}
                       {% if is_granted('ROLE_EXPERT') %}
                           <div class="action-dropdown__items-container">
                               <div class="action-dropdown__item action-dropdown__item--with-children">Expert</div>
+                              <div class="action-dropdown__sub-item"><a href="{{ path('editorNewPerson') }}">Add a person</a></div>
                               <div class="action-dropdown__sub-item"><a href="{{ path('editorNewFilm') }}">Add a film</a></div>
                           </div>
                       {% endif %}
