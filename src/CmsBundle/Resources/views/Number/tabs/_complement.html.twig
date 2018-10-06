@@ -16,7 +16,7 @@
 
 <div id="complement" class="row container main">
 
-    {% if ( validationCost is defined and validationCost|length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if ( validationCost is defined and validationCost|length < 2 or is_granted('ROLE_MEMBER')) %}
     <article class="col s12">
     {% else %}
     <article class="col s12 hide">

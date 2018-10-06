@@ -14,7 +14,7 @@
 
 <div id="outlines" class="row container main">
 
-    {% if ( validationTc is defined and validationTc|length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if ( validationTc is defined and validationTc|length < 2 or is_granted('ROLE_MEMBER')) %}
     <article class="col s12">
     {% else %}
     <article class="col s12 hide">

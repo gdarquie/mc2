@@ -14,7 +14,7 @@
 
 <div id="director" class="row container main">
 
-    {% if ( validationDirector is defined and validationDirector|length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if ( validationDirector is defined and validationDirector|length < 2 or is_granted('ROLE_MEMBER')) %}
     <article class="col s12">
     {% else %}
     <article class="col s12 hide">

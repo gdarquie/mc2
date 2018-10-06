@@ -23,7 +23,6 @@ class NumberController extends Controller
 
         $validationTitle = "";
 
-
         $form = $this->createForm(NumberType::class);
         $form->handleRequest($request);
 

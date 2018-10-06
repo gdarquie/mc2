@@ -15,7 +15,7 @@
 
 <div id="performers" class="row container main">
 
-    {% if ( validationPerformance is defined and validationPerformance|length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if ( validationPerformance is defined and validationPerformance|length < 2 or is_granted('ROLE_MEMBER')) %}
     <article class="col s12">
     {% else %}
     <article class="col s12 hide">

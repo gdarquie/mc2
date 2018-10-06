@@ -15,12 +15,11 @@
 
 <div id="title" class="row container main">
 
-    {% if (validationTitle is defined and validationTitle |length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if (validationTitle is defined and validationTitle |length < 2 or is_granted('ROLE_MEMBER')) %}
         <article class="col s12">
     {% else %}
         <article class="col s12 hide">
     {% endif %}
-
 
         <h3>Title</h3>
 
