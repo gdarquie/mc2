@@ -74,6 +74,18 @@
                         <div class="action-dropdown__sub-item"><a href="{{ path('editorNewPerson') }}">Add a person</a></div>
                       </div>
                     {% endif %}
+                      {% if is_granted('ROLE_EXPERT') %}
+                          <div class="action-dropdown__items-container">
+                              <div class="action-dropdown__item action-dropdown__item--with-children">Expert</div>
+                              <div class="action-dropdown__sub-item"><a href="{{ path('editorNewFilm') }}">Add a film</a></div>
+                          </div>
+                      {% endif %}
+                      {% if is_granted('ROLE_EDITOR') %}
+                          <div class="action-dropdown__items-container">
+                              <div class="action-dropdown__item action-dropdown__item--with-children">Editor</div>
+                              <div class="action-dropdown__sub-item"><a href="{{ path('newThesaurus') }}">Add a Thesaurus</a></div>
+                          </div>
+                      {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                       <div class="action-dropdown__item"><a href="{{ path('admin') }}">Admin</a></div>
                     {% endif %}
