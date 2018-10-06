@@ -35,7 +35,7 @@
         "beberlei/DoctrineExtensions": "^1.0",
         "eightpoints/guzzle-bundle": "^4.5",
         "fabpot/goutte": "^3.2",
-        "friendsofsymfony/elastica-bundle": "^4.0",
+        "friendsofsymfony/elastica-bundle": "^5.0",
         "symfony/webpack-encore-pack": "^1.0"
     },
     "require-dev": {
@@ -47,7 +47,11 @@
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

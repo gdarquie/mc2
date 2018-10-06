@@ -104,7 +104,6 @@ class NumberController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            // dump($form->getData());die;
 
             //calcule length
             $begin = $number->getBeginTc();
@@ -118,6 +117,7 @@ class NumberController extends Controller
             $now = new \DateTime();
             $number->setLastUpdate($now);
 
+            //????
             if($this->isGranted('ROLE_EDITOR')){
                 $this->validate($number, $user);
             }
