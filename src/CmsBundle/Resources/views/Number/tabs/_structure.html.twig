@@ -15,7 +15,7 @@
 
 <div id="structure" class="row container main">
 
-    {% if ( validationStructure is defined and validationStructure|length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if ( validationStructure is defined and validationStructure|length < 2 or is_granted('ROLE_MEMBER')) %}
     <article class="col s12">
     {% else %}
     <article class="col s12 hide">
