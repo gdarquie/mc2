@@ -22,7 +22,7 @@
           <div class="number__tables-wrapper">
             <table class="number__table">
               <tr class="number__table-row__head">
-                <th>Starting time code</a></th>
+                <th>Starting time code</th>
                 <th>Ending time code</th>
                 <th><a href="{{ path('thesaurus_type', {'content': 'begin_thesaurus'}) }}">Beginning</a></th>
                 <th><a href="{{ path('thesaurus_type', {'content': 'ending_thesaurus'}) }}">Ending</a></th>
@@ -35,13 +35,19 @@
                 <td>{{ ((number.EndTc)/(60*60))|round(0, 'floor') }}h{{ ((number.EndTc)/(60)) |round(0, 'floor')-(60*((number.EndTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.EndTc) |round(0, 'floor')-(60*((number.EndTc)/(60)) |round(0, 'floor')) }}s
                 </td>
                 <td>
+                  {% if number.beginThesaurus %}
                   <a href="{{ path('thesaurus_element', {'id': number.beginThesaurus.id }) }}">{{ number.beginThesaurus  }}</a>
+                  {% endif %}
                 </td>
                 <td>
+                  {% if number.endingThesaurus %}
                   <a href="{{ path('thesaurus_element', {'id': number.endingThesaurus.id }) }}">{{ number.endingThesaurus  }}</a>
+                  {% endif %}
                 </td>
                 <td>
+                  {% if number.completenessThesaurus %}
                   <a href="{{ path('thesaurus_element', {'id': number.completenessThesaurus.id }) }}">{{ number.completenessThesaurus }}</a>
+                  {% endif %}
                 </td>
                 <td>
                   {% for completoption in number.completoptions %}
@@ -66,13 +72,23 @@
               </tr>
               <tr class="number__table-row__content">
                 <td>
+                  {% if number.structure %}
                   <a href="{{ path('thesaurus_element', {'id': number.structure.id }) }}">{{ number.structure  }}</a>
+                  {%  endif %}
                 </td>
                 <td>{{ number.shots }}</td>
                 {#calculer avg shots length#}
-                <td>{{ ((number.EndTc-number.beginTc)/number.shots)|round(2, 'floor') }} seconds</td>
                 <td>
+                  {% if number.EndTc-number.beginTc  == 0 %}
+                      NAN
+                  {% else %}
+                    {{ ((number.EndTc-number.beginTc)/number.shots)|round(2, 'floor') }} seconds
+                  {% endif %}
+                </td>
+                <td>
+                  {% if  number.performanceThesaurus %}
                   <a href="{{ path('thesaurus_element', {'id': number.performanceThesaurus.id }) }}">{{ number.performanceThesaurus  }}</a>
+                  {% endif %}
                 </td>
                 <td>
                   {% for person in number.performers %}
@@ -81,7 +97,9 @@
                   {% endfor %}
                 </td>
                 <td>
-                  {#<a href="{{ path('thesaurus_element', {'id': number.cast.id }) }}">{{ number.cast  }}</a>#}
+                  {% if  number.cast %}
+                    <a href="{{ path('thesaurus_element', {'id': number.cast.id }) }}">{{ number.cast  }}</a>
+                  {% endif %}
                 </td>
                 <td>
                   {% for person in number.figurants %}
@@ -106,13 +124,19 @@
               </tr>
               <tr class="number__table-row__content">
                 <td>
+                  {% if number.spectatorsThesaurus %}
                   <a href="{{ path('thesaurus_element', {'id': number.spectatorsThesaurus.id }) }}">{{ number.spectatorsThesaurus  }}</a>
+                  {% endif %}
                 </td>
                 <td>
-                  <a href="{{ path('thesaurus_element', {'id': number.diegeticThesaurus.id }) }}">{{ number.diegeticThesaurus  }}</a>
+                  {% if number.diegeticThesaurus %}
+                    <a href="{{ path('thesaurus_element', {'id': number.diegeticThesaurus.id }) }}">{{ number.diegeticThesaurus  }}</a>
+                  {% endif %}
                 </td>
                 <td>
-                  <a href="{{ path('thesaurus_element', {'id': number.musicianThesaurus.id }) }}">{{ number.musicianThesaurus  }}</a>
+                  {% if number.musicianThesaurus %}
+                    <a href="{{ path('thesaurus_element', {'id': number.musicianThesaurus.id }) }}">{{ number.musicianThesaurus  }}</a>
+                  {% endif %}
                 </td>
               </tr>
             </table>
@@ -230,7 +254,9 @@
                   {{ number.dubbing }}
                 </td>
                 <td>
+                  {% if number.tempoThesaurus %}
                   <a href="{{ path('thesaurus_element', {'id': number.tempoThesaurus.id }) }}">{{ number.tempoThesaurus }}</a>
+                  {% endif %}
                 </td>
                 <td>
                   {% for item in number.musicalThesaurus %}
