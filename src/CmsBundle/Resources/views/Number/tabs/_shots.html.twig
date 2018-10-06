@@ -14,7 +14,7 @@
 
 <div id="shots" class="row container main">
 
-    {% if ( validationShots is defined and validationShots|length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if ( validationShots is defined and validationShots|length < 2 or is_granted('ROLE_MEMBER')) %}
     <article class="col s12">
     {% else %}
     <article class="col s12 hide">

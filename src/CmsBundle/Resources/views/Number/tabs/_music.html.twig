@@ -15,7 +15,7 @@
 
 <div id="music" class="row container main">
 
-    {% if ( validationMusic is defined and validationMusic|length < 2 or is_granted('ROLE_EDITOR')) %}
+    {% if ( validationMusic is defined and validationMusic|length < 2 or is_granted('ROLE_MEMBER')) %}
     <article class="col s12">
     {% else %}
     <article class="col s12 hide">
