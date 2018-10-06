@@ -34,6 +34,7 @@ security:
         - { path: ^/resetting, role: ROLE_MEMBER }
 
         - { path: ^/member, role: ROLE_MEMBER } #attention, il faut promovoir les users
+        - { path: ^/editor/song, role: ROLE_MEMBER }
         - { path: ^/editor, role: ROLE_EDITOR }
         - { path: ^/expert, role: ROLE_EXPERT }
         - { path: ^/admin, role: ROLE_ADMIN }
