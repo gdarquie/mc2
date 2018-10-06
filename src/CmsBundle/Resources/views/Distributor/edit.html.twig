@@ -6,20 +6,15 @@
         <h1>Distributor edit</h1>
 
         {{ form_start(edit_form) }}
-            {{ form_widget(edit_form) }}
-            <input type="submit" class="btn black" value="Edit" />
+        {{ form_widget(edit_form) }}
+        <input type="submit" class="btn btn-admin green right" value="Edit" />
         {{ form_end(edit_form) }}
 
-        <ul>
-            <li>
-                <a href="{{ path('admin_distributor_index') }}">Back to the list</a>
-            </li>
-            <li>
-                {{ form_start(delete_form) }}
-                    <input type="submit" class="red btn right" value="Delete">
-                {{ form_end(delete_form) }}
-            </li>
-        </ul>
+        {{ form_start(delete_form) }}
+        <input type="submit" class="btn btn-admin red right" value="Delete">
+        {{ form_end(delete_form) }}
+
+        <a href="{{ path('admin_distributor_index') }}">Back to the list</a>
 
         <br><br>
 
