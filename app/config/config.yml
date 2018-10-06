@@ -146,7 +146,7 @@ fos_elastica:
         mc2:
             types:
                 number:
-                    mappings:
+                    properties:
                         title:
                          type: keyword
                         beginTc: { type: integer }
