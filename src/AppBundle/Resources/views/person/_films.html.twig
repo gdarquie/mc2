@@ -11,102 +11,18 @@
 
   <div class="section-films__films section-films__films--margin-bottom">
 
-    {% set tabAll = [] %}
-    {% for item in person.numbersChoregrapher  %}
-      {% if item.film.filmId not in tabAll %}
-        {% set tabAll = tabAll|merge([item.film.filmId]) %}
-        <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : item.film.filmId}) }}">
-          <h4 class="section-films__film-name">{{ item.film }}</h4>
+     {% for film in filmsLinkedToPerson %}
+         <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : film.filmId}) }}">
+             <h4 class="section-films__film-name">{{ film.title }}</h4>
 
-          <div class="section-films__centered-cropped">
-            <img class="section-films__film-poster" src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
-          </div>
-        </a>
-      {% endif %}
-    {% endfor %}
+             <div class="section-films__centered-cropped">
+                 <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
+             </div>
+         </a>
+     {% endfor %}
 
-    {% for item in person.numbersArranger  %}
-      {% if item.film.filmId not in tabAll %}
-        {% set tabAll = tabAll|merge([item.film.filmId]) %}
-        <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : item.film.filmId}) }}">
-          <h4 class="section-films__film-name">{{ item.film }}</h4>
-          <div class="section-films__centered-cropped">
-            <img class="section-films__film-poster" src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
-          </div>
-        </a>
-      {% endif %}
-    {% endfor %}
-    {% for item in person.numbersDirector  %}
-      {% if item.film.filmId not in tabAll %}
-        {% set tabAll = tabAll|merge([item.film.filmId]) %}
-        <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : item.film.filmId}) }}">
-          <h4 class="section-films__film-name">{{ item.film }}</h4>
-          <div class="section-films__centered-cropped">
-            <img class="section-films__film-poster" src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
-          </div>
-        </a>
-      {% endif %}
-    {% endfor %}
-    {% for item in person.numbersPerformer  %}
-      {% if item.film.filmId not in tabAll %}
-        {% set tabAll = tabAll|merge([item.film.filmId]) %}
-        <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : item.film.filmId}) }}">
-          <h4 class="section-films__film-name">{{ item.film }}</h4>
-          <div class="section-films__centered-cropped">
-            <img class="section-films__film-poster" src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
-          </div>
-        </a>
-      {% endif %}
-    {% endfor %}
-    {% for item in person.numbersFigurant  %}
-      {% if item.film.filmId not in tabAll %}
-        {% set tabAll = tabAll|merge([item.film.filmId]) %}
-        <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : item.film.filmId}) }}">
-          <h4 class="section-films__film-name">{{ item.film }}</h4>
-          <div class="section-films__centered-cropped">
-            <img class="section-films__film-poster" src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
-          </div>
-        </a>
-      {% endif %}
-    {% endfor %}
-    {% for item in person.songLyricist  %}
-      {% for itemNumber in item.number  %}
-        {% if itemNumber.film.filmId not in tabAll %}
-          {% set tabAll = tabAll|merge([itemNumber.film.filmId]) %}
-          <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
-            <h4 class="section-films__film-name">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
-            <div class="section-films__centered-cropped">
-              <img class="section-films__film-poster" src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
-            </div>
-          </a>
-        {% endif %}
-      {% endfor %}
-    {% endfor %}
-
-    {% for item in person.songComposer  %}
-      {% for itemNumber in item.number  %}
-        {% if itemNumber.film.filmId not in tabAll %}
-          {% set tabAll = tabAll|merge([itemNumber.film.filmId]) %}
-          <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : itemNumber.film.filmId}) }}">
-            <h4 class="section-films__film-name">{{ itemNumber.film }} ({{ itemNumber.film.released }})</h4>
-            <div class="section-films__centered-cropped">
-              <img class="section-films__film-poster" src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}" alt="poster">
-            </div>
-          </a>
-        {% endif %}
-      {% endfor %}
-    {% endfor %}
 
   </div>
 </div>
 
-{% block javascript %}
 
-    <script>
-        function standby() {
-//            document.getElementById('foo').src = 'https://www.google.com/images/srpr/logo11w.png'
-
-        }
-    </script>
-
-{% endblock %}

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gaetan
- * Date: 20/09/2016
- * Time: 12:28
- */
 
 namespace AppBundle\Repository;
 
@@ -18,5 +12,4 @@ class PersonRepository extends EntityRepository
             ->orderBy('person.name', 'ASC');
     }
 }
-
 

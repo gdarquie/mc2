@@ -2,10 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Person;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
-
 
 class PersonController extends Controller
 {
@@ -14,11 +13,11 @@ class PersonController extends Controller
      */
     public function getOnePerson($personId){
 
-        //Get Person
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery("SELECT p FROM AppBundle:Person p WHERE p.personId = :person");
-        $query->setParameter('person', $personId);
-        $person = $query->getSingleResult();
+
+        //Get Person
+        $person = $em->getRepository(Person::class)->findOneByPersonId($personId);
+        $filmsLinkedToPerson = $this->getAllMoviesLinkedToPerson($person);
 
         //Get all numbers for the person
         $query = $em->createQuery("SELECT n FROM AppBundle:Number n JOIN n.performers p WHERE p.personId = :person");
@@ -270,6 +269,7 @@ class PersonController extends Controller
         $query->setParameter('person', $personId );
         $filmsPerson = $query->getResult();
 
+//        dump($personsLinkedTofilm);die;
         return $this->render('AppBundle:person:person.html.twig', array(
             'person' => $person,
             'numbers_as_performers' => $numbers_as_performers,
@@ -311,7 +311,8 @@ class PersonController extends Controller
             'top_associated_composers' => $top_associated_composers,
             'associated_lyricists' => $associated_lyricists,
             'top_associated_lyricists' => $top_associated_lyricists,
-            'filmsPerson' => $filmsPerson
+            'filmsPerson' => $filmsPerson,
+            'filmsLinkedToPerson' => $filmsLinkedToPerson
         ));
     }
 
@@ -358,8 +359,6 @@ class PersonController extends Controller
             $query = $em->createQuery("SELECT n FROM AppBundle:Number n JOIN n.diegetic_thesaurus t JOIN n.performers p WHERE p.personId = :person AND  t.id = :thesaurus");
         }
 
-
-
         $query->setParameter('person', $personId);
         $query->setParameter('thesaurus', $id);
         $numbers = $query->getResult();
@@ -370,6 +369,49 @@ class PersonController extends Controller
             'thesaurus' => $thesaurus,
             'numbers' => $numbers
         ));
+    }
+
+//    static function cmp($a, $b)
+//    {
+//        return strcmp($a->getTitle(), $b->getTitle());
+//    }
+
+    private function getAllMoviesLinkedToPerson($person)
+    {
+        $films = [];
+
+        foreach($person->getFilmsDirector() as $film) {
+            array_push($films, $film);
+        };
+
+        foreach($person->getFilmsProducer() as $film) {
+            array_push($films, $film);
+        };
+
+        foreach($person->getNumbersArranger() as $number) {
+            array_push($films, $number->getFilm());
+        };
+
+        foreach($person->getNumbersChoregrapher() as $number) {
+            array_push($films, $number->getFilm());
+        };
+
+        foreach($person->getNumbersDirector() as $number) {
+            array_push($films, $number->getFilm());
+        };
+
+        foreach($person->getNumbersPerformer() as $number) {
+            array_push($films, $number->getFilm());
+        };
+
+        foreach($person->getNumbersFigurant() as $number) {
+            array_push($films, $number->getFilm());
+        };
+
+//        usort($films, "cmp");
+//        dump($films[0]->getTitle());;die;
+        return $films = array_unique($films);
+
     }
 
 
