@@ -20,6 +20,14 @@ L’objectif de ce programme est de renouveler la compréhension du musical cin�
 
 http://musicalmc2.labex-arts-h2h.fr/fr/content/projet
 
+##Requirements
+```
+Php 7+
+composer
+MysSQL
+Elastic Search
+```
+
 ## Installation
 ```
 composer install  
@@ -32,5 +40,7 @@ yarn run encore production
 composer install  
 yarn install
 yarn run encore dev --watch
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update
 php bin/console server:run
 ```

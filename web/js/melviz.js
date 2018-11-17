@@ -80,8 +80,6 @@ function creerButton(div) {
 
 function versionMelviz(container, data, nbCsp) {
 
-
-
     var width = (document.getElementById(container).getBoundingClientRect().width/nbCsp)-2;
     var height = document.getElementById(container).getBoundingClientRect().height;
 
