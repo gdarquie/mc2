@@ -28,6 +28,12 @@ MysSQL
 Elastic Search
 ```
 
+##Check requirments
+```
+cd your-project/
+composer require symfony/requirements-checker
+```
+
 ## Installation
 ```
 composer install  
@@ -38,9 +44,9 @@ yarn run encore production
 ## Dev.
 ```
 composer install  
-yarn install
-yarn run encore dev --watch
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:update
 php bin/console server:run
+yarn install
+yarn run encore dev --watch
 ```
