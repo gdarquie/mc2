@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Number
 {
-
     /**
      * @var integer
      *
@@ -769,7 +768,6 @@ class Number
      * })
      */
     private $tempo_thesaurus;
-
 
     /**
      * @var \Doctrine\Common\Collections\Collection

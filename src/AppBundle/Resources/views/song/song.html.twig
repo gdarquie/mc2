@@ -79,10 +79,10 @@
 
             <h2>Numbers</h2>
             <ul class="collection">
-                {% for item in song.number %}
+                {% for item in numbers %}
                     <a href="{{ path('number', {'id' : item.id}) }}"> <li class="collection-item avatar">
-                            <img src="{{ asset('img/films/'~ item.film.idImdb ~'.jpg') }}"  class="circle">
-                            {{ item.title }}</li></a>
+                            <img src="{{ asset('img/films/'~ item.imdb ~'.jpg') }}"  class="circle">
+                            {{ item.title }} ({{ item.released }})</li></a>
 
                 {% endfor %}
             </ul>
@@ -92,7 +92,7 @@
                 {% for item in films %}
                     <a href="{{ path('film', {'filmId' : item.filmId}) }}"> <li class="collection-item avatar">
                             <img src="{{ asset('img/films/'~ item.imdb ~'.jpg') }}" alt="" class="circle">
-                            {{ item.title }}</li></a>
+                            {{ item.title }} ({{ item.released }})</li></a>
                 {% endfor %}
             </ul>
 
