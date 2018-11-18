@@ -2,14 +2,6 @@
 
 namespace AppBundle\Component;
 
-use Doctrine\ORM\EntityManager;
-
-class DefaultHander
+class DefaultHander extends BaseHandler
 {
-    private $em;
-
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
 }
