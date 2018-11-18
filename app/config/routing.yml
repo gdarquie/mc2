@@ -1,8 +1,3 @@
-quizz:
-    resource: "@QuizzBundle/Controller/"
-    type:     annotation
-    prefix:   /quizz
-
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

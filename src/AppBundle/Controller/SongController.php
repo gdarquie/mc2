@@ -2,32 +2,39 @@
 
 namespace AppBundle\Controller;
 
+use Elastica\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class SongController extends Controller
+class SongController extends BaseController
 {
+    const SONG = 'song';
+
     /**
      * @Route("song/id/{songId}", name="song")
      */
     public function songAction($songId){
 
-        $em = $this->getDoctrine()->getManager();
-        $song = $em->getRepository('AppBundle:Song')
-            ->findOneBySongId($songId);
 
-        $films = $em->getRepository('AppBundle:Song')->getFilmsOrderByReleased($songId)
-            ->getQuery()
-            ->execute();
+        $handler = $this->getHandler(SongController::SONG);
+        $data = $handler->getSong($songId);
 
-        $numbers = $em->getRepository('AppBundle:Song')->getNumbersOrderByReleased($songId)
-            ->getQuery()
-            ->execute();
+        //test ES
+//        $finder = $this->container->get('fos_elastica.finder.mc2.number');
+//
+//        $boolQuery = new Query\BoolQuery();
+//        $tagsQuery = new Query\Terms();
+//        $tagsQuery->setTerms('title', array('Put Me to the Test'));
+//        $boolQuery->addShould($tagsQuery);
+//
+//        $data = $finder->find($boolQuery);
+
+//        dump($data);die;
+
 
         return $this->render('AppBundle:song:song.html.twig',array(
-            'song' => $song,
-            'films' => $films,
-            'numbers' => $numbers
+            'song' => $data['song'],
+            'films' => $data['films'],
+            'numbers' => $data['numbers']
         ));
     }
 

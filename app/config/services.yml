@@ -4,9 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    song_handler:
+        class: AppBundle\Component\SongHandler
+        autowire: true
+        public: true
+
 
 #  maintenance_listener:
 #    class: AppBundle\Event\MaintenanceListener

@@ -21,7 +21,6 @@ class AppKernel extends Kernel
             new CmsBundle\CmsBundle(),
             new ApiBundle\ApiBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
-            new QuizzBundle\QuizzBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
