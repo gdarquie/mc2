@@ -10,11 +10,20 @@
           <small> - <a href="{{ path('number_edit', {'id' : number.id}) }}">edit</a></small>{% endif %}
         </h1>
         <a href="/film/id/{{number.film.filmId}}">
-          <h2 class="number__subtitle">[{{ number.film }}]
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} {% endif %}
+          <h2 class="number__subtitle">[{{ number.film }}
+
+            {% if number.director %}
+                {%  for director in number.director %}
+                    - {{ director }}
+                {% endfor %}
+            {% endif %}
+            ]
           </h2>
         </a>
+
       </div>
+
+
 
       <img src="/img/photograms/{{number.id}}.jpg" alt="image du number" style="width:500px;" class="center">
 
