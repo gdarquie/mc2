@@ -2,20 +2,10 @@
 
 namespace AppBundle\Component;
 
-use Doctrine\ORM\EntityManager;
-
-class FilmHandler
+class FilmHandler extends BaseHandler
 {
-    private $em;
-
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     public function getFilmPayload($filmId)
     {
-
         $payload = [];
 
         //film

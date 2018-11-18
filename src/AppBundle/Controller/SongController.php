@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class SongController extends Controller
 {
-
     /**
      * @Route("song/id/{songId}", name="song")
      */
@@ -17,13 +16,13 @@ class SongController extends Controller
         $song = $em->getRepository('AppBundle:Song')
             ->findOneBySongId($songId);
 
-        $query = $em->createQuery("SELECT DISTINCT(f.title) as title, f.filmId as filmId, f.idImdb as imdb, f.released as released FROM AppBundle:Song s LEFT JOIN s.number n JOIN n.film f WHERE s.songId = :songId ORDER BY f.released ASC");
-        $query->setParameter('songId', $songId );
-        $films = $query->getResult();
+        $films = $em->getRepository('AppBundle:Song')->getFilmsOrderByReleased($songId)
+            ->getQuery()
+            ->execute();
 
-        $query = $em->createQuery("SELECT n.id, n.title, f.idImdb as imdb, f.released FROM AppBundle:Song s LEFT JOIN s.number n JOIN n.film f WHERE s.songId = :songId ORDER BY f.released, f.filmId, n.beginTc ASC");
-        $query->setParameter('songId', $songId );
-        $numbers = $query->getResult();
+        $numbers = $em->getRepository('AppBundle:Song')->getNumbersOrderByReleased($songId)
+            ->getQuery()
+            ->execute();
 
         return $this->render('AppBundle:song:song.html.twig',array(
             'song' => $song,
