@@ -66,7 +66,6 @@ class Person
      */
     private $personId;
 
-
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Film", mappedBy="directors")
      */
