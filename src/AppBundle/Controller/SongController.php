@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use Elastica\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SongController extends BaseController
 {
@@ -12,24 +12,10 @@ class SongController extends BaseController
     /**
      * @Route("song/id/{songId}", name="song")
      */
-    public function songAction($songId){
-
+    public function getSong($songId){
 
         $handler = $this->getHandler(SongController::SONG);
         $data = $handler->getSong($songId);
-
-        //test ES
-//        $finder = $this->container->get('fos_elastica.finder.mc2.number');
-//
-//        $boolQuery = new Query\BoolQuery();
-//        $tagsQuery = new Query\Terms();
-//        $tagsQuery->setTerms('title', array('Put Me to the Test'));
-//        $boolQuery->addShould($tagsQuery);
-//
-//        $data = $finder->find($boolQuery);
-
-//        dump($data);die;
-
 
         return $this->render('AppBundle:song:song.html.twig',array(
             'song' => $data['song'],
@@ -38,6 +24,17 @@ class SongController extends BaseController
         ));
     }
 
+    /**
+     * @Route("song/es/{songId}", name="song_elastic")
+     */
+    public function testElasticSearch($songId)
+    {
+        $handler = $this->getHandler(SongController::SONG);
+        $finder = $this->container->get('fos_elastica.finder.mc2.number');
+        $data = $handler->getFilms($finder, $songId);
+
+        return new JsonResponse($data);
+    }
 
 
 }

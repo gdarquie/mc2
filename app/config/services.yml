@@ -8,7 +8,10 @@ services:
         class: AppBundle\Component\SongHandler
         autowire: true
         public: true
-
+    film_handler:
+        class: AppBundle\Component\FilmHandler
+        autowire: true
+        public: true
 
 #  maintenance_listener:
 #    class: AppBundle\Event\MaintenanceListener

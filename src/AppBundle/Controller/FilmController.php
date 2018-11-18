@@ -6,8 +6,10 @@ use AppBundle\Component\FilmHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class FilmController extends Controller
+class FilmController extends BaseController
 {
+    const FILM = 'film';
+
     /**
      * @Route("/film/id/{filmId}", name="film")
      */
@@ -18,7 +20,7 @@ class FilmController extends Controller
         $query->setParameter('film', $filmId);
         $film = $query->getSingleResult();
 
-        $payload = $this->getHandler()->getFilmPayload($filmId);
+        $payload = $this->getHandler(FilmController::FILM)->getFilmPayload($filmId);
 
         //change with API //not secure at all!!! use pagination
 
@@ -50,8 +52,7 @@ class FilmController extends Controller
             'persons' => $persons,
             'professions' => $professions,
         ));
-
-
+        
     }
 
     /**
@@ -107,14 +108,6 @@ class FilmController extends Controller
             'NameFilmWithCountNumbers' => $NameFilmWithCountNumbers,
             'NbFilm' => $NbFilm
         ));
-    }
-
-    /**
-     * @return FilmHandler
-     */
-    public function getHandler()
-    {
-        return new FilmHandler($this->getDoctrine()->getManager());
     }
 
 }
