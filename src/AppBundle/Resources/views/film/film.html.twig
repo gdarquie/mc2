@@ -116,12 +116,10 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {#{% for number in numbersOf1Film %}#}
                                         {% for number in numbersOf1Film %}
                                             <tr>
                                                 <td>{{loop.index}}</td>
-                                                <td><a class="img_hover" href="{{ path('number', {'id' : number.id}) }}">{{ number.title  }} <span><img
-                                                                    src="/img/photograms/{{number.id}}.jpg" alt="image du number" style="width:250px;"></span></a></td>
+                                                <td><a class="img_hover" href="{{ path('number', {'id' : number.id}) }}">{{ number.title  }} <span><img src="/img/photograms/{{number.id}}.jpg" alt="image du number" style="width:250px;"></span></a></td>
                                                 <td>{{ ((number.beginTc)/(60*60))|round(0, 'floor') }}h{{ ((number.beginTc)/(60)) |round(0, 'floor')-(60*((number.beginTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.beginTc) |round(0, 'floor')-(60*((number.beginTc)/(60)) |round(0, 'floor')) }}s</td>
                                                 <td>{{ ((number.endTc)/(60*60))|round(0, 'floor') }}h{{ ((number.endTc)/(60)) |round(0, 'floor')-(60*((number.endTc)/(60*60)) |round(0, 'floor'))  }}m{{ (number.endTc) |round(0, 'floor')-(60*((number.endTc)/(60)) |round(0, 'floor')) }}s</td>
                                                 <td>{{ ((number.length)/(60)) |round(0, 'floor')-(60*((number.length)/(60*60)) |round(0, 'floor'))  }}m{{ (number.length) |round(0, 'floor')-(60*((number.length)/(60)) |round(0, 'floor')) }}s</td>
@@ -133,7 +131,6 @@
 
                                                     {% endfor %}
                                                 </td>
-                                                {#<td>{% for item in number.performers  %}{{ item.performer }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>#}
 
                                                 {% if is_granted("ROLE_MEMBER") %}
                                                     <td>
