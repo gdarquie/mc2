@@ -1,28 +1,28 @@
 <div id="films">
 
-  {% if person.numbersChoregrapher|length == 0 and person.numbersArranger|length == 0 and person.numbersDirector|length == 0 and person.numbersPerformer|length == 0 and person.numbersFigurant|length == 0 and person.songLyricist|length == 0 and person.songComposer|length == 0 %}
-    <div class="no_info center">
-      <h3>No result</h3>
-      <p> {{ person.name }} is not involved in any film yet </p>
+    {% if person.numbersChoregrapher|length == 0 and person.numbersArranger|length == 0 and person.numbersDirector|length == 0 and person.numbersPerformer|length == 0 and person.numbersFigurant|length == 0 and person.songLyricist|length == 0 and person.songComposer|length == 0 %}
+        <div class="no_info center">
+            <h3>No result</h3>
+            <p> {{ person.name }} is not involved in any film yet </p>
+        </div>
+    {% else %}
+        <h2>{{ filmsLinkedToPerson| length }} film(s) linked to {{ person.name }}</h2>
+    {% endif %}
+
+    <div class="section-films__films section-films__films--margin-bottom">
+
+        {% for film in filmsLinkedToPerson %}
+            <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : film.filmId}) }}">
+                <h4 class="section-films__film-name">{{ film.title }} ({{ film.released }})</h4>
+
+                <div class="section-films__centered-cropped">
+                    <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
+                </div>
+            </a>
+        {% endfor %}
+
+
     </div>
-  {% else %}
-    <h2>All films linked to {{ person.name }}</h2>
-  {% endif %}
-
-  <div class="section-films__films section-films__films--margin-bottom">
-
-     {% for film in filmsLinkedToPerson %}
-         <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : film.filmId}) }}">
-             <h4 class="section-films__film-name">{{ film.title }}</h4>
-
-             <div class="section-films__centered-cropped">
-                 <img class="section-films__film-poster" src="{{ asset('img/films/'~ film.idImdb ~'.jpg') }}" alt="poster">
-             </div>
-         </a>
-     {% endfor %}
-
-
-  </div>
 </div>
 
 
