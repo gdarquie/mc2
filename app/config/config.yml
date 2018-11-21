@@ -165,9 +165,17 @@ fos_elastica:
                         film.protestant: { type: keyword }
                         film.harrisson: { type: keyword }
                         film.bord: { type: keyword }
-                        film.length: { type: keyword }
+                        film.length: { type: integer }
                         film.adaptation: { type:keyword }
                         film.stageshows: {type:keyword}
+                        film.negative: { type:integer }
+                        film.pna: { type:integer }
+                        film.us_rentals: { type:integer }
+                        film.foreign_rentals: { type:integer }
+                        film.total_rentals: { type:integer }
+                        film.us_boxoffice: { type:integer }
+                        film.foreign_boxoffice: { type:integer }
+                        film.total_boxoffice: { type:integer }
                         song:
                           type: nested
                           properties:
