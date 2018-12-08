@@ -261,9 +261,9 @@
 
                 <div class="row">
 
-                    <article id="tabTimelineContainer">
-                        <h3> Cast </h3>
-                        <div >
+                    <article class="tabTimelineContainer">
+                        <h2> Cast </h2>
+                        <div>
                             <table class="highlight mini-table" id="table_cast">
                                 <tr>
                                     <th>Color</th>
@@ -299,12 +299,59 @@
                 </div>
 
                 <div class="row">
+                    <div class="graph-container">
+                        <div class = "svg" id="cast_timeline"></div>
+                        <div id = "cast_tag"></div>
+                    </div>
+                </div>
 
-                    <article id = "container">
-                        <h3>Graphe/ Timeline</h3>
-                        <div class = "svg" id="svg_timeline"></div>
-                        <div id = "tag"></div>
+                <div class="row">
+                    <article class="tabTimelineContainer">
+                        <h2> Structure </h2>
+                        <div >
+                            <table class="highlight mini-table" id="table_cast">
+                                <tr>
+                                    <th>Color</th>
+                                    <th>Structure</th>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#003399"></circle></svg></td>
+                                    <td>medley</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#339933"></circle></svg></td>
+                                    <td>simple</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#ffff00"></circle></svg></td>
+                                    <td>montage</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#ff9900"></circle></svg></td>
+                                    <td>narrative ballet</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#ff0000"></circle></svg></td>
+                                    <td>variations</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#cc0099"></circle></svg></td>
+                                    <td>medley-montage</td>
+                                </tr>
+                                <tr style="height: 15px;">
+                                    <td><svg style="width: 50px; height: 15px"><circle cx="25" cy="7.5" r="6" fill="#595959"></circle></svg></td>
+                                    <td>other</td>
+                                </tr>
+                            </table>
+                        </div>
                     </article>
+                </div>
+
+                <div class="row">
+                    <div class="graph-container">
+                        <div class="svg" id="structure_timeline"></div>
+                        <div id="structure_tag"></div>
+                    </div>
                 </div>
 
             </div>
@@ -445,7 +492,8 @@
 {% block javascripts %}
 
     {{parent()}}
-    <script type="text/javascript" src="{{ asset('js/length_timeline.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/cast_graph.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/structure_graph.js') }}"></script>
 
     <script type="text/javascript">
 
@@ -456,6 +504,27 @@
             {% endfor %}
         ]);
 
+        var structureItems = new vis.DataSet([
+            {% for number in numbersOf1Film %}
+            {
+                id: {{loop.index}},
+                content: '{{number.title}}',
+                start: {{number.beginTc}},
+                end: {{number.endTc}},
+                shots: {%  if number.shots != null %}
+                            '{{ number.shots }}'
+                       {% else %}
+                             0
+                       {% endif %},
+                structure: {%  if number.structure != null %}
+                            '{{ number.structure.id }}'
+                      {% else %}
+                             0
+                      {% endif %} }
+                {% if loop.last %}{% else %},{% endif %}
+            {% endfor %}
+        ]);
+        
         nv.addGraph(function() {
             var chart = nv.models.pieChart()
                     .x(function(d) { return d.label })
@@ -490,9 +559,11 @@
                 .replace(/&#039;/g, "\'");
         }
 
-        //Timeline Ale
+        //cost graph
+        create_gant(items,{{ film.length }}, 'cast_timeline', 'cast_tag', 'cast');
 
-        create_gant(items,{{ film.length }});
+        //structure graph
+        create_structure_graph(structureItems,{{ film.length }}, 'structure_timeline', 'structure_tag', 'structure');
 
     </script>
 
