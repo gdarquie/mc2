@@ -66,15 +66,15 @@
                 <table class="striped medium-table">
                     <thead>
                     <tr>
-                        <th onclick="sortPerso(this, 'list_film')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
-                        <th onclick="sortPerso(this, 'list_release_date')" data-cpt="0">Release Date<i class="material-icons icone_perso">arrow_drop_down</i></th>
-                        <th onclick="sortPerso(this, 'list_studio')" data-cpt="0">Studio<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortFilm(this, 'list_title')" data-cpt="0">Film<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortFilm(this, 'list_release_date')" data-cpt="0">Release Date<i class="material-icons icone_perso">arrow_drop_down</i></th>
+                        <th onclick="sortFilm(this, 'list_studio')" data-cpt="0">Studio<i class="material-icons icone_perso">arrow_drop_down</i></th>
                     </tr>
                     </thead>
                     <tbody class="list">
                     {% for film in filmsByVerdict  %}
                         <tr>
-                            <td class="list_film"><a href="{{ path('film', {'filmId' : film.filmId}) }}">{{ film.title }}</a></td>
+                            <td class="list_title"><a href="{{ path('film', {'filmId' : film.filmId}) }}">{{ film.title }}</a></td>
                             <td class="list_release_date">{{ film.released }}</td>
                             <td class="list_studio">
                                 {% for studio in film.studios %}
@@ -88,16 +88,6 @@
                 <ul class="pagination"></ul>
             </div>
 
-            {#<div class="row">#}
-            {#{% for film in filmsByVerdict  %}#}
-                {#<a href="{{ path('film', {'filmId' : film.filmId}) }}">#}
-                    {#<div class="col s3 film">#}
-                        {#<h4 class="center">{{ film.title }} ({{ film.released }})</h4>#}
-                        {#<img class="poster" src="http://img.omdbapi.com/?i={{ film.idImdb }}&apikey=1733f6a&h=300" alt="poster">#}
-                    {#</div>#}
-                {#</a>#}
-            {#{% endfor %}#}
-            {#</div>#}
         </article>
 
 
@@ -129,7 +119,7 @@
         {% if filmsByVerdict|length < 16 %}
 
         var options = {
-            valueNames: ['list_film', 'list_release_date', 'list_studio']
+            valueNames: ['list_title', 'list_release_date', 'list_studio']
         };
 
         {% endif %}
@@ -138,7 +128,7 @@
         {% if filmsByVerdict|length > 15 %}
 
         var options = {
-            valueNames: ['list_film', 'list_release_date', 'list_studio']
+            valueNames: ['list_title', 'list_release_date', 'list_studio']
         };
 
         {% endif %}
@@ -148,8 +138,7 @@
     </script>
 
     <script>
-        function sortPerso(element, col) {
-
+        function sortFilm(element, col) {
             if (element.dataset.cpt%2 == 0) {
                 FilmList.sort(col, {order : "asc"});
                 element.dataset.cpt++;

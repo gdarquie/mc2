@@ -42,9 +42,7 @@ class ThesaurusController extends Controller
         $codeId = $query->getSingleResult();
         $codeId = $codeId['codeId'];
 
-
-
-        $query = $em->createQuery('SELECT t FROM AppBundle:Thesaurus t INNER JOIN t.code c WHERE c.codeId = :codeId');
+        $query = $em->createQuery('SELECT t FROM AppBundle:Thesaurus t INNER JOIN t.code c WHERE c.codeId = :codeId ORDER BY t.title ASC');
         $query->setParameter('codeId', $codeId);
         $thesaurus = $query->getResult();
 
@@ -104,7 +102,7 @@ class ThesaurusController extends Controller
             }
 
             //Select tous les numbers avec ce code (dans tous les cas)
-            $query = $em->createQuery('SELECT n FROM AppBundle:Number n JOIN n.'.$code.' t WHERE t.id = :id');
+            $query = $em->createQuery('SELECT n FROM AppBundle:Number n JOIN n.'.$code.' t WHERE t.id = :id ORDER BY n.title ASC');
             $query->setParameter('id', $id);
             $numbers = $query->getResult();
 
