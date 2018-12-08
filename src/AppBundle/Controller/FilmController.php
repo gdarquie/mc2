@@ -52,7 +52,7 @@ class FilmController extends BaseController
             'persons' => $persons,
             'professions' => $professions,
         ));
-        
+
     }
 
     /**

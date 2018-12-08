@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Repository\DistributorRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,7 +41,16 @@ class FilmType extends AbstractType
             ->add('released')
             ->add('idImdb')
             ->add('length')
-            ->add('distributors')
+            ->add('distributors', EntityType::class, array(
+                'placeholder' => '',
+                'multiple' => true,
+                'class' => 'AppBundle:Distributor',
+                'choice_label' => 'title', //order by alpha
+                'query_builder' => function(DistributorRepository $repo) {
+                    return $repo->createAlphabeticalQueryBuilder();
+                },
+                'empty_data' => null,
+            ))
             ->add('color')
             ->add('ratio')
             ->add('contract')
