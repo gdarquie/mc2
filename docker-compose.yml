@@ -1,0 +1,74 @@
+version: '3'
+services:
+  web:
+    container_name: mc2-web
+    image: nginx
+    ports:
+      - "81:80"
+    volumes:
+      - .:/usr/share/nginx/html
+      - ./.docker/nginx:/etc/nginx/conf.d
+    environment:
+      - NGINX_HOST=mc2.dev
+    links:
+      - php:php
+  php:
+    container_name: mc2-php
+    build: .docker/php
+    hostname: mc2-php
+    ports:
+      - "9000:9000"
+    depends_on:
+      - "composer"
+      - "db"
+    volumes:
+      - .:/usr/share/nginx/html
+      - ~/.composer:/srv/cache/composer
+    environment:
+      COMPOSER_CACHE_DIR: /srv/cache/composer
+      APP_ENV: dev
+  composer:
+    container_name: mc2-composer
+    restart: 'no'
+    image: composer
+    command: install
+    volumes:
+      - .:/app
+      - ~/.composer:/srv/cache/composer
+    environment:
+      COMPOSER_CACHE_DIR: /srv/cache/composer
+      COMPOSER_ALLOW_SUPERUSER: 1
+  db:
+    container_name: mc2-db
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mc2
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mc2-phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 8081:80
+    volumes:
+      - /sessions
+  yarn:
+    container_name: mc2-yarn
+    build: .docker/yarn
+    restart: 'no'
+    command: ["yarn", "run", "encore", "production"]
+    volumes:
+      - .:/app
+#  elasticsearch:
+#    container_name: mc2-elasticsearch
+#    image: elasticsearch:5-alpine
+#    depends_on:
+#      - "php"
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#    environment:
+#      discovery.typer: single-node
+
