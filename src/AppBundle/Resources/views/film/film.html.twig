@@ -224,18 +224,34 @@
                         <div class="row film__flex-grid">
                             <article class="card amber col s12 m12">
                                 <div class="card-content white-text center-align">
-                                    <p class="center-align number">{% for number in numberSumLength %}
+                                    <p class="center-align number">
+                                    {% for number in numberSumLength %}
 
                                         {% if number.total > 0 %}
                                         {{((number.total/number.length)*100)|round(2, 'floor') }}%
                                         {% else %}
-                                    <p>N/A</p>
-                                    {% endif %}
-
-                                    {% endfor %}</p>
+                                        <p>N/A</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </p>
                                     <p class="center-align number-label">Ratio number/total length</p>
                                 </div>
                             </article>
+                            {#<article class="card orange col s6 m6">#}
+                                {#<div class="card-content white-text center-align">#}
+                                    {#<p class="center-align number">#}
+                                        {#{% for number in numberSumLength %}#}
+
+                                        {#{% if number.total > 0 %}#}
+                                        {#{{((number.total/number.length)*100)|round(2, 'floor') }}%#}
+                                        {#{% else %}#}
+                                    {#<p>N/A</p>#}
+                                    {#{% endif %}#}
+                                    {#{% endfor %}#}
+                                    {#</p>#}
+                                    {#<p class="center-align number-label">Ratio number/total length for all films</p>#}
+                                {#</div>#}
+                            {#</article>#}
                         </div>
 
                         <div class="row film__flex-grid">

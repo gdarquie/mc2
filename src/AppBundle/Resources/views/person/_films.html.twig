@@ -10,8 +10,8 @@
     {% endif %}
 
     <div class="section-films__films section-films__films--margin-bottom">
+        {% for film in filmsLinkedToPerson | usortFilmByReleased %}
 
-        {% for film in filmsLinkedToPerson %}
             <a class="section-films__film section-films__film--6" href="{{ path('film', {'filmId' : film.filmId}) }}">
                 <h4 class="section-films__film-name">{{ film.title }} ({{ film.released }})</h4>
 
@@ -20,8 +20,6 @@
                 </div>
             </a>
         {% endfor %}
-
-
     </div>
 </div>
 

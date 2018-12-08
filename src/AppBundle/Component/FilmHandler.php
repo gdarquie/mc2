@@ -22,7 +22,7 @@ class FilmHandler extends BaseHandler
 
         //moyenne des number pour le film
         $query =  $this->em->createQuery(
-            'SELECT SUM(f.length) / COUNT(f.title) as average FROM AppBundle:Number f WHERE f.film = :film'
+            'SELECT SUM(n.length) / COUNT(n.title) as average FROM AppBundle:Number n WHERE n.film = :film'
         );
         $query->setParameter('film', $film);
         $payload['numberAverageLength'] = $query->getResult();
@@ -40,6 +40,22 @@ class FilmHandler extends BaseHandler
         $query->setParameter('film', $film);
         $payload['numberSumLength'] = $query->getResult();
 
+        //durée moyenne de tous les numbers et durée moyenne de tous les films
+        $query = $this->em->createQuery(
+        );
+
+        //durée moyenne de tous les films du corpus
+        $query =  $this->em->createQuery(
+            'SELECT SUM(f.length) / COUNT(f.filmId) FROM AppBundle:Film f'
+        );
+        $payload['filmsAverageLength'] = $query->getResult();
+
+        //durée moyenne des films du corpus qui ont un number
+        $query =  $this->em->createQuery(
+            'SELECT SUM(f.length) / COUNT(f.filmId) FROM AppBundle:Number n JOIN n.film f'
+        );
+        $payload['filmsWithNumbersAverageLength'] = $query->getResult();
+
         //persons linked to a movie
         $query =  $this->em->createQuery(
             'SELECT a.personId as personId FROM AppBundle:FilmHasPerson a WHERE a.filmId = :film' //film has person
@@ -47,7 +63,7 @@ class FilmHandler extends BaseHandler
         $query->setParameter('film', $film);
         $payload['persons1Film'] = $query->getResult();
 
-        //        //persons linked to a movie
+        //persons linked to a movie
         $query = $this->em->createQuery(
             'SELECT a.personId as personId FROM AppBundle:FilmHasPerson a WHERE a.filmId = :film' //film has person
         );

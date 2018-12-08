@@ -408,11 +408,11 @@ class PersonController extends Controller
             array_push($films, $number->getFilm());
         };
 
-//        usort($films, "cmp");
-//        dump($films[0]->getTitle());;die;
         return $films = array_unique($films);
 
     }
+
+
 
 
 }
