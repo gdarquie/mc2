@@ -6,8 +6,8 @@ services:
     ports:
       - "81:80"
     volumes:
-      - .:/usr/share/nginx/html
-      - ./.docker/nginx:/etc/nginx/conf.d
+      - ${PWD}:/usr/share/nginx/html
+      - ${PWD}/.docker/nginx:/etc/nginx/conf.d
     environment:
       - NGINX_HOST=mc2.dev
     links:
@@ -22,7 +22,7 @@ services:
       - "composer"
       - "db"
     volumes:
-      - .:/usr/share/nginx/html
+      - ${PWD}:/usr/share/nginx/html
       - ~/.composer:/srv/cache/composer
     environment:
       COMPOSER_CACHE_DIR: /srv/cache/composer
@@ -33,7 +33,7 @@ services:
     image: composer
     command: install
     volumes:
-      - .:/app
+      - ${PWD}:/app
       - ~/.composer:/srv/cache/composer
     environment:
       COMPOSER_CACHE_DIR: /srv/cache/composer
@@ -60,7 +60,7 @@ services:
     restart: 'no'
     command: ["yarn", "run", "encore", "production"]
     volumes:
-      - .:/app
+      - ${PWD}:/app
 #  elasticsearch:
 #    container_name: mc2-elasticsearch
 #    image: elasticsearch:5-alpine
