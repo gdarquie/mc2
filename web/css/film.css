@@ -3,12 +3,12 @@
     padding: 0;
 }
 
-#container{
+.graph-container {
 
     position: relative;
     /*width:100%;*/
-    height: 350px;
-    overflow-x: scroll;
+    height: 290px;
+    overflow-x: auto;
     overflow-y: hidden;
 }
 .svg {
@@ -23,7 +23,7 @@
     stroke-width: 0;
 }
 
-#tag {
+#cast_tag, #structure_tag {
     color: black;
     background-color: white;
     width: 170px;
@@ -34,7 +34,7 @@
     margin-left: -80px;
     font-size: 15px;
 }
-#tag span{
+#cast_tag span, #structure_tag span{
     color: #db5462;
 }
 #film h1 {
@@ -47,7 +47,7 @@
 .card p{
     line-height: 1em;
 }
-#tabTimelineContainer {
+.tabTimelineContainer {
     padding-top: 20px;
     /*width: 600px;*/
 }

@@ -1,10 +1,9 @@
-function create_gant(data,lengthFilm){
-
-    var w = document.getElementById("svg_timeline").getBoundingClientRect().width;
+function create_gant(data,lengthFilm, container, outputTag, attribute){
+    var w = document.getElementById(container).getBoundingClientRect().width;
 
     // var w = 800;
     var h = 400;
-    var svg = d3.selectAll(".svg")
+    var svg = d3.selectAll('#' + container + '.svg')
         .append("svg")
         .attr("width", w)
         .attr("height", h)
@@ -39,7 +38,7 @@ function create_gant(data,lengthFilm){
     // ];
     var taskArray = [];
     data.forEach(function(element) {
-        addTask(element.start,element.end,element.content,element.id,element.cast,element.shots);
+        addTask(element.start,element.end,element.content,element.id,element[attribute],element.shots);
     });
     function doTime(tme){
         var t = Math.floor(tme / 60);
@@ -173,9 +172,9 @@ function create_gant(data,lengthFilm){
                 "<p> <span> Begin Tc: </span>" + debut + " </p>" +
                 "<p> <span> Ending Tc: </span> " + fin +" </p>" +
                 "<p><span>Shots: </span>"+ (d3.select(this).data()[0].shots) +"</p>";
-            var output = document.getElementById("tag");
+            var output = document.getElementById(outputTag);
             var x = (this.x.animVal.value + this.width.animVal.value/2);
-            var y = this.y.animVal.value + 25 + "px";
+            var y = this.y.animVal.value + 5 + "px";
             if(x<100){
                 x = 100;
             }
@@ -186,10 +185,11 @@ function create_gant(data,lengthFilm){
             output.innerHTML = tag;
             output.style.top = y;
             output.style.left = x;
-            output.style.transform = "translate(0px, 100px)";
+            output.style.transform = "translate(0px, 90px)";
+            output.style.height = "180px";
             output.style.display = "block";
         }).on('mouseout', function() {
-            var output = document.getElementById("tag");
+            var output = document.getElementById(outputTag);
             output.style.display = "none";
         });
     }
